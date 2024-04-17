@@ -4,7 +4,7 @@
  */
 package hvan.qlkh.views;
 
-import hvan.qlkh.controllers.MainController;
+import hvan.qlkh.controllers.UserController;
 import hvan.qlkh.models.User;
 import hvan.qlkh.services.Services;
 import hvan.qlkh.utils.PasswordField;
@@ -40,10 +40,6 @@ public class App extends javax.swing.JFrame {
     public App() {
         initComponents();
         initApp();
-//        Thread appThread = new Thread(new Task(appCallback));
-//        Thread mainThread = new Thread(new Task(mainCallback));
-//        appThread.start();
-//        mainThread.start();
     }
 
     public static synchronized App getInstance(){
@@ -427,7 +423,7 @@ public class App extends javax.swing.JFrame {
                     SignIn__UsernameInput.setText("");
                     SignIn__PasswordInput.setText("");
                     SignIn__Alert.setText("");
-                    MainController.getInstance().initMain();
+                    UserController.getInstance().initMain();
                 }
                 else{
                     showMessage("Bạn chưa được cấp quyền để truy cập vào ứng dụng", false);
@@ -465,7 +461,6 @@ public class App extends javax.swing.JFrame {
                     SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản đã tồn tại!</div></html>");
                 }
             } catch (IOException ex) {
-                //
             }
         }
         else{
@@ -505,7 +500,6 @@ public class App extends javax.swing.JFrame {
             try {
                 Services.getInstance().createUser(temp);
             } catch (IOException ex) {
-                //
             }
             layout.show(App, "SignIn");
             resetSignUp();
@@ -571,7 +565,7 @@ public class App extends javax.swing.JFrame {
                         SignIn__UsernameInput.setText("");
                         SignIn__PasswordInput.setText("");
                         SignIn__Alert.setText("");
-                        MainController.getInstance().initMain();
+                        UserController.getInstance().initMain();
                     }
                     else{
                         showMessage("Bạn chưa được cấp quyền để truy cập vào ứng dụng", false);
@@ -602,12 +596,11 @@ public class App extends javax.swing.JFrame {
                         try {
                             Services.getInstance().setCurrentUser(user);
                         } catch (IOException ex) {
-                            //
                         }
                         SignIn__UsernameInput.setText("");
                         SignIn__PasswordInput.setText("");
                         SignIn__Alert.setText("");
-                        MainController.getInstance().initMain();
+                        UserController.getInstance().initMain();
                     }
                     else{
                         showMessage("Bạn chưa được cấp quyền để truy cập vào ứng dụng", false);
@@ -652,7 +645,6 @@ public class App extends javax.swing.JFrame {
             try {
                 Services.getInstance().createUser(temp);
             } catch (IOException ex) {
-                //
             }
             layout.show(App, "SignIn");
             resetSignUp();
@@ -692,7 +684,6 @@ public class App extends javax.swing.JFrame {
                 try {
                     Services.getInstance().createUser(temp);
                 } catch (IOException ex) {
-                    //
                 }
                 layout.show(App, "SignIn");
                 resetSignUp();
@@ -732,7 +723,6 @@ public class App extends javax.swing.JFrame {
                 try {
                     Services.getInstance().createUser(temp);
                 } catch (IOException ex) {
-                    //
                 }
                 layout.show(App, "SignIn");
                 resetSignUp();
@@ -769,10 +759,8 @@ public class App extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new App().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new App().setVisible(true);
         });
     }
 

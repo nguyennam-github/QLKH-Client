@@ -11,7 +11,7 @@ import hvan.qlkh.models.Product;
 import hvan.qlkh.utils.BigDecimalConverter;
 import java.awt.Color;
 import hvan.qlkh.chart.ModelPieChart;
-import hvan.qlkh.controllers.MainController;
+import hvan.qlkh.controllers.UserController;
 import hvan.qlkh.models.User;
 import hvan.qlkh.services.Services;
 import hvan.qlkh.utils.Panel;
@@ -237,6 +237,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 Sort__Main.add(temp);
             });
         } catch (IOException e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }
 
@@ -260,6 +261,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 });
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             
             List<ModelChart> modelCharts = new ArrayList<>();
@@ -285,6 +287,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 });
             } catch (IOException ex ){
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             List<ModelChart> modelCharts = new ArrayList<>();
             for (Entry<String, Integer> entry : categoryStatistic.entrySet()) {
@@ -309,6 +312,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 });
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             List<ModelChart> modelCharts = new ArrayList<>();
             for (Entry<String, Integer> entry : manafacturerStatistic.entrySet()) {
@@ -345,6 +349,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 try {
                     value = Services.getInstance().filterByCategory(key).size();
                 } catch (IOException  e) {
+                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
                 }
                 categoryStatistic.put(key, value);
             }
@@ -367,6 +372,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 priceStatistic.put(PRICE[3], Services.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
                 priceStatistic.put(PRICE[4], Services.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             int ci = 0;
             for (Entry<String, Integer> entry : priceStatistic.entrySet()) {
@@ -385,6 +391,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         try {
             totalProducts = Services.getInstance().getProducts().size();
         } catch (IOException e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         int totalQuantity = 0;
         int totalCategory = Toolbar__CategoryInput.getItemCount();
@@ -395,6 +402,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 manafacturer.add(product.getManafacturer());
             }
         } catch (IOException  e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         int totalManafaturer = manafacturer.size();
         Statistic__TotalProductsStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalProducts +"</div></html>");
@@ -418,6 +426,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Information__RegisterInput.setText("");
         Information__WriteInput.setSelected(false);
         Information__ReadInput.setSelected(false);
+        Information__WriteInput.setEnabled(false);
+        Information__ReadInput.setEnabled(false);
         Information__ButtonEdit.setEnabled(false);
         Information__ButtonDelete.setEnabled(false);
         usersTable.clearSelection();
@@ -453,7 +463,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Information__WriteInput.isSelected() == user.isWrite());
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         return temp;
     }
@@ -479,6 +489,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 }
         }
         } catch (IOException | NumberFormatException  e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         return temp;
     }
@@ -506,8 +517,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__SortInput.setName("Toolbar__SortInput");
         p.setBackground(new Color(246,251,249,0));
         initToolbar();
-        MainController.getInstance();
-        MainController.setComponents(Toolbar, Navbar);
+        UserController.getInstance();
+        UserController.setComponents(Toolbar, Navbar);
         initSearchField();
         initWarehouse();
         Statistic__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
@@ -1532,6 +1543,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__NameTitle3.setPreferredSize(new java.awt.Dimension(80, 35));
 
         Information__ReadInput.setBackground(new java.awt.Color(255, 255, 255));
+        Information__ReadInput.setEnabled(false);
         Information__ReadInput.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Information__ReadInput.setPreferredSize(new java.awt.Dimension(20, 35));
         Information__ReadInput.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -1544,6 +1556,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__NameTitle4.setPreferredSize(new java.awt.Dimension(80, 35));
 
         Information__WriteInput.setBackground(new java.awt.Color(255, 255, 255));
+        Information__WriteInput.setEnabled(false);
         Information__WriteInput.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         Information__WriteInput.setPreferredSize(new java.awt.Dimension(20, 35));
         Information__WriteInput.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -2063,6 +2076,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                                                     Services.getInstance().create(temp);
                                                     showMessage("Thêm mới sản phẩm thành công!", true);
                                                 } catch (Exception e) {
+                                                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
                                                 }
                                             }
                                         }
@@ -2078,7 +2092,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__ButtonAddMouseClicked
 
@@ -2113,11 +2127,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                             }
                         }
                     } catch (Exception e) {
+                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
                     }
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__NameInputCaretUpdate
 
@@ -2146,7 +2161,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__QuantityInputCaretUpdate
 
@@ -2175,7 +2190,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__PriceInputCaretUpdate
 
@@ -2221,11 +2236,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                             }
                         }
                     } catch (IOException e) {
+                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
                     }
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__IDInputCaretUpdate
 
@@ -2234,6 +2250,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         try {
             appController.setProductsTable(productsTable, Services.getInstance().getProducts());
         } catch (IOException  e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         Toolbar__SortInput.setSelectedIndex(0);
         Toolbar__SearchInput.setSelectedIndex(0);
@@ -2273,6 +2290,31 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         this.revalidate();
     }//GEN-LAST:event_Navbar__ButtonStatisticMouseClicked
 
+    public void SignOut(){
+        CardLayout AppCardLayout = (CardLayout) Main__Pages.getParent().getParent().getParent().getLayout();
+        AppCardLayout.show(Main__Pages.getParent().getParent().getParent(), "SignIn");
+        CardLayout MainCardLayout = (CardLayout) Main__Pages.getLayout();
+        MainCardLayout.show(Main__Pages, "Pages__Home");
+        try {
+            appController.setProductsTable(productsTable, Services.getInstance().getProducts());
+        } catch (IOException e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+        } 
+        resetWarehouse();
+        Products__Scroll.getVerticalScrollBar().setValue(0);
+        initStatistic();
+        resetToolbar(true);
+        resetSearchField(true);
+        try {
+            Services.getInstance().setCurrentUser(null);
+        } catch (IOException ex) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+        }
+        accessPage = PAGES_HOME;
+        this.repaint();
+        this.revalidate();
+    }
+    
     private void Navbar__ButtonSignOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Navbar__ButtonSignOutMouseClicked
         JDialog.setDefaultLookAndFeelDecorated(true);
         int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn đăng xuất tài khoản này?", "Cảnh báo",
@@ -2284,24 +2326,25 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 AppCardLayout.show(Main__Pages.getParent().getParent().getParent(), "SignIn");
                 CardLayout MainCardLayout = (CardLayout) Main__Pages.getLayout();
                 MainCardLayout.show(Main__Pages, "Pages__Home");
-            try {
-                appController.setProductsTable(productsTable, Services.getInstance().getProducts());
-            } catch (IOException e) {
-            } 
-                resetWarehouse();
-                Products__Scroll.getVerticalScrollBar().setValue(0);
-                initStatistic();
-                resetToolbar(true);
-                resetSearchField(true);
-            try {
-                Services.getInstance().setCurrentUser(null);
-            } catch (IOException ex) {
-                //
-            }
-                accessPage = PAGES_HOME;
-                this.repaint();
-                this.revalidate();
-            }
+                try {
+                    appController.setProductsTable(productsTable, Services.getInstance().getProducts());
+                } catch (IOException e) {
+                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                } 
+                    resetWarehouse();
+                    Products__Scroll.getVerticalScrollBar().setValue(0);
+                    initStatistic();
+                    resetToolbar(true);
+                    resetSearchField(true);
+                try {
+                    Services.getInstance().setCurrentUser(null);
+                } catch (IOException ex) {
+                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                }
+                    accessPage = PAGES_HOME;
+                    this.repaint();
+                    this.revalidate();
+                }
             case JOptionPane.CLOSED_OPTION: break;
             default: {
             }
@@ -2321,7 +2364,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 }
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__ManafacturerInputCaretUpdate
 
@@ -2335,6 +2378,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 productsTable.clearSelection();
                 Services.getInstance().setSelectedProduct(null);
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             } 
         }
     }//GEN-LAST:event_Toolbar__ButtonResetMouseClicked
@@ -2404,15 +2448,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                                                             String thumbnail = Toolbar__ThumbnailInput.getText();
                                                             String description = Toolbar__DescriptionInput.getText();
                                                             Product product = new Product(id, name, category, quantity, price, expDate, manafacturer, thumbnail, description);
-                                                            System.out.println(Services.getInstance().getSelectedProduct().getId());
                                                             int index = Services.getInstance().getProducts().indexOf(Services.getInstance().findById(Services.getInstance().getSelectedProduct().getId()));
                                                             Services.getInstance().update(Services.getInstance().getSelectedProduct().getId(), product);
                                                             showMessage("Sửa thông tin sản phẩm thành công!", true);
-//                                                        Products__Main.remove(index);
-//                                                        ProductTemplate temp = new ProductTemplate(product);
-//                                                        productTemplates.add(index, temp);
-//                                                        Products__Main.add(temp, index);
                                                         } catch (IOException | NumberFormatException  e) {
+                                                            showMessage("Một lỗi không mong muốn đã xảy ra", false);
                                                         }
                                                     }
                                                     case JOptionPane.CLOSED_OPTION: break;
@@ -2432,7 +2472,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__ButtonEditMouseClicked
 
@@ -2452,6 +2492,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                                 productsTable.clearSelection();
                                 showMessage("Xóa thành công sản phẩm này", true);
                             } catch (IOException e) {
+                                showMessage("Một lỗi không mong muốn đã xảy ra", false);
                             }
                         }
                         case JOptionPane.CLOSED_OPTION: break;
@@ -2464,7 +2505,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
             }
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Toolbar__ButtonDeleteMouseClicked
 
@@ -2537,6 +2578,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
         }
     }//GEN-LAST:event_Toolbar__ButtonSortMouseClicked
@@ -2617,6 +2659,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             }
         }
         } catch (IOException e) {
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         initSearchField();
     }//GEN-LAST:event_Toolbar__ButtonSearchMouseClicked
@@ -2630,6 +2673,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 appController.setProductsTable(productsTable, Services.getInstance().getProducts());
             } catch (IOException  e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             resetSearchField(true);
         }
@@ -2668,7 +2712,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             this.repaint();
             this.revalidate();
         } catch (IOException ex) {
-            //
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
     }//GEN-LAST:event_Navbar__ButtonAuthorizationMouseClicked
 
@@ -2682,13 +2726,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 case JOptionPane.YES_OPTION: {
                     try {
                         Services.getInstance().deleteUser(Services.getInstance().getSelectedUser().getUsername());
-                        //Services.getInstance().setSelectedUser(null);
                         resetUserEdit();
                         this.repaint();
                         this.revalidate();
                         showMessage("Bạn đã xóa thành công tài khoản", true);
                     } catch (IOException ex) {
-                        //
+                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
                     }
                 }
 
@@ -2716,7 +2759,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         resetUserEdit();
                         showMessage("Bạn đã chỉnh sửa thành công quyền cho tài khoản", true);
                     } catch (IOException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
                     }
                 }
 
@@ -2742,7 +2785,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         try {
             adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         resetUserEdit();
     }//GEN-LAST:event_Filter__ButtonFilterMouseClicked
@@ -2751,7 +2794,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         try {
             adminController.setUsersTable(usersTable, Services.getInstance().getUsers());
         } catch (IOException ex) {
-            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            showMessage("Một lỗi không mong muốn đã xảy ra", false);
         }
         resetUserFilter();
     }//GEN-LAST:event_Navbar__ButtonAuthorization3MouseClicked
@@ -2872,6 +2915,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
         initSearchField();  
         }
@@ -2947,6 +2991,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
         initSearchField();  
         }
@@ -3022,6 +3067,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
         initSearchField();  
         }
@@ -3043,7 +3089,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             resetUserEdit();
         }
@@ -3065,7 +3111,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             resetUserEdit();
         }
@@ -3087,7 +3133,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             resetUserEdit();
         }
@@ -3109,7 +3155,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             resetUserEdit();
         }
@@ -3131,7 +3177,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             resetUserEdit();
         }
@@ -3278,11 +3324,14 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             } catch (IOException e) {
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
         }
     }
 
     public void setUserFromSelected(){
+         Information__ReadInput.setEnabled(true);
+         Information__WriteInput.setEnabled(true);
         int row = usersTable.getSelectedRow();
         if (row >= 0) {
             Information__UsernameInput.setText(usersTable.getModel().getValueAt(row, 1).toString());
@@ -3318,7 +3367,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 setProductFromSelected();
             } catch (ParseException ex) {
-                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                showMessage("Một lỗi không mong muốn đã xảy ra", false);
             }
             int row = productsTable.getSelectedRow();
             if (row >= 0) {
@@ -3326,6 +3375,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     Services.getInstance();
                     Services.setSelectedProduct(Services.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
                 } catch (IOException e) {
+                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
                 }
             }
             Toolbar__ButtonAdd.setEnabled(false);
@@ -3345,7 +3395,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     Services.getInstance();
                     Services.getInstance().setSelectedUser(Services.getInstance().findByUsername(usersTable.getModel().getValueAt(row, 1).toString()));
                 } catch (IOException ex) {
-                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
                 }
             }
         }

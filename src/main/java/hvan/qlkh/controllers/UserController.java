@@ -19,22 +19,22 @@ import javax.swing.JScrollPane;
  *
  * @author PC
  */
-public class MainController {
+public class UserController {
     
-    private static MainController instance;
+    private static UserController instance;
     private static JPanel Toolbar;
     private static JPanel Navbar;
     private static Map<String, Integer> ToolbarMap = new HashMap<>();
     private static Map<String, Integer> NavbarMap = new HashMap<>();
     
-    public static MainController getInstance(){
+    public static UserController getInstance(){
         if (instance == null){
-            instance = new MainController();
+            instance = new UserController();
         }
         return instance;
     }
 
-    private MainController() {
+    private UserController() {
     }
     
     private void setComponetsMap(){
@@ -47,8 +47,11 @@ public class MainController {
     }
     
     public void initMain(){
+        
         try {
+            
             setComponetsMap();
+            
             if (Services.getInstance().getCurrentUser().getUsername().equals("admin")){
                 Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(true);
             }
@@ -108,14 +111,16 @@ public class MainController {
                     }
                 }
             }
+            
         } catch (IOException ex) {
-            //
         }
     }
 
     public static void setComponents(JPanel ToolBar, JPanel NavBar) {
-        MainController.Toolbar = ToolBar;
-        MainController.Navbar = NavBar;
+        
+        UserController.Toolbar = ToolBar;
+        UserController.Navbar = NavBar;
+        
     }
     
 }

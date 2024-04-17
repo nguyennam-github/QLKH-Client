@@ -27,8 +27,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBContext;
@@ -122,8 +120,10 @@ public class Services{
                                     }
                                 }
                                 if(method.equals("Reset-User")){
+                                    String username = payload.substring(0, payload.indexOf("/"));
+                                    String data = payload.substring(payload.indexOf("/") + 1);
                                     StringBuilder sb = new StringBuilder();
-                                    sb.append(payload);
+                                    sb.append(data);
                                     while (true) {     
                                         String line = is.readLine();
                                         if (line.trim().equals("")){
@@ -143,6 +143,9 @@ public class Services{
                                     }
                                     try {
                                         adminController.setUsersTable(usersTable, users);
+                                        if (username.equals(getCurrentUser().getUsername())) {
+                                            Main.getInstance().SignOut();
+                                        }
                                         setSelectedUser(null);
                                     } catch (Exception e) {
                                     }
@@ -150,13 +153,8 @@ public class Services{
                             }
 
                         }
-    //                    os.close();
-    //                    is.close();
-    //                    socketOfClient.close();
                     } catch (UnknownHostException e) {
-                    } catch (IOException e) {
-                    } catch (JAXBException ex) {
-                        Logger.getLogger(Services.class.getName()).log(Level.SEVERE, null, ex);
+                    } catch (IOException | JAXBException e) {
                     }
                 }
             };
