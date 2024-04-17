@@ -16,7 +16,6 @@ import hvan.qlkh.dao.UserDAO;
 import hvan.qlkh.models.User;
 import hvan.qlkh.services.ProductService;
 import hvan.qlkh.services.UserServices;
-//import hvan.qlkh.socket.ProductServices;
 import hvan.qlkh.utils.Panel;
 import hvan.qlkh.utils.ScrollBar;
 import hvan.qlkh.utils.Table;
