@@ -12,10 +12,8 @@ import hvan.qlkh.utils.BigDecimalConverter;
 import java.awt.Color;
 import hvan.qlkh.chart.ModelPieChart;
 import hvan.qlkh.controllers.MainController;
-import hvan.qlkh.dao.UserDAO;
 import hvan.qlkh.models.User;
-import hvan.qlkh.services.ProductService;
-import hvan.qlkh.services.UserServices;
+import hvan.qlkh.services.Services;
 import hvan.qlkh.utils.Panel;
 import hvan.qlkh.utils.ScrollBar;
 import hvan.qlkh.utils.Table;
@@ -92,8 +90,16 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         return appController;
     }
     
+    public Controller getAdminController(){
+        return adminController;
+    }
+    
     public Table getProductsTable(){
         return productsTable;
+    }
+    
+    public Table getUsersTable(){
+        return usersTable;
     }
     
     public void initToolbar(){
@@ -127,7 +133,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__ButtonEdit.setEnabled(false);
         Toolbar__ButtonDelete.setEnabled(false);
         Toolbar__ButtonReset.setEnabled(state);
-        ProductService.setSelectedProduct(null);
+        Services.setSelectedProduct(null);
         Toolbar.repaint();
         Toolbar.revalidate();
     }
@@ -225,7 +231,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Sort__Scroll.getViewport().setBackground(Color.WHITE);
         Sort__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         try {
-            ProductService.getInstance().sort(new Comparator.IDComparator()).forEach(product -> {
+            Services.getInstance().sort(new Comparator.IDComparator()).forEach(product -> {
                 ProductTemplate temp = new ProductTemplate(product);
                 sortTemplates.add(temp);
                 Sort__Main.add(temp);
@@ -244,7 +250,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Hạn sử dụng")){
             Map<Integer, Integer> expStatistic = new HashMap<>();
             try {
-                ProductService.getInstance().getProducts().forEach(product -> {
+                Services.getInstance().getProducts().forEach(product -> {
                     int key = product.getExpDate().getYear() + 1900;
                     if (expStatistic.containsKey(key)){
                         expStatistic.replace(key, expStatistic.get(key) + product.getQuantity());
@@ -269,7 +275,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Danh mục")){
             Map<String, Integer> categoryStatistic = new HashMap<>();
             try {
-                ProductService.getInstance().getProducts().forEach(product -> {
+                Services.getInstance().getProducts().forEach(product -> {
                     String key = product.getCategory();
                     if (categoryStatistic.containsKey(key)){
                         categoryStatistic.replace(key, categoryStatistic.get(key) + product.getQuantity());
@@ -293,7 +299,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Nhà sản xuất")){
             Map<String, Integer> manafacturerStatistic = new HashMap<>();
             try {
-                ProductService.getInstance().getProducts().forEach(product -> {
+                Services.getInstance().getProducts().forEach(product -> {
                     String key = product.getManafacturer();
                     if (manafacturerStatistic.containsKey(key)){
                         manafacturerStatistic.replace(key, manafacturerStatistic.get(key) + product.getQuantity());
@@ -337,7 +343,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 String key = Toolbar__CategoryInput.getItemAt(i);
                 int value = 0;
                 try {
-                    value = ProductService.getInstance().filterByCategory(key).size();
+                    value = Services.getInstance().filterByCategory(key).size();
                 } catch (IOException  e) {
                 }
                 categoryStatistic.put(key, value);
@@ -355,11 +361,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__PercentStatistic.getSelectedItem().toString().equals("Đơn giá")) {
             Map<String, Integer> priceStatistic = new HashMap<>();
             try {
-                priceStatistic.put(PRICE[0], ProductService.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
-                priceStatistic.put(PRICE[1], ProductService.getInstance().filterByPrice(new BigDecimal("1000000"), new BigDecimal("5000000")).size());
-                priceStatistic.put(PRICE[2], ProductService.getInstance().filterByPrice(new BigDecimal("5000000"), new BigDecimal("10000000")).size());
-                priceStatistic.put(PRICE[3], ProductService.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
-                priceStatistic.put(PRICE[4], ProductService.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
+                priceStatistic.put(PRICE[0], Services.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
+                priceStatistic.put(PRICE[1], Services.getInstance().filterByPrice(new BigDecimal("1000000"), new BigDecimal("5000000")).size());
+                priceStatistic.put(PRICE[2], Services.getInstance().filterByPrice(new BigDecimal("5000000"), new BigDecimal("10000000")).size());
+                priceStatistic.put(PRICE[3], Services.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
+                priceStatistic.put(PRICE[4], Services.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
             } catch (IOException e) {
             }
             int ci = 0;
@@ -377,14 +383,14 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private void initOveral(){
         int totalProducts = 0;
         try {
-            totalProducts = ProductService.getInstance().getProducts().size();
+            totalProducts = Services.getInstance().getProducts().size();
         } catch (IOException e) {
         }
         int totalQuantity = 0;
         int totalCategory = Toolbar__CategoryInput.getItemCount();
         Set<String> manafacturer = new HashSet<>();
         try {
-            for (Product product: ProductService.getInstance().getProducts()){
+            for (Product product: Services.getInstance().getProducts()){
                 totalQuantity += product.getQuantity();
                 manafacturer.add(product.getManafacturer());
             }
@@ -440,10 +446,14 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
 
     private boolean isUserModify(){
         boolean temp = false;
-        if (UserServices.getInstance().getSelectedUser() != null){
-            User user = UserServices.getInstance().getSelectedUser();
-            temp = !(Information__ReadInput.isSelected() == user.isRead() &&
-                    Information__WriteInput.isSelected() == user.isWrite());
+        try {
+            if (Services.getInstance().getSelectedUser() != null){
+                User user = Services.getInstance().getSelectedUser();
+                temp = !(Information__ReadInput.isSelected() == user.isRead() &&
+                        Information__WriteInput.isSelected() == user.isWrite());
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
         return temp;
     }
@@ -451,8 +461,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private boolean isModify(){
         boolean temp = false;
         try {
-            if (ProductService.getInstance().getSelectedProduct() != null){
-                Product product = ProductService.getInstance().getSelectedProduct();
+            if (Services.getInstance().getSelectedProduct() != null){
+                Product product = Services.getInstance().getSelectedProduct();
                 if (Toolbar__ExpiryInput.getDate() != null){
                     temp = !(Toolbar__IDInput.getText().equals(product.getId())&&
                             Toolbar__NameInput.getText().equals(product.getName())&&
@@ -1996,76 +2006,65 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     }
 
     private void Toolbar__ButtonAddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Toolbar__ButtonAddMouseClicked
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__ButtonAdd.isEnabled()){
-                if (!idCheck){
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
-                }
-                else{
-                    if (!nameCheck){
-                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__ButtonAdd.isEnabled()){
+                    if (!idCheck){
+                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
                     }
                     else{
-                        if (!quantityCheck){
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
-                        }
-                        else {
-                            if (!priceCheck){
-                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
-                            }
-                        }
-                    }
-                }
-                if (Toolbar__IDInput.getText().equals("")){
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");
-                }
-                else{
-                    if (Toolbar__NameInput.getText().equals("")){
-                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");  
-                    }
-                    else{
-                        if (Toolbar__QuantityInput.getText().equals("")){
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
+                        if (!nameCheck){
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
                         }
                         else{
-                            if(Toolbar__PriceInput.getText().equals("")){
-                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
+                            if (!quantityCheck){
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                            }
+                            else {
+                                if (!priceCheck){
+                                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
+                                }
+                            }
+                        }
+                    }
+                    if (Toolbar__IDInput.getText().equals("")){
+                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");  
+                    }
+                    else{
+                        if (Toolbar__NameInput.getText().equals("")){
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");
+                        }
+                        else{
+                            if (Toolbar__QuantityInput.getText().equals("")){
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
                             }
                             else{
-                                if (Toolbar__ExpiryInput.getDate() == null){
-                                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
+                                if(Toolbar__PriceInput.getText().equals("")){
+                                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
                                 }
                                 else{
-                                    if (Toolbar__ManafacturerInput.getText().equals("")){
-                                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                                    if (Toolbar__ExpiryInput.getDate() == null){
+                                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
                                     }
                                     else{
-                                        if (idCheck == nameCheck == quantityCheck == priceCheck == manafacturerCheck == true){
-                                            try {
-                                                Product temp = new Product(Toolbar__IDInput.getText(), Toolbar__NameInput.getText(), (String) Toolbar__CategoryInput.getSelectedItem(), Integer.parseInt(Toolbar__QuantityInput.getText()), new BigDecimal(Toolbar__PriceInput.getText()), Toolbar__ExpiryInput.getDate(), Toolbar__ManafacturerInput.getText());
-                                                if(!Toolbar__ThumbnailInput.getText().equals("") || Toolbar__ThumbnailInput.getText() == null){
-                                                    temp.setThumbnail(Toolbar__ThumbnailInput.getText());
+                                        if (Toolbar__ManafacturerInput.getText().equals("")){
+                                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                                        }
+                                        else{
+                                            if (idCheck == nameCheck == quantityCheck == priceCheck == manafacturerCheck == true){
+                                                try {
+                                                    Product temp = new Product(Toolbar__IDInput.getText(), Toolbar__NameInput.getText(), (String) Toolbar__CategoryInput.getSelectedItem(), Integer.parseInt(Toolbar__QuantityInput.getText()), new BigDecimal(Toolbar__PriceInput.getText()), Toolbar__ExpiryInput.getDate(), Toolbar__ManafacturerInput.getText());
+                                                    if(!Toolbar__ThumbnailInput.getText().equals("") || Toolbar__ThumbnailInput.getText() == null){
+                                                        temp.setThumbnail(Toolbar__ThumbnailInput.getText());
+                                                    }
+                                                    if (!Toolbar__DescriptionInput.getText().equals("") || Toolbar__DescriptionInput.getText() == null){
+                                                        temp.setDescription(Toolbar__DescriptionInput.getText());
+                                                    }
+                                                    Services.getInstance().create(temp);
+                                                    showMessage("Thêm mới sản phẩm thành công!", true);
+                                                } catch (Exception e) {
                                                 }
-                                                if (!Toolbar__DescriptionInput.getText().equals("") || Toolbar__DescriptionInput.getText() == null){
-                                                    temp.setDescription(Toolbar__DescriptionInput.getText());
-                                                }
-                                                ProductService.getInstance().create(temp);
-                                                showMessage("Thêm mới sản phẩm thành công!", true);
-                                            } catch (Exception e) {
                                             }
-                                            
-//                                            if(!Toolbar__ThumbnailInput.getText().equals("") || Toolbar__ThumbnailInput.getText() == null){
-//                                                temp.setThumbnail(Toolbar__ThumbnailInput.getText());
-//                                            }
-//                                            if (!Toolbar__DescriptionInput.getText().equals("") || Toolbar__DescriptionInput.getText() == null){
-//                                                temp.setDescription(Toolbar__DescriptionInput.getText());
-//                                            }
-//                                            ProductDAO.getInstance().create(temp);
-//                                            appController.setProductsTable(productsTable, ProductService.getInstance().get());
-//                                            resetToolbar(true);
-//                                            productTemplates.add(new ProductTemplate(temp));
-//                                            Products__Main.add(productTemplates.getLast());
-//                                            initStatistic();
                                         }
                                     }
                                 }
@@ -2074,95 +2073,109 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             }
-        }
-        else{
-            resetToolbar(true);
-            showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+            else{
+                resetToolbar(true);
+                showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__ButtonAddMouseClicked
 
     private void Toolbar__NameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_Toolbar__NameInputCaretUpdate
-        if (UserServices.getInstance().getCurrent().isWrite()) {
-            if (Toolbar__NameInput.getText().equals("")){
-                nameCheck = false;
-                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>"); 
-            }
-            else{
-                try {
-                    if (ProductService.getInstance().getSelectedProduct() != null){
-                        if (ProductService.getInstance().findByName(Toolbar__NameInput.getText()) == null ||
-                        ProductService.getInstance().getSelectedProduct().getName().equals(Toolbar__NameInput.getText())){
-                            nameCheck = true;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()) {
+                if (Toolbar__NameInput.getText().equals("")){
+                    nameCheck = false;
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");
+                }
+                else{
+                    try {
+                        if (Services.getInstance().getSelectedProduct() != null){
+                            if (Services.getInstance().findByName(Toolbar__NameInput.getText()) == null ||
+                                    Services.getInstance().getSelectedProduct().getName().equals(Toolbar__NameInput.getText())){
+                                nameCheck = true;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                            }
+                            else{
+                                nameCheck = false;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                            }
                         }
                         else{
-                            nameCheck = false;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                            if (Services.getInstance().findByName(Toolbar__NameInput.getText()) == null){
+                                nameCheck = true;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                            }
+                            else{
+                                nameCheck = false;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                            }
                         }
+                    } catch (Exception e) {
                     }
-                    else{
-                        if (ProductService.getInstance().findByName(Toolbar__NameInput.getText()) == null){
-                            nameCheck = true;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-                        }
-                        else{
-                            nameCheck = false;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
-                        }
-                    }
-                } catch (Exception e) {
                 }
             }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__NameInputCaretUpdate
 
     private void Toolbar__QuantityInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_Toolbar__QuantityInputCaretUpdate
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__QuantityInput.getText().equals("")) {
-                quantityCheck = false;
-                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
-            }
-            else{
-                try {
-                    int quantity = Integer.parseInt(Toolbar__QuantityInput.getText());
-                    if (quantity >= 0){
-                        quantityCheck = true;
-                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");    
-                    }
-                    else{
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__QuantityInput.getText().equals("")) {
                     quantityCheck = false;
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
+                }
+                else{
+                    try {
+                        int quantity = Integer.parseInt(Toolbar__QuantityInput.getText());
+                        if (quantity >= 0){
+                            quantityCheck = true;
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                        }
+                        else{
+                            quantityCheck = false;
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                        }
+                    } catch (Exception e) {
+                        quantityCheck = false;
+                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
                     }
-                } catch (Exception e) {
-                    quantityCheck = false;
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
                 }
             }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__QuantityInputCaretUpdate
 
     private void Toolbar__PriceInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_Toolbar__PriceInputCaretUpdate
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__PriceInput.getText().equals("")) {
-                priceCheck = false;
-                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
-            }
-            else{
-                try {
-                    BigDecimal price = new BigDecimal(Toolbar__PriceInput.getText());
-                    if (price.compareTo(BigDecimal.ZERO) >= 0){
-                        priceCheck = true;
-                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");    
-                    }
-                    else{
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__PriceInput.getText().equals("")) {
+                    priceCheck = false;
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
+                }
+                else{
+                    try {
+                        BigDecimal price = new BigDecimal(Toolbar__PriceInput.getText());
+                        if (price.compareTo(BigDecimal.ZERO) >= 0){
+                            priceCheck = true;
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                        }
+                        else{
+                            priceCheck = false;
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
+                        }
+                    } catch (Exception e) {
                         priceCheck = false;
                         Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
                     }
-                } catch (Exception e) {
-                    priceCheck = false;
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
                 }
             }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__PriceInputCaretUpdate
 
@@ -2178,44 +2191,48 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     }//GEN-LAST:event_Toolbar__ButtonFileChooserMouseClicked
 
     private void Toolbar__IDInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_Toolbar__IDInputCaretUpdate
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__IDInput.getText().equals("")) {
-                idCheck = false;
-                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");
-            }
-            else{
-                try {
-                    if (ProductService.getInstance().getSelectedProduct() != null){
-                        if (ProductService.getInstance().findById(Toolbar__IDInput.getText()) == null ||
-                        ProductService.getInstance().getSelectedProduct().getId().equals(Toolbar__IDInput.getText())){
-                            idCheck = true;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__IDInput.getText().equals("")) {
+                    idCheck = false;
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");
+                }
+                else{
+                    try {
+                        if (Services.getInstance().getSelectedProduct() != null){
+                            if (Services.getInstance().findById(Toolbar__IDInput.getText()) == null ||
+                                    Services.getInstance().getSelectedProduct().getId().equals(Toolbar__IDInput.getText())){
+                                idCheck = true;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                            }
+                            else{
+                                idCheck = false;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
+                            }
                         }
                         else{
-                            idCheck = false;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
+                            if (Services.getInstance().findById(Toolbar__IDInput.getText()) == null){
+                                idCheck = true;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                            }
+                            else{
+                                idCheck = false;
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
+                            }
                         }
+                    } catch (IOException e) {
                     }
-                    else{
-                        if (ProductService.getInstance().findById(Toolbar__IDInput.getText()) == null){
-                            idCheck = true;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-                        }
-                        else{
-                            idCheck = false;
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
-                        }
-                    }
-                } catch (IOException e) {
                 }
             }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__IDInputCaretUpdate
 
     private void Navbar__ButtonHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Navbar__ButtonHomeMouseClicked
         accessPage = PAGES_HOME;
         try {
-            appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+            appController.setProductsTable(productsTable, Services.getInstance().getProducts());
         } catch (IOException  e) {
         }
         Toolbar__SortInput.setSelectedIndex(0);
@@ -2268,7 +2285,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 CardLayout MainCardLayout = (CardLayout) Main__Pages.getLayout();
                 MainCardLayout.show(Main__Pages, "Pages__Home");
             try {
-                appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+                appController.setProductsTable(productsTable, Services.getInstance().getProducts());
             } catch (IOException e) {
             } 
                 resetWarehouse();
@@ -2276,7 +2293,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 initStatistic();
                 resetToolbar(true);
                 resetSearchField(true);
-                UserServices.getInstance().setCurrent(null);
+            try {
+                Services.getInstance().setCurrentUser(null);
+            } catch (IOException ex) {
+                //
+            }
                 accessPage = PAGES_HOME;
                 this.repaint();
                 this.revalidate();
@@ -2288,15 +2309,19 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     }//GEN-LAST:event_Navbar__ButtonSignOutMouseClicked
 
     private void Toolbar__ManafacturerInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_Toolbar__ManafacturerInputCaretUpdate
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__ManafacturerInput.getText().equals("")){
-                manafacturerCheck = false;
-                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__ManafacturerInput.getText().equals("")){
+                    manafacturerCheck = false;
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                }
+                else{
+                    manafacturerCheck = true;
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                }
             }
-            else{
-                manafacturerCheck = true;
-                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__ManafacturerInputCaretUpdate
 
@@ -2308,89 +2333,91 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 Toolbar__ButtonEdit.setEnabled(false);
                 Toolbar__ButtonDelete.setEnabled(false);
                 productsTable.clearSelection();
-                ProductService.getInstance().setSelectedProduct(null);
+                Services.getInstance().setSelectedProduct(null);
             } catch (IOException e) {
             } 
         }
     }//GEN-LAST:event_Toolbar__ButtonResetMouseClicked
 
     private void Toolbar__ButtonEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Toolbar__ButtonEditMouseClicked
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__ButtonEdit.isEnabled() && isModify()){
-                if (!idCheck){
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
-                }
-                else{
-                    if (!nameCheck){
-                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__ButtonEdit.isEnabled() && isModify()){
+                    if (!idCheck){
+                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
                     }
                     else{
-                        if (!quantityCheck){
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
-                        }
-                        else {
-                            if (!priceCheck){
-                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
-                            }
-                        }
-                    }
-                }
-                if (Toolbar__IDInput.getText().equals("")){
-                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");
-                }
-                else{
-                    if (Toolbar__NameInput.getText().equals("")){
-                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");  
-                    }
-                    else{
-                        if (Toolbar__QuantityInput.getText().equals("")){
-                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
+                        if (!nameCheck){
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
                         }
                         else{
-                            if(Toolbar__PriceInput.getText().equals("")){
-                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
+                            if (!quantityCheck){
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                            }
+                            else {
+                                if (!priceCheck){
+                                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
+                                }
+                            }
+                        }
+                    }
+                    if (Toolbar__IDInput.getText().equals("")){
+                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");  
+                    }
+                    else{
+                        if (Toolbar__NameInput.getText().equals("")){
+                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");
+                        }
+                        else{
+                            if (Toolbar__QuantityInput.getText().equals("")){
+                                Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
                             }
                             else{
-                                if (Toolbar__ExpiryInput.getDate() == null){
-                                    dateCheck = false;
-                                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
+                                if(Toolbar__PriceInput.getText().equals("")){
+                                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
                                 }
                                 else{
-                                    if (Toolbar__ManafacturerInput.getText().equals("")){
-                                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                                    if (Toolbar__ExpiryInput.getDate() == null){
+                                        dateCheck = false;
+                                        Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
                                     }
                                     else{
-                                        if (idCheck&&nameCheck&&quantityCheck&&priceCheck&&dateCheck&&manafacturerCheck){
-                                            JDialog.setDefaultLookAndFeelDecorated(true);
-                                            int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa thông tin sản phẩm này?", "Cảnh báo",
-                                                JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                                            switch (response) {
-                                                case JOptionPane.NO_OPTION: break; 
-                                                case JOptionPane.YES_OPTION: {
-                                                    try {
-                                                        String id  = Toolbar__IDInput.getText();
-                                                        String name = Toolbar__NameInput.getText();
-                                                        String category = (String) Toolbar__CategoryInput.getSelectedItem(); 
-                                                        int quantity = Integer.parseInt(Toolbar__QuantityInput.getText());
-                                                        BigDecimal price = new BigDecimal(Toolbar__PriceInput.getText());
-                                                        Date expDate = Toolbar__ExpiryInput.getDate();
-                                                        String manafacturer = Toolbar__ManafacturerInput.getText();
-                                                        String thumbnail = Toolbar__ThumbnailInput.getText();
-                                                        String description = Toolbar__DescriptionInput.getText();
-                                                        Product product = new Product(id, name, category, quantity, price, expDate, manafacturer, thumbnail, description);
-                                                        System.out.println(ProductService.getInstance().getSelectedProduct().getId());
-                                                        int index = ProductService.getInstance().getProducts().indexOf(ProductService.getInstance().findById(ProductService.getInstance().getSelectedProduct().getId()));                                                     
-                                                        ProductService.getInstance().update(ProductService.getInstance().getSelectedProduct().getId(), product);
-                                                        showMessage("Sửa thông tin sản phẩm thành công!", true);
+                                        if (Toolbar__ManafacturerInput.getText().equals("")){
+                                            Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                                        }
+                                        else{
+                                            if (idCheck&&nameCheck&&quantityCheck&&priceCheck&&dateCheck&&manafacturerCheck){
+                                                JDialog.setDefaultLookAndFeelDecorated(true);
+                                                int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa thông tin sản phẩm này?", "Cảnh báo",
+                                                        JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                                                switch (response) {
+                                                    case JOptionPane.NO_OPTION: break;
+                                                    case JOptionPane.YES_OPTION: {
+                                                        try {
+                                                            String id  = Toolbar__IDInput.getText();
+                                                            String name = Toolbar__NameInput.getText();
+                                                            String category = (String) Toolbar__CategoryInput.getSelectedItem();
+                                                            int quantity = Integer.parseInt(Toolbar__QuantityInput.getText());
+                                                            BigDecimal price = new BigDecimal(Toolbar__PriceInput.getText());
+                                                            Date expDate = Toolbar__ExpiryInput.getDate();
+                                                            String manafacturer = Toolbar__ManafacturerInput.getText();
+                                                            String thumbnail = Toolbar__ThumbnailInput.getText();
+                                                            String description = Toolbar__DescriptionInput.getText();
+                                                            Product product = new Product(id, name, category, quantity, price, expDate, manafacturer, thumbnail, description);
+                                                            System.out.println(Services.getInstance().getSelectedProduct().getId());
+                                                            int index = Services.getInstance().getProducts().indexOf(Services.getInstance().findById(Services.getInstance().getSelectedProduct().getId()));
+                                                            Services.getInstance().update(Services.getInstance().getSelectedProduct().getId(), product);
+                                                            showMessage("Sửa thông tin sản phẩm thành công!", true);
 //                                                        Products__Main.remove(index);
 //                                                        ProductTemplate temp = new ProductTemplate(product);
 //                                                        productTemplates.add(index, temp);
 //                                                        Products__Main.add(temp, index);
-                                                    } catch (IOException | NumberFormatException  e) {
+                                                        } catch (IOException | NumberFormatException  e) {
+                                                        }
                                                     }
-                                                }
-                                                case JOptionPane.CLOSED_OPTION: break;
-                                                default: {
+                                                    case JOptionPane.CLOSED_OPTION: break;
+                                                    default: {
+                                                    }
                                                 }
                                             }
                                         }
@@ -2401,39 +2428,43 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     }
                 }
             }
-        }
-        else{
-            showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+            else{
+                showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__ButtonEditMouseClicked
 
     private void Toolbar__ButtonDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Toolbar__ButtonDeleteMouseClicked
-        if (UserServices.getInstance().getCurrent().isWrite()){
-            if (Toolbar__ButtonDelete.isEnabled()){
-                JDialog.setDefaultLookAndFeelDecorated(true);
-                int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa sản phẩm này?", "Cảnh báo",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
-                switch (response) {
-                    case JOptionPane.NO_OPTION: break;
-                    case JOptionPane.YES_OPTION: {
-                        try {
-                            Toolbar__ButtonAdd.setEnabled(true);
-//                            productTemplates.remove(ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().getSelectedProduct()));
-//                            Products__Main.remove(ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().getSelectedProduct()));
-                            ProductService.getInstance().delete(ProductService.getInstance().getSelectedProduct().getId());
-//                            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-                            productsTable.clearSelection();
-                        } catch (IOException e) {
+        try {
+            if (Services.getInstance().getCurrentUser().isWrite()){
+                if (Toolbar__ButtonDelete.isEnabled()){
+                    JDialog.setDefaultLookAndFeelDecorated(true);
+                    int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa sản phẩm này?", "Cảnh báo",
+                            JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+                    switch (response) {
+                        case JOptionPane.NO_OPTION: break;
+                        case JOptionPane.YES_OPTION: {
+                            try {
+                                Toolbar__ButtonAdd.setEnabled(true);
+                                Services.getInstance().delete(Services.getInstance().getSelectedProduct().getId());
+                                productsTable.clearSelection();
+                                showMessage("Xóa thành công sản phẩm này", true);
+                            } catch (IOException e) {
+                            }
                         }
-                    }
-                    case JOptionPane.CLOSED_OPTION: break;
-                    default: {
+                        case JOptionPane.CLOSED_OPTION: break;
+                        default: {
+                        }
                     }
                 }
             }
-        }
-        else{
-            showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+            else{
+                showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_Toolbar__ButtonDeleteMouseClicked
 
@@ -2442,7 +2473,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Mặc định")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+                        appController.setProductsTable(productsTable, Services.getInstance().getProducts());
                     }
                     if (accessPage == PAGES_PRODUCTS){
                         CardLayout c = (CardLayout) Main__Pages.getLayout();
@@ -2451,58 +2482,58 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.IDComparator()));   
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.IDComparator()));   
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.IDComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.IDComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.NameComparator()));
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.NameComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.NameComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.NameComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Số lượng tăng")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.QuantityUpComparator()));
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.QuantityUpComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.QuantityUpComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.QuantityUpComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Số lượng giảm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.QuantityDownComparator()));
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.QuantityDownComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.QuantityDownComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.QuantityDownComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Đơn giá tăng")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.PriceUpComparator()));
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.PriceUpComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.PriceUpComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.PriceUpComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Đơn giá giảm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.PriceDownComparator()));
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.PriceDownComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.PriceDownComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.PriceDownComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Hạn sử dụng")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.ExpiryComparator()));
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.ExpiryComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductService.getInstance().sort(new Comparator.ExpiryComparator()));
+                        setSort(Services.getInstance().sort(new Comparator.ExpiryComparator()));
                     }
                 }
             } catch (IOException e) {
@@ -2521,37 +2552,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         try {
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                filter(Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                filter(Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                filter(Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                filter(Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
@@ -2560,10 +2591,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                 BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                 if (accessPage == PAGES_HOME){
-                    appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                    appController.setProductsTable(productsTable, Services.getInstance().filterByPrice(minPrice, maxPrice));
                 }
                 if (accessPage == PAGES_PRODUCTS){
-                    filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                    filter(Services.getInstance().filterByPrice(minPrice, maxPrice));
                     productSearchModify = true;
                 }
             } catch (IOException e) {
@@ -2575,10 +2606,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                 Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                 if (accessPage == PAGES_HOME){
-                    appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                    appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                 }
                 if (accessPage == PAGES_PRODUCTS){
-                    filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                    filter(Services.getInstance().filterByExpiry(minDate, maxDate));
                     productSearchModify = true;
                 }
             } catch (IOException | ParseException  e) {
@@ -2597,7 +2628,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private void Toolbar__ButtonResetSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Toolbar__ButtonResetSearchMouseClicked
         if (accessPage == PAGES_HOME){
             try {
-                appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+                appController.setProductsTable(productsTable, Services.getInstance().getProducts());
             } catch (IOException  e) {
             }
             resetSearchField(true);
@@ -2627,14 +2658,18 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     }//GEN-LAST:event_Statistic__ButtonPercent1MouseClicked
 
     private void Navbar__ButtonAuthorizationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Navbar__ButtonAuthorizationMouseClicked
-        accessPage = PAGES_AUTHORIZATION;
-        resetToolbar(true);
-        CardLayout c = (CardLayout) Main__Pages.getLayout();
-        c.show(Main__Pages, "Pages__Authorization");
-        usersTable.setBackground(Color.WHITE);
-        adminController.setUsersTable(usersTable, UserServices.getInstance().getUsers());
-        this.repaint();
-        this.revalidate();
+        try {
+            accessPage = PAGES_AUTHORIZATION;
+            resetToolbar(true);
+            CardLayout c = (CardLayout) Main__Pages.getLayout();
+            c.show(Main__Pages, "Pages__Authorization");
+            usersTable.setBackground(Color.WHITE);
+            adminController.setUsersTable(usersTable, Services.getInstance().getUsers());
+            this.repaint();
+            this.revalidate();
+        } catch (IOException ex) {
+            //
+        }
     }//GEN-LAST:event_Navbar__ButtonAuthorizationMouseClicked
 
     private void Information__ButtonDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Information__ButtonDeleteMouseClicked
@@ -2645,13 +2680,18 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             switch (response) {
                 case JOptionPane.NO_OPTION: break;
                 case JOptionPane.YES_OPTION: {
-                    UserDAO.getInstance().delete(UserServices.getInstance().getSelectedUser().getUsername());
-                    adminController.setUsersTable(usersTable, UserServices.getInstance().getUsers());
-                    UserServices.getInstance().setSelectedUser(null);
-                    this.repaint();
-                    this.revalidate();
-                    showMessage("Bạn đã xóa thành công tài khoản", true);
+                    try {
+                        Services.getInstance().deleteUser(Services.getInstance().getSelectedUser().getUsername());
+                        //Services.getInstance().setSelectedUser(null);
+                        resetUserEdit();
+                        this.repaint();
+                        this.revalidate();
+                        showMessage("Bạn đã xóa thành công tài khoản", true);
+                    } catch (IOException ex) {
+                        //
+                    }
                 }
+
                 case JOptionPane.CLOSED_OPTION: break;
                 default: {
                 }
@@ -2667,13 +2707,19 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             switch (response) {
                 case JOptionPane.NO_OPTION: break;
                 case JOptionPane.YES_OPTION: {
-                    UserDAO.getInstance().update(UserServices.getInstance().getSelectedUser(), Information__ReadInput.isSelected(), Information__WriteInput.isSelected());
-                    adminController.setUsersTable(usersTable, UserServices.getInstance().getUsers());
-                    this.repaint();
-                    this.revalidate();
-                    resetUserEdit();
-                    showMessage("Bạn đã chỉnh sửa thành công quyền cho tài khoản", true);
+                    try {
+                        Services.getInstance().getSelectedUser().setRead(Information__ReadInput.isSelected());
+                        Services.getInstance().getSelectedUser().setWrite(Information__WriteInput.isSelected());
+                        Services.getInstance().updateUser(Services.getInstance().getSelectedUser().getUsername(), Services.getInstance().getSelectedUser());
+                        this.repaint();
+                        this.revalidate();
+                        resetUserEdit();
+                        showMessage("Bạn đã chỉnh sửa thành công quyền cho tài khoản", true);
+                    } catch (IOException ex) {
+                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                 }
+
                 case JOptionPane.CLOSED_OPTION: break;
                 default: {
                 }
@@ -2693,12 +2739,20 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 showMessage("Ngày tạo tài khoản không hợp lệ", false);
             } 
         }
-        adminController.setUsersTable(usersTable, UserServices.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+        try {
+            adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetUserEdit();
     }//GEN-LAST:event_Filter__ButtonFilterMouseClicked
 
     private void Navbar__ButtonAuthorization3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Navbar__ButtonAuthorization3MouseClicked
-        adminController.setUsersTable(usersTable, UserServices.getInstance().getUsers());
+        try {
+            adminController.setUsersTable(usersTable, Services.getInstance().getUsers());
+        } catch (IOException ex) {
+            Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+        }
         resetUserFilter();
     }//GEN-LAST:event_Navbar__ButtonAuthorization3MouseClicked
 
@@ -2753,37 +2807,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
@@ -2792,10 +2846,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                            appController.setProductsTable(productsTable, Services.getInstance().filterByPrice(minPrice, maxPrice));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                            filter(Services.getInstance().filterByPrice(minPrice, maxPrice));
                             productSearchModify = true;
                         }
                     } catch (IOException e) {
@@ -2807,10 +2861,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                         Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                            appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                            filter(Services.getInstance().filterByExpiry(minDate, maxDate));
                             productSearchModify = true;
                         }
                     } catch (IOException | ParseException  e) {
@@ -2828,37 +2882,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
@@ -2867,10 +2921,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                            appController.setProductsTable(productsTable, Services.getInstance().filterByPrice(minPrice, maxPrice));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                            filter(Services.getInstance().filterByPrice(minPrice, maxPrice));
                             productSearchModify = true;
                         }
                     } catch (IOException e) {
@@ -2882,10 +2936,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                         Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                            appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                            filter(Services.getInstance().filterByExpiry(minDate, maxDate));
                             productSearchModify = true;
                         }
                     } catch (IOException | ParseException  e) {
@@ -2903,37 +2957,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        filter(Services.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
@@ -2942,10 +2996,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                            appController.setProductsTable(productsTable, Services.getInstance().filterByPrice(minPrice, maxPrice));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
+                            filter(Services.getInstance().filterByPrice(minPrice, maxPrice));
                             productSearchModify = true;
                         }
                     } catch (IOException e) {
@@ -2957,10 +3011,10 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                         Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                            appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
+                            filter(Services.getInstance().filterByExpiry(minDate, maxDate));
                             productSearchModify = true;
                         }
                     } catch (IOException | ParseException  e) {
@@ -2986,7 +3040,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     showMessage("Ngày tạo tài khoản không hợp lệ", false);
                 } 
             }
-            adminController.setUsersTable(usersTable, UserServices.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            try {
+                adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
             resetUserEdit();
         }
     }//GEN-LAST:event_Filter__UsernameInputKeyPressed
@@ -3004,7 +3062,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     showMessage("Ngày tạo tài khoản không hợp lệ", false);
                 } 
             }
-            adminController.setUsersTable(usersTable, UserServices.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            try {
+                adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
             resetUserEdit();
         }
     }//GEN-LAST:event_Filter__DateMinKeyPressed
@@ -3022,7 +3084,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     showMessage("Ngày tạo tài khoản không hợp lệ", false);
                 } 
             }
-            adminController.setUsersTable(usersTable, UserServices.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            try {
+                adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
             resetUserEdit();
         }
     }//GEN-LAST:event_Filter__DateMaxKeyPressed
@@ -3040,7 +3106,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     showMessage("Ngày tạo tài khoản không hợp lệ", false);
                 } 
             }
-            adminController.setUsersTable(usersTable, UserServices.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            try {
+                adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
             resetUserEdit();
         }
     }//GEN-LAST:event_Filter__ReadInputKeyPressed
@@ -3058,7 +3128,11 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     showMessage("Ngày tạo tài khoản không hợp lệ", false);
                 } 
             }
-            adminController.setUsersTable(usersTable, UserServices.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            try {
+                adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, Filter__ReadInput.isSelected(), Filter__WriteInput.isSelected()));
+            } catch (IOException ex) {
+                Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+            }
             resetUserEdit();
         }
     }//GEN-LAST:event_Filter__WriteInputKeyPressed
@@ -3195,12 +3269,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             Toolbar__ExpiryInput.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(productsTable.getModel().getValueAt(row, 5).toString()));
             Toolbar__ManafacturerInput.setText(productsTable.getModel().getValueAt(row, 6).toString());
             try {
-                if (ProductService.getInstance().getSelectedProduct() != null){
-                    if (ProductService.getInstance().getSelectedProduct().getThumbnail() != null){
-                        Toolbar__ThumbnailInput.setText(ProductService.getInstance().getSelectedProduct().getThumbnail());
+                if (Services.getInstance().getSelectedProduct() != null){
+                    if (Services.getInstance().getSelectedProduct().getThumbnail() != null){
+                        Toolbar__ThumbnailInput.setText(Services.getInstance().getSelectedProduct().getThumbnail());
                     }
-                    if (ProductService.getInstance().getSelectedProduct().getDescription()!= null){
-                        Toolbar__DescriptionInput.setText(ProductService.getInstance().getSelectedProduct().getDescription());
+                    if (Services.getInstance().getSelectedProduct().getDescription()!= null){
+                        Toolbar__DescriptionInput.setText(Services.getInstance().getSelectedProduct().getDescription());
                     }
                 }
             } catch (IOException e) {
@@ -3249,8 +3323,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             int row = productsTable.getSelectedRow();
             if (row >= 0) {
                 try {
-                    ProductService.getInstance();
-                    ProductService.setSelectedProduct(ProductService.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
+                    Services.getInstance();
+                    Services.setSelectedProduct(Services.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
                 } catch (IOException e) {
                 }
             }
@@ -3267,8 +3341,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             setUserFromSelected();
             int row = usersTable.getSelectedRow();
             if (row >= 0) {
-                UserServices.getInstance();
-                UserServices.getInstance().setSelectedUser(UserServices.getInstance().findByName(usersTable.getModel().getValueAt(row, 1).toString()));
+                try {
+                    Services.getInstance();
+                    Services.getInstance().setSelectedUser(Services.getInstance().findByUsername(usersTable.getModel().getValueAt(row, 1).toString()));
+                } catch (IOException ex) {
+                    Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
     }

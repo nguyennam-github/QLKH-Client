@@ -4,10 +4,8 @@
 
 package hvan.qlkh.main;
 
-import hvan.qlkh.services.ProductService;
-import hvan.qlkh.views.Main;
+import hvan.qlkh.services.Services;
 import java.io.IOException;
-import java.time.Clock;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingUtilities;
@@ -23,7 +21,8 @@ public class App {
         SwingUtilities.invokeLater(() -> {
             hvan.qlkh.views.App.main(args);
             try {
-                ProductService.getInstance().get();
+                Services.getInstance().getUser();
+                Services.getInstance().get();
             } catch (IOException | JAXBException ex) {
                 Logger.getLogger(App.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -42,7 +41,7 @@ public class App {
 //    public static volatile BufferedReader is;
 //    
 //    public static void main(String[] args) throws IOException {
-//        ProductService.getInstance().create(new Product("1", "1", "1", 10, BigDecimal.ONE, new Date(), "1"));
+//        Services.getInstance().create(new Product("1", "1", "1", 10, BigDecimal.ONE, new Date(), "1"));
 //        try {
 //            thread = new Thread() {
 //                @Override

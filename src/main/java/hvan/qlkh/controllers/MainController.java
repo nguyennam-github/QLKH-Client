@@ -5,9 +5,10 @@
 package hvan.qlkh.controllers;
 
 import com.toedter.calendar.JDateChooser;
-import hvan.qlkh.services.UserServices;
+import hvan.qlkh.services.Services;
 import hvan.qlkh.utils.TextField;
 import java.awt.Color;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JComboBox;
@@ -46,65 +47,69 @@ public class MainController {
     }
     
     public void initMain(){
-        setComponetsMap();
-        if (UserServices.getInstance().getCurrent().getUsername().equals("admin")){
-            Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(true);
-        }
-        else{
-            Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(false);
-        }
-
-        if (!UserServices.getInstance().getCurrent().isWrite()) {
-            for (int i = 0; i < Toolbar.getComponentCount(); i++) {
-                if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
-                    ((TextField)Toolbar.getComponent(i)).setEditable(false);
-                    ((TextField)Toolbar.getComponent(i)).setEnabled(false);
-                }
-                if (Toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
-                    ((JDateChooser) Toolbar.getComponent(i)).setEnabled(false);
-                }
-                if (Toolbar.getComponent(i).getClass().equals(JComboBox.class)){
-                    ((JComboBox) Toolbar.getComponent(i)).setEnabled(false);
-                }
-                if (Toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
-                    ((JScrollPane)Toolbar.getComponent(i)).getViewport().getView().setEnabled(false);
-                }
-                if (Toolbar.getComponent(i).getName() != null) {
-                    if (Toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
-                        Toolbar.getComponent(i).setEnabled(false);
+        try {
+            setComponetsMap();
+            if (Services.getInstance().getCurrentUser().getUsername().equals("admin")){
+                Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(true);
+            }
+            else{
+                Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(false);
+            }
+            
+            if (!Services.getInstance().getCurrentUser().isWrite()) {
+                for (int i = 0; i < Toolbar.getComponentCount(); i++) {
+                    if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
+                        ((TextField)Toolbar.getComponent(i)).setEditable(false);
+                        ((TextField)Toolbar.getComponent(i)).setEnabled(false);
                     }
-                    if (Toolbar.getComponent(i).getName().toLowerCase().contains("search") ||
-                        Toolbar.getComponent(i).getName().toLowerCase().contains("sort")) {
-                        Toolbar.getComponent(i).setEnabled(true);
-                        if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
-                            ((TextField)Toolbar.getComponent(i)).setEditable(true);
+                    if (Toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
+                        ((JDateChooser) Toolbar.getComponent(i)).setEnabled(false);
+                    }
+                    if (Toolbar.getComponent(i).getClass().equals(JComboBox.class)){
+                        ((JComboBox) Toolbar.getComponent(i)).setEnabled(false);
+                    }
+                    if (Toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
+                        ((JScrollPane)Toolbar.getComponent(i)).getViewport().getView().setEnabled(false);
+                    }
+                    if (Toolbar.getComponent(i).getName() != null) {
+                        if (Toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
+                            Toolbar.getComponent(i).setEnabled(false);
+                        }
+                        if (Toolbar.getComponent(i).getName().toLowerCase().contains("search") ||
+                                Toolbar.getComponent(i).getName().toLowerCase().contains("sort")) {
+                            Toolbar.getComponent(i).setEnabled(true);
+                            if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
+                                ((TextField)Toolbar.getComponent(i)).setEditable(true);
+                            }
                         }
                     }
                 }
             }
-        }
-        else{
-            for (int i = 0; i < Toolbar.getComponentCount(); i++) {
-                if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
-                    ((TextField)Toolbar.getComponent(i)).setEditable(true);
-                    ((TextField)Toolbar.getComponent(i)).setEnabled(true);
-                }
-                if (Toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
-                    ((JDateChooser) Toolbar.getComponent(i)).setEnabled(true);
-                }
-                if (Toolbar.getComponent(i).getClass().equals(JComboBox.class)){
-                    ((JComboBox) Toolbar.getComponent(i)).setEnabled(true);
-                    ((JComboBox) Toolbar.getComponent(i)).setBackground(Color.white);
-                }
-                if (Toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
-                    ((JScrollPane)Toolbar.getComponent(i)).getViewport().getView().setEnabled(true);
-                }
-                if (Toolbar.getComponent(i).getName() != null) {
-                    if (Toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
-                        Toolbar.getComponent(i).setEnabled(true);
+            else{
+                for (int i = 0; i < Toolbar.getComponentCount(); i++) {
+                    if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
+                        ((TextField)Toolbar.getComponent(i)).setEditable(true);
+                        ((TextField)Toolbar.getComponent(i)).setEnabled(true);
+                    }
+                    if (Toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
+                        ((JDateChooser) Toolbar.getComponent(i)).setEnabled(true);
+                    }
+                    if (Toolbar.getComponent(i).getClass().equals(JComboBox.class)){
+                        ((JComboBox) Toolbar.getComponent(i)).setEnabled(true);
+                        ((JComboBox) Toolbar.getComponent(i)).setBackground(Color.white);
+                    }
+                    if (Toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
+                        ((JScrollPane)Toolbar.getComponent(i)).getViewport().getView().setEnabled(true);
+                    }
+                    if (Toolbar.getComponent(i).getName() != null) {
+                        if (Toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
+                            Toolbar.getComponent(i).setEnabled(true);
+                        }
                     }
                 }
             }
+        } catch (IOException ex) {
+            //
         }
     }
 

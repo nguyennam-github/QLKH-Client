@@ -5,15 +5,15 @@
 package hvan.qlkh.views;
 
 import hvan.qlkh.controllers.MainController;
-import hvan.qlkh.dao.UserDAO;
 import hvan.qlkh.models.User;
-import hvan.qlkh.services.UserServices;
+import hvan.qlkh.services.Services;
 import hvan.qlkh.utils.PasswordField;
 import java.awt.CardLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -31,39 +31,7 @@ public class App extends javax.swing.JFrame {
     private boolean check = true;
     Dimension dimension = Toolkit.getDefaultToolkit().getScreenSize();
     CardLayout layout;
-//    
-//    Callback mainCallback = new Callback() {
-//        @Override
-//        public void excute() {
-//            Main.getInstance();
-//        }
-//    };
-//    
-//    Callback appCallback = new Callback() {
-//        @Override
-//        public void excute() {
-//            initComponents();
-//            initApp();
-//        }
-//    };
-//    
-//    public class Task implements Runnable   {
-//
-//        Callback callback;
-//        public Task(Callback callback) {
-//            this.callback = callback;
-//        }
-//
-//        @Override
-//        public void run() {
-//            callback.excute();
-//        }
-//        
-//    }
-//    
-//    interface Callback{
-//        public void excute();
-//    }
+
     private void initApp(){
         layout = (CardLayout) App.getLayout();
         App.add(Main.getInstance(), "Main");
@@ -423,13 +391,17 @@ public class App extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void SignIn__UsernameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_SignIn__UsernameInputCaretUpdate
-        user = UserServices.getInstance().findByName(SignIn__UsernameInput.getText());
-        if (user != null){
-            SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-        }
-        else{
-            user = null;
-            SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tài khoản này không tồn tại!</div></html>");
+        try {
+            user = Services.getInstance().findByUsername(SignIn__UsernameInput.getText());
+            if (user != null){
+                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+            }
+            else{
+                user = null;
+                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tài khoản này không tồn tại!</div></html>");
+            }
+        } catch (IOException ex) {
+            //
         }
     }//GEN-LAST:event_SignIn__UsernameInputCaretUpdate
 
@@ -447,7 +419,11 @@ public class App extends javax.swing.JFrame {
             if (md5Hex.equals(user.getPassword())){
                 if (user.isRead()){
                     layout.show(App, "Main");
-                    UserServices.getInstance().setCurrent(user);
+                    try {
+                        Services.getInstance().setCurrentUser(user);
+                    } catch (IOException ex) {
+                        //
+                    }
                     SignIn__UsernameInput.setText("");
                     SignIn__PasswordInput.setText("");
                     SignIn__Alert.setText("");
@@ -479,13 +455,17 @@ public class App extends javax.swing.JFrame {
     private void SignUp__UsernameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_SignUp__UsernameInputCaretUpdate
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9_-]{5,15}$");
         if (pattern.matcher(SignUp__UsernameInput.getText()).find()){
-            if (UserServices.getInstance().findByName(SignUp__UsernameInput.getText()) == null){
-                check = true;
-                SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-            }
-            else{
-                check = false;
-                SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản đã tồn tại!</div></html>");
+            try {
+                if (Services.getInstance().findByUsername(SignUp__UsernameInput.getText()) == null){
+                    check = true;
+                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                }
+                else{
+                    check = false;
+                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản đã tồn tại!</div></html>");
+                }
+            } catch (IOException ex) {
+                //
             }
         }
         else{
@@ -521,7 +501,12 @@ public class App extends javax.swing.JFrame {
             }
         }
         if (check){
-            UserDAO.getInstance().create(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+            User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+            try {
+                Services.getInstance().createUser(temp);
+            } catch (IOException ex) {
+                //
+            }
             layout.show(App, "SignIn");
             resetSignUp();
         }
@@ -578,7 +563,11 @@ public class App extends javax.swing.JFrame {
                 if (md5Hex.equals(user.getPassword())){
                     if (user.isRead()){
                         layout.show(App, "Main");
-                        UserServices.getInstance().setCurrent(user);
+                        try {
+                            Services.getInstance().setCurrentUser(user);
+                        } catch (IOException ex) {
+                            //
+                        }
                         SignIn__UsernameInput.setText("");
                         SignIn__PasswordInput.setText("");
                         SignIn__Alert.setText("");
@@ -610,7 +599,11 @@ public class App extends javax.swing.JFrame {
                 if (md5Hex.equals(user.getPassword())){
                     if (user.isRead()){
                         layout.show(App, "Main");
-                        UserServices.getInstance().setCurrent(user);
+                        try {
+                            Services.getInstance().setCurrentUser(user);
+                        } catch (IOException ex) {
+                            //
+                        }
                         SignIn__UsernameInput.setText("");
                         SignIn__PasswordInput.setText("");
                         SignIn__Alert.setText("");
@@ -655,9 +648,14 @@ public class App extends javax.swing.JFrame {
                 }
             }
             if (check){
-                UserDAO.getInstance().create(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
-                layout.show(App, "SignIn");
-                resetSignUp();
+            User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+            try {
+                Services.getInstance().createUser(temp);
+            } catch (IOException ex) {
+                //
+            }
+            layout.show(App, "SignIn");
+            resetSignUp();
             }
         }
     }//GEN-LAST:event_SignUp__UsernameInputKeyPressed
@@ -690,7 +688,12 @@ public class App extends javax.swing.JFrame {
                 }
             }
             if (check){
-                UserDAO.getInstance().create(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+                User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+                try {
+                    Services.getInstance().createUser(temp);
+                } catch (IOException ex) {
+                    //
+                }
                 layout.show(App, "SignIn");
                 resetSignUp();
             }
@@ -725,7 +728,12 @@ public class App extends javax.swing.JFrame {
                 }
             }
             if (check){
-                UserDAO.getInstance().create(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+                User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+                try {
+                    Services.getInstance().createUser(temp);
+                } catch (IOException ex) {
+                    //
+                }
                 layout.show(App, "SignIn");
                 resetSignUp();
             }
