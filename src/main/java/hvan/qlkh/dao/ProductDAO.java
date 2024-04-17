@@ -8,6 +8,7 @@ import hvan.qlkh.models.Product;
 import hvan.qlkh.models.ProductList;
 import hvan.qlkh.services.ProductService;
 import hvan.qlkh.utils.FileUtils;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -87,7 +88,7 @@ public final class ProductDAO {
         return temp;
     }
     
-    public boolean delete(String id) {
+    public boolean delete(String id) throws IOException {
         Product product = ProductService.getInstance().findById(id);
         if (product != null) {
             products.remove(product);

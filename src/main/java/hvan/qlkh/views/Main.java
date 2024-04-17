@@ -6,7 +6,7 @@ package hvan.qlkh.views;
 
 import hvan.qlkh.chart.ModelChart;
 import hvan.qlkh.chart.PieChart;
-import hvan.qlkh.controllers.HomeController;
+import hvan.qlkh.controllers.Controller;
 import hvan.qlkh.models.Product;
 import hvan.qlkh.utils.BigDecimalConverter;
 import java.awt.Color;
@@ -14,8 +14,9 @@ import hvan.qlkh.chart.ModelPieChart;
 import hvan.qlkh.controllers.MainController;
 import hvan.qlkh.dao.UserDAO;
 import hvan.qlkh.models.User;
+import hvan.qlkh.services.ProductService;
 import hvan.qlkh.services.UserServices;
-import hvan.qlkh.socket.ProductServices;
+//import hvan.qlkh.socket.ProductServices;
 import hvan.qlkh.utils.Panel;
 import hvan.qlkh.utils.ScrollBar;
 import hvan.qlkh.utils.Table;
@@ -67,8 +68,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private static final int PAGES_STATISTIC = 2;
     private static final int PAGES_AUTHORIZATION = 3;
     private static Main instance;
-    private transient HomeController appController;
-    private transient HomeController adminController;
+    private transient Controller appController;
+    private transient Controller adminController;
     private Table productsTable = new Table();
     private Table usersTable = new Table();
     private static List<ProductTemplate> productTemplates = new ArrayList<>();
@@ -88,6 +89,14 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private Socket socketOfClient;
     private int id;
 
+    public Controller getAppController(){
+        return appController;
+    }
+    
+    public Table getProductsTable(){
+        return productsTable;
+    }
+    
     public void initToolbar(){
         Toolbar__DescriptionScroll.setBorder(new LineBorder(new Color(0, 0, 0, 200), 1));
         Toolbar__DescriptionScroll.setVerticalScrollBar(new ScrollBar());
@@ -104,7 +113,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__SearchInput.setBackground(Color.white);
     }
 
-    private void resetToolbar(boolean state){
+    public void resetToolbar(boolean state){
         Toolbar__IDInput.setText("");
         Toolbar__NameInput.setText("");
         Toolbar__CategoryInput.setSelectedIndex(0);
@@ -119,7 +128,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__ButtonEdit.setEnabled(false);
         Toolbar__ButtonDelete.setEnabled(false);
         Toolbar__ButtonReset.setEnabled(state);
-        ProductServices.setSelectedProduct(null);
+        ProductService.setSelectedProduct(null);
         Toolbar.repaint();
         Toolbar.revalidate();
     }
@@ -184,32 +193,32 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Toolbar__ButtonResetSearch.setEnabled(state);
     }
 
-    private void initWarehouse(){
-        Products__Main.removeAll();
+    public void initWarehouse(){
         Products__Main.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
         Products__Scroll.setBorder(null);
         Products__Scroll.setVerticalScrollBar(new ScrollBar());
         Products__Scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         Products__Scroll.getViewport().setBackground(Color.WHITE);
         Products__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+    }
+    
+    public void setProductTemplates(List<Product> products){
+        Products__Main.removeAll();
         productTemplates.clear();
-        try {
-            ProductServices.getInstance().getProducts().forEach(product -> {
-                ProductTemplate temp = new ProductTemplate(product);
-                productTemplates.add(temp);
-                Products__Main.add(temp);
-            });
-        } catch (IOException | ClassNotFoundException | JAXBException e) {
-        }
+        products.forEach(product -> {
+            ProductTemplate temp = new ProductTemplate(product);
+            productTemplates.add(temp);
+            Products__Main.add(temp);
+        });
         Products__Main.repaint();
         Products__Main.revalidate();
     }
-
+    
     private void resetWarehouse(){
         productTemplates.forEach(pt ->  pt.setVisible(true));
     }
 
-    private void initSort(){
+    public void initSort(){
         Sort__Main.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
         Sort__Scroll.setBorder(null);
         Sort__Scroll.setVerticalScrollBar(new ScrollBar());
@@ -217,12 +226,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Sort__Scroll.getViewport().setBackground(Color.WHITE);
         Sort__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         try {
-            ProductServices.getInstance().sort(new Comparator.IDComparator()).forEach(product -> {
+            ProductService.getInstance().sort(new Comparator.IDComparator()).forEach(product -> {
                 ProductTemplate temp = new ProductTemplate(product);
                 sortTemplates.add(temp);
                 Sort__Main.add(temp);
             });
-        } catch (IOException | ClassNotFoundException | JAXBException e) {
+        } catch (IOException e) {
         }
     }
 
@@ -236,7 +245,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Hạn sử dụng")){
             Map<Integer, Integer> expStatistic = new HashMap<>();
             try {
-                ProductServices.getInstance().getProducts().forEach(product -> {
+                ProductService.getInstance().getProducts().forEach(product -> {
                     int key = product.getExpDate().getYear() + 1900;
                     if (expStatistic.containsKey(key)){
                         expStatistic.replace(key, expStatistic.get(key) + product.getQuantity());
@@ -245,7 +254,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         expStatistic.put(key, product.getQuantity());
                     }
                 });
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
             }
             
             List<ModelChart> modelCharts = new ArrayList<>();
@@ -261,7 +270,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Danh mục")){
             Map<String, Integer> categoryStatistic = new HashMap<>();
             try {
-                ProductServices.getInstance().getProducts().forEach(product -> {
+                ProductService.getInstance().getProducts().forEach(product -> {
                     String key = product.getCategory();
                     if (categoryStatistic.containsKey(key)){
                         categoryStatistic.replace(key, categoryStatistic.get(key) + product.getQuantity());
@@ -270,7 +279,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         categoryStatistic.put(key, product.getQuantity());
                     }
                 });
-            } catch (IOException | ClassNotFoundException | JAXBException ex ){
+            } catch (IOException ex ){
             }
             List<ModelChart> modelCharts = new ArrayList<>();
             for (Entry<String, Integer> entry : categoryStatistic.entrySet()) {
@@ -285,7 +294,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Nhà sản xuất")){
             Map<String, Integer> manafacturerStatistic = new HashMap<>();
             try {
-                ProductServices.getInstance().getProducts().forEach(product -> {
+                ProductService.getInstance().getProducts().forEach(product -> {
                     String key = product.getManafacturer();
                     if (manafacturerStatistic.containsKey(key)){
                         manafacturerStatistic.replace(key, manafacturerStatistic.get(key) + product.getQuantity());
@@ -294,7 +303,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         manafacturerStatistic.put(key, product.getQuantity());
                     }
                 });
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
             }
             List<ModelChart> modelCharts = new ArrayList<>();
             for (Entry<String, Integer> entry : manafacturerStatistic.entrySet()) {
@@ -329,8 +338,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 String key = Toolbar__CategoryInput.getItemAt(i);
                 int value = 0;
                 try {
-                    value = ProductServices.getInstance().filterByCategory(key).size();
-                } catch (IOException | ClassNotFoundException | JAXBException e) {
+                    value = ProductService.getInstance().filterByCategory(key).size();
+                } catch (IOException  e) {
                 }
                 categoryStatistic.put(key, value);
             }
@@ -347,12 +356,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         if (Statistic__PercentStatistic.getSelectedItem().toString().equals("Đơn giá")) {
             Map<String, Integer> priceStatistic = new HashMap<>();
             try {
-                priceStatistic.put(PRICE[0], ProductServices.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
-                priceStatistic.put(PRICE[1], ProductServices.getInstance().filterByPrice(new BigDecimal("1000000"), new BigDecimal("5000000")).size());
-                priceStatistic.put(PRICE[2], ProductServices.getInstance().filterByPrice(new BigDecimal("5000000"), new BigDecimal("10000000")).size());
-                priceStatistic.put(PRICE[3], ProductServices.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
-                priceStatistic.put(PRICE[4], ProductServices.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+                priceStatistic.put(PRICE[0], ProductService.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
+                priceStatistic.put(PRICE[1], ProductService.getInstance().filterByPrice(new BigDecimal("1000000"), new BigDecimal("5000000")).size());
+                priceStatistic.put(PRICE[2], ProductService.getInstance().filterByPrice(new BigDecimal("5000000"), new BigDecimal("10000000")).size());
+                priceStatistic.put(PRICE[3], ProductService.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
+                priceStatistic.put(PRICE[4], ProductService.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
+            } catch (IOException e) {
             }
             int ci = 0;
             for (Entry<String, Integer> entry : priceStatistic.entrySet()) {
@@ -369,18 +378,18 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private void initOveral(){
         int totalProducts = 0;
         try {
-            totalProducts = ProductServices.getInstance().getProducts().size();
-        } catch (IOException | ClassNotFoundException | JAXBException e) {
+            totalProducts = ProductService.getInstance().getProducts().size();
+        } catch (IOException e) {
         }
         int totalQuantity = 0;
         int totalCategory = Toolbar__CategoryInput.getItemCount();
         Set<String> manafacturer = new HashSet<>();
         try {
-            for (Product product: ProductServices.getInstance().getProducts()){
+            for (Product product: ProductService.getInstance().getProducts()){
                 totalQuantity += product.getQuantity();
                 manafacturer.add(product.getManafacturer());
             }
-        } catch (IOException | ClassNotFoundException | JAXBException e) {
+        } catch (IOException  e) {
         }
         int totalManafaturer = manafacturer.size();
         Statistic__TotalProductsStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalProducts +"</div></html>");
@@ -389,14 +398,14 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         Statistic__ManafacturerStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalManafaturer +"</div></html>");
     }
 
-    private void initStatistic(){
+    public void initStatistic(){
         Statistic__QuantityStatistic.setSelectedIndex(0);
         Statistic__PercentStatistic.setSelectedIndex(0);
+        Statistic__QuantityStatistic.setBackground(Color.WHITE);
+        Statistic__PercentStatistic.setBackground(Color.WHITE); 
         initOveral();
         initBarChart();
         initPieChart();
-        Statistic__QuantityStatistic.setBackground(Color.WHITE);
-        Statistic__PercentStatistic.setBackground(Color.WHITE); 
     }
 
     private void resetUserEdit(){
@@ -443,19 +452,24 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private boolean isModify(){
         boolean temp = false;
         try {
-            if (ProductServices.getInstance().getSelectedProduct() != null){
-                Product product = ProductServices.getInstance().getSelectedProduct();
-                temp = !(Toolbar__IDInput.getText().equals(product.getId())&&
-                        Toolbar__NameInput.getText().equals(product.getName())&&
-                        ((String)Toolbar__CategoryInput.getSelectedItem()).equals(product.getCategory())&&
-                        (Integer.parseInt(Toolbar__QuantityInput.getText()) == product.getQuantity())&&
-                        new BigDecimal(Toolbar__PriceInput.getText()).equals(product.getPrice())&&
-                        Toolbar__ExpiryInput.getDate().equals(product.getExpDate())&&
-                        Toolbar__ManafacturerInput.getText().equals(product.getManafacturer())&&
-                        Toolbar__ThumbnailInput.getText().equals(product.getThumbnail())&&
-                        Toolbar__DescriptionInput.getText().equals(product.getDescription()));
+            if (ProductService.getInstance().getSelectedProduct() != null){
+                Product product = ProductService.getInstance().getSelectedProduct();
+                if (Toolbar__ExpiryInput.getDate() != null){
+                    temp = !(Toolbar__IDInput.getText().equals(product.getId())&&
+                            Toolbar__NameInput.getText().equals(product.getName())&&
+                            ((String)Toolbar__CategoryInput.getSelectedItem()).equals(product.getCategory())&&
+                            (Integer.parseInt(Toolbar__QuantityInput.getText()) == product.getQuantity())&&
+                            new BigDecimal(Toolbar__PriceInput.getText()).equals(product.getPrice())&&
+                            Toolbar__ExpiryInput.getDate().equals(product.getExpDate())&&
+                            Toolbar__ManafacturerInput.getText().equals(product.getManafacturer())&&
+                            Toolbar__ThumbnailInput.getText().equals(product.getThumbnail())&&
+                            Toolbar__DescriptionInput.getText().equals(product.getDescription()));
+                }
+                else{
+                    Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
+                }
         }
-        } catch (IOException | ClassNotFoundException | NumberFormatException | JAXBException e) {
+        } catch (IOException | NumberFormatException  e) {
         }
         return temp;
     }
@@ -487,20 +501,16 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         MainController.setComponents(Toolbar, Navbar);
         initSearchField();
         initWarehouse();
-        initSort();
         Statistic__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
         Statistic__Scroll.setBorder(new LineBorder(new Color(246,251,249), 1));
         Statistic__Scroll.setVerticalScrollBar(new ScrollBar());
         Statistic__Scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         Statistic__Scroll.getViewport().setBackground(Color.WHITE);
         Statistic__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
-        initStatistic();
-        this.appController = new HomeController(Home__Table);
-        this.adminController = new HomeController(jPanel1);
-        try {
-            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-        } catch (Exception e) {
-        }
+        Statistic__QuantityStatistic.setBackground(Color.WHITE);
+        Statistic__PercentStatistic.setBackground(Color.WHITE); 
+        this.appController = new Controller(Home__Table);
+        this.adminController = new Controller(jPanel1);
         addProductSelectionListener(new ProductSelectionListener());
         addUserSelectionListener(new UserSelectionListener());
     }
@@ -1385,7 +1395,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 .addGroup(Statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(Statistic__MainLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(Statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(Statistic__PieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(Statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(Statistic__MainLayout.createSequentialGroup()
                                 .addGap(5, 5, 5)
@@ -1422,8 +1432,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         .addComponent(Statistic__Menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15))
                     .addGroup(Statistic__MainLayout.createSequentialGroup()
-                        .addGap(0, 0, 0)
-                        .addComponent(Statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(Statistic__PieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGap(5, 5, 5))))
         );
 
@@ -2041,12 +2050,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                                                 if (!Toolbar__DescriptionInput.getText().equals("") || Toolbar__DescriptionInput.getText() == null){
                                                     temp.setDescription(Toolbar__DescriptionInput.getText());
                                                 }
-                                                hvan.qlkh.socket.ProductServices.getInstance().create(temp);
-                                                appController.setProductsTable(productsTable, ProductServices.getInstance().get());
-                                                resetToolbar(true);
-                                                productTemplates.add(new ProductTemplate(temp));
-                                                Products__Main.add(productTemplates.getLast());
-                                                initStatistic();
+                                                ProductService.getInstance().create(temp);
                                                 showMessage("Thêm mới sản phẩm thành công!", true);
                                             } catch (Exception e) {
                                             }
@@ -2086,9 +2090,9 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             }
             else{
                 try {
-                    if (ProductServices.getInstance().getSelectedProduct() != null){
-                        if (ProductServices.getInstance().findByName(Toolbar__NameInput.getText()) == null ||
-                        ProductServices.getInstance().getSelectedProduct().getName().equals(Toolbar__NameInput.getText())){
+                    if (ProductService.getInstance().getSelectedProduct() != null){
+                        if (ProductService.getInstance().findByName(Toolbar__NameInput.getText()) == null ||
+                        ProductService.getInstance().getSelectedProduct().getName().equals(Toolbar__NameInput.getText())){
                             nameCheck = true;
                             Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                         }
@@ -2098,7 +2102,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         }
                     }
                     else{
-                        if (ProductServices.getInstance().findByName(Toolbar__NameInput.getText()) == null){
+                        if (ProductService.getInstance().findByName(Toolbar__NameInput.getText()) == null){
                             nameCheck = true;
                             Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                         }
@@ -2182,9 +2186,9 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             }
             else{
                 try {
-                    if (ProductServices.getInstance().getSelectedProduct() != null){
-                        if (ProductServices.getInstance().findById(Toolbar__IDInput.getText()) == null ||
-                        ProductServices.getInstance().getSelectedProduct().getId().equals(Toolbar__IDInput.getText())){
+                    if (ProductService.getInstance().getSelectedProduct() != null){
+                        if (ProductService.getInstance().findById(Toolbar__IDInput.getText()) == null ||
+                        ProductService.getInstance().getSelectedProduct().getId().equals(Toolbar__IDInput.getText())){
                             idCheck = true;
                             Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                         }
@@ -2194,7 +2198,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         }
                     }
                     else{
-                        if (ProductServices.getInstance().findById(Toolbar__IDInput.getText()) == null){
+                        if (ProductService.getInstance().findById(Toolbar__IDInput.getText()) == null){
                             idCheck = true;
                             Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                         }
@@ -2203,7 +2207,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                             Toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
                         }
                     }
-                } catch (Exception e) {
+                } catch (IOException e) {
                 }
             }
         }
@@ -2212,8 +2216,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private void Navbar__ButtonHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Navbar__ButtonHomeMouseClicked
         accessPage = PAGES_HOME;
         try {
-            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-        } catch (IOException | ClassNotFoundException | JAXBException e) {
+            appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+        } catch (IOException  e) {
         }
         Toolbar__SortInput.setSelectedIndex(0);
         Toolbar__SearchInput.setSelectedIndex(0);
@@ -2246,6 +2250,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         resetSearchField(true);
         Toolbar__SortInput.setSelectedIndex(0);
         Toolbar__SearchInput.setSelectedIndex(0);
+        initStatistic();
         CardLayout c = (CardLayout) Main__Pages.getLayout();
         c.show(Main__Pages, "Pages__Statistic");
         this.repaint();
@@ -2264,8 +2269,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 CardLayout MainCardLayout = (CardLayout) Main__Pages.getLayout();
                 MainCardLayout.show(Main__Pages, "Pages__Home");
             try {
-                appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+                appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+            } catch (IOException e) {
             } 
                 resetWarehouse();
                 Products__Scroll.getVerticalScrollBar().setValue(0);
@@ -2299,13 +2304,13 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private void Toolbar__ButtonResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Toolbar__ButtonResetMouseClicked
         if (Toolbar__ButtonReset.isEnabled()){
             try {
-                productsTable.clearSelection();
-                ProductServices.getInstance().setSelectedProduct(null);
                 resetToolbar(true);
                 Toolbar__ButtonAdd.setEnabled(true);
                 Toolbar__ButtonEdit.setEnabled(false);
                 Toolbar__ButtonDelete.setEnabled(false);
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+                productsTable.clearSelection();
+                ProductService.getInstance().setSelectedProduct(null);
+            } catch (IOException e) {
             } 
         }
     }//GEN-LAST:event_Toolbar__ButtonResetMouseClicked
@@ -2374,24 +2379,15 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                                                         String thumbnail = Toolbar__ThumbnailInput.getText();
                                                         String description = Toolbar__DescriptionInput.getText();
                                                         Product product = new Product(id, name, category, quantity, price, expDate, manafacturer, thumbnail, description);
-                                                        ProductServices.getInstance().update(ProductServices.getInstance().getSelectedProduct().getId(), product);
-                                                        int index = ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().findById(id));                                                     
-                                                        if (index == -1){
-                                                            showMessage("Sản phẩm này đã không còn tồn tại trong hệ thống", false);
-                                                            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-                                                            resetToolbar(true);
-                                                        }
-                                                        else{
-                                                            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-                                                            resetToolbar(true);
-                                                            Products__Main.remove(index);
-                                                            ProductTemplate temp = new ProductTemplate(product);
-                                                            productTemplates.add(index, temp);
-                                                            Products__Main.add(temp, index);
-                                                            initStatistic();
-                                                            showMessage("Chỉnh sửa thông tin sản phẩm thành công!", true); 
-                                                        }
-                                                    } catch (IOException | ClassNotFoundException | NumberFormatException | JAXBException e) {
+                                                        System.out.println(ProductService.getInstance().getSelectedProduct().getId());
+                                                        int index = ProductService.getInstance().getProducts().indexOf(ProductService.getInstance().findById(ProductService.getInstance().getSelectedProduct().getId()));                                                     
+                                                        ProductService.getInstance().update(ProductService.getInstance().getSelectedProduct().getId(), product);
+                                                        showMessage("Sửa thông tin sản phẩm thành công!", true);
+//                                                        Products__Main.remove(index);
+//                                                        ProductTemplate temp = new ProductTemplate(product);
+//                                                        productTemplates.add(index, temp);
+//                                                        Products__Main.add(temp, index);
+                                                    } catch (IOException | NumberFormatException  e) {
                                                     }
                                                 }
                                                 case JOptionPane.CLOSED_OPTION: break;
@@ -2423,15 +2419,12 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                     case JOptionPane.YES_OPTION: {
                         try {
                             Toolbar__ButtonAdd.setEnabled(true);
-                            productTemplates.remove(ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().getSelectedProduct()));
-                            Products__Main.remove(ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().getSelectedProduct()));
-                            ProductServices.getInstance().delete(ProductServices.getInstance().getSelectedProduct().getId());
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
+//                            productTemplates.remove(ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().getSelectedProduct()));
+//                            Products__Main.remove(ProductServices.getInstance().getProducts().indexOf(ProductServices.getInstance().getSelectedProduct()));
+                            ProductService.getInstance().delete(ProductService.getInstance().getSelectedProduct().getId());
+//                            appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
                             productsTable.clearSelection();
-                            resetToolbar(true);
-                            initStatistic();
-                            showMessage("Xóa sản phẩm thành công!", true);
-                        } catch (Exception e) {
+                        } catch (IOException e) {
                         }
                     }
                     case JOptionPane.CLOSED_OPTION: break;
@@ -2450,7 +2443,7 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Mặc định")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
+                        appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
                     }
                     if (accessPage == PAGES_PRODUCTS){
                         CardLayout c = (CardLayout) Main__Pages.getLayout();
@@ -2459,61 +2452,61 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.IDComparator()));   
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.IDComparator()));   
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.IDComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.IDComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.NameComparator()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.NameComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.NameComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.NameComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Số lượng tăng")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.QuantityUpComparator()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.QuantityUpComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.QuantityUpComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.QuantityUpComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Số lượng giảm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.QuantityDownComparator()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.QuantityDownComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.QuantityDownComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.QuantityDownComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Đơn giá tăng")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.PriceUpComparator()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.PriceUpComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.PriceUpComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.PriceUpComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Đơn giá giảm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.PriceDownComparator()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.PriceDownComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.PriceDownComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.PriceDownComparator()));
                     }
                 }
                 if (Toolbar__SortInput.getSelectedItem().toString().equals("Hạn sử dụng")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().sort(new Comparator.ExpiryComparator()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().sort(new Comparator.ExpiryComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        setSort(ProductServices.getInstance().sort(new Comparator.ExpiryComparator()));
+                        setSort(ProductService.getInstance().sort(new Comparator.ExpiryComparator()));
                     }
                 }
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
             }
         }
     }//GEN-LAST:event_Toolbar__ButtonSortMouseClicked
@@ -2529,37 +2522,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
         try {
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
         if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
             if (accessPage == PAGES_HOME){
-                appController.setProductsTable(productsTable, ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
             }
             if (accessPage == PAGES_PRODUCTS){
-                filter(ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                 productSearchModify = true;
             }
         }
@@ -2568,13 +2561,13 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                 BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                 if (accessPage == PAGES_HOME){
-                    appController.setProductsTable(productsTable, ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                    appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                 }
                 if (accessPage == PAGES_PRODUCTS){
-                    filter(ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                    filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                     productSearchModify = true;
                 }
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
                 showMessage("Đơn giá sản phẩm không hợp lệ", false);
             }
         }
@@ -2583,17 +2576,17 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                 Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                 Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                 if (accessPage == PAGES_HOME){
-                    appController.setProductsTable(productsTable, ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                    appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
                 }
                 if (accessPage == PAGES_PRODUCTS){
-                    filter(ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                    filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
                     productSearchModify = true;
                 }
-            } catch (IOException | ClassNotFoundException | ParseException | JAXBException e) {
+            } catch (IOException | ParseException  e) {
                 showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
             }
         }
-        } catch (IOException | ClassNotFoundException | JAXBException e) {
+        } catch (IOException e) {
         }
         initSearchField();
     }//GEN-LAST:event_Toolbar__ButtonSearchMouseClicked
@@ -2605,8 +2598,8 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
     private void Toolbar__ButtonResetSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Toolbar__ButtonResetSearchMouseClicked
         if (accessPage == PAGES_HOME){
             try {
-                appController.setProductsTable(productsTable, ProductServices.getInstance().getProducts());
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+                appController.setProductsTable(productsTable, ProductService.getInstance().getProducts());
+            } catch (IOException  e) {
             }
             resetSearchField(true);
         }
@@ -2761,37 +2754,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
@@ -2800,13 +2793,13 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                            filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                             productSearchModify = true;
                         }
-                    } catch (IOException | ClassNotFoundException | JAXBException e) {
+                    } catch (IOException e) {
                         showMessage("Đơn giá sản phẩm không hợp lệ", false);
                     }
                 }
@@ -2815,17 +2808,17 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                         Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                            filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
                             productSearchModify = true;
                         }
-                    } catch (IOException | ClassNotFoundException | ParseException | JAXBException e) {
+                    } catch (IOException | ParseException  e) {
                         showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
                     }
                 }
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
             }
         initSearchField();  
         }
@@ -2836,37 +2829,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
@@ -2875,13 +2868,13 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                            filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                             productSearchModify = true;
                         }
-                    } catch (IOException | ClassNotFoundException | JAXBException e) {
+                    } catch (IOException e) {
                         showMessage("Đơn giá sản phẩm không hợp lệ", false);
                     }
                 }
@@ -2890,17 +2883,17 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                         Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                            filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
                             productSearchModify = true;
                         }
-                    } catch (IOException | ClassNotFoundException | ParseException | JAXBException e) {
+                    } catch (IOException | ParseException  e) {
                         showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
                     }
                 }
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
             }
         initSearchField();  
         }
@@ -2911,37 +2904,37 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             try {
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterById(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterById(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByName(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByCategory(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
                 if (Toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        appController.setProductsTable(productsTable, ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
-                        filter(ProductServices.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
+                        filter(ProductService.getInstance().filterByManafacturer(Toolbar__SearchStringInput.getText()));
                         productSearchModify = true;
                     }
                 }
@@ -2950,13 +2943,13 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         BigDecimal minPrice = new BigDecimal(Toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductServices.getInstance().filterByPrice(minPrice, maxPrice));
+                            filter(ProductService.getInstance().filterByPrice(minPrice, maxPrice));
                             productSearchModify = true;
                         }
-                    } catch (IOException | ClassNotFoundException | JAXBException e) {
+                    } catch (IOException e) {
                         showMessage("Đơn giá sản phẩm không hợp lệ", false);
                     }
                 }
@@ -2965,17 +2958,17 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
                         Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMinInput.getText());
                         Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(Toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
-                            appController.setProductsTable(productsTable, ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                            appController.setProductsTable(productsTable, ProductService.getInstance().filterByExpiry(minDate, maxDate));
                         }
                         if (accessPage == PAGES_PRODUCTS){
-                            filter(ProductServices.getInstance().filterByExpiry(minDate, maxDate));
+                            filter(ProductService.getInstance().filterByExpiry(minDate, maxDate));
                             productSearchModify = true;
                         }
-                    } catch (IOException | ClassNotFoundException | ParseException | JAXBException e) {
+                    } catch (IOException | ParseException  e) {
                         showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
                     }
                 }
-            } catch (IOException | ClassNotFoundException | JAXBException e) {
+            } catch (IOException e) {
             }
         initSearchField();  
         }
@@ -3203,15 +3196,15 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             Toolbar__ExpiryInput.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(productsTable.getModel().getValueAt(row, 5).toString()));
             Toolbar__ManafacturerInput.setText(productsTable.getModel().getValueAt(row, 6).toString());
             try {
-                if (ProductServices.getInstance().getSelectedProduct() != null){
-                    if (ProductServices.getInstance().getSelectedProduct().getThumbnail() != null){
-                        Toolbar__ThumbnailInput.setText(ProductServices.getInstance().getSelectedProduct().getThumbnail());
+                if (ProductService.getInstance().getSelectedProduct() != null){
+                    if (ProductService.getInstance().getSelectedProduct().getThumbnail() != null){
+                        Toolbar__ThumbnailInput.setText(ProductService.getInstance().getSelectedProduct().getThumbnail());
                     }
-                    if (ProductServices.getInstance().getSelectedProduct().getDescription()!= null){
-                        Toolbar__DescriptionInput.setText(ProductServices.getInstance().getSelectedProduct().getDescription());
+                    if (ProductService.getInstance().getSelectedProduct().getDescription()!= null){
+                        Toolbar__DescriptionInput.setText(ProductService.getInstance().getSelectedProduct().getDescription());
                     }
                 }
-            } catch (Exception e) {
+            } catch (IOException e) {
             }
         }
     }
@@ -3257,9 +3250,9 @@ public class Main extends javax.swing.JPanel implements ListSelectionListener{
             int row = productsTable.getSelectedRow();
             if (row >= 0) {
                 try {
-                    ProductServices.getInstance();
-                    ProductServices.setSelectedProduct(ProductServices.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
-                } catch (Exception e) {
+                    ProductService.getInstance();
+                    ProductService.setSelectedProduct(ProductService.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
+                } catch (IOException e) {
                 }
             }
             Toolbar__ButtonAdd.setEnabled(false);

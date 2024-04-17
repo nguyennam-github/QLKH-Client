@@ -27,6 +27,7 @@ D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\views\Main.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\services\ProductService.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\utils\Table.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\chart\LegendItem.java
+D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\controllers\Controller.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\utils\Panel.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\chart\PieChart.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\models\UserList.java
@@ -35,6 +36,5 @@ D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\utils\ScrollBar.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\controllers\MainController.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\controllers\SignUpController.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\chart\LabelColor.java
-D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\controllers\HomeController.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\utils\NiceScale.java
 D:\Projects\Java\QLKH-Client\src\main\java\hvan\qlkh\utils\ModernScrollBarUI.java

@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author PC
  */
-public class HomeController {
+public class Controller {
 
     private JPanel pagesHome;
     private ClassTableModel classTableModel = null;
@@ -33,7 +33,7 @@ public class HomeController {
         "Số lượng", "Đơn giá", "Ngày hết hạn", "Nhà sản xuất"};
     private final String[] USERS_COLUMNS = {"STT", "Tên tài khoản", "Ngày tạo", "Đọc", "Ghi"};
 
-    public HomeController(JPanel pagesHome) {
+    public Controller(JPanel pagesHome) {
         this.pagesHome = pagesHome;
         this.classTableModel = new ClassTableModel();
     }
