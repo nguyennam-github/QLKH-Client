@@ -1,5 +1,10 @@
 package hvan.qlkh.chart;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class ModelChart {
 
     public String getLabel() {

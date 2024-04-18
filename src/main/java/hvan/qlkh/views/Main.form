@@ -26,21 +26,21 @@
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="Toolbar" min="-2" max="-2" attributes="0"/>
+              <Component id="toolbar" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="Main" pref="820" max="32767" attributes="0"/>
+              <Component id="main" pref="820" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="Toolbar" pref="830" max="32767" attributes="0"/>
-          <Component id="Main" alignment="0" pref="830" max="32767" attributes="0"/>
+          <Component id="toolbar" pref="830" max="32767" attributes="0"/>
+          <Component id="main" alignment="0" pref="830" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="Toolbar">
+    <Container class="javax.swing.JPanel" name="toolbar">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="f4" green="f4" red="f4" type="rgb"/>
@@ -57,85 +57,85 @@
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="Toolbar__DescriptionTitle" min="-2" max="-2" attributes="0"/>
+                          <Component id="toolbar__DescriptionTitle" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="Toolbar__SearchStringInput" max="-2" attributes="0"/>
+                              <Component id="toolbar__SearchStringInput" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__ButtonAdd" min="-2" pref="65" max="-2" attributes="0"/>
+                                      <Component id="toolbar__ButtonAdd" min="-2" pref="65" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__ButtonEdit" min="-2" pref="65" max="-2" attributes="0"/>
+                                      <Component id="toolbar__ButtonEdit" min="-2" pref="65" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__ButtonDelete" min="-2" pref="65" max="-2" attributes="0"/>
+                                      <Component id="toolbar__ButtonDelete" min="-2" pref="65" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__ButtonReset" min="-2" pref="65" max="-2" attributes="0"/>
+                                      <Component id="toolbar__ButtonReset" min="-2" pref="65" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="Toolbar__SortTitle" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="toolbar__SortTitle" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="Toolbar__SortInput" min="-2" pref="230" max="-2" attributes="0"/>
+                                      <Component id="toolbar__SortInput" min="-2" pref="230" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__ButtonSort" min="-2" max="-2" attributes="0"/>
+                                      <Component id="toolbar__ButtonSort" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="1" attributes="0">
-                                              <Component id="Toolbar__ThumbnailTitle" min="-2" max="-2" attributes="0"/>
+                                              <Component id="toolbar__ThumbnailTitle" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                              <Component id="Toolbar__ThumbnailInput" min="-2" max="-2" attributes="0"/>
+                                              <Component id="toolbar__ThumbnailInput" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="Toolbar__DescriptionScroll" alignment="0" min="-2" pref="341" max="-2" attributes="0"/>
+                                          <Component id="toolbar__DescriptionScroll" alignment="0" min="-2" pref="341" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                          <Component id="Toolbar__Alert" min="-2" pref="340" max="-2" attributes="0"/>
+                                          <Component id="toolbar__Alert" min="-2" pref="340" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="Toolbar__ExpiryTitle" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__ManafacturerTitle" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__ExpiryTitle" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__ManafacturerTitle" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="Toolbar__ExpiryInput" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__ManafacturerInput" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__ExpiryInput" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__ManafacturerInput" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                                  <Component id="Toolbar__CategoryTitle" alignment="0" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__NameTitle" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__PriceTitle" alignment="0" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__QuantityTitle" alignment="0" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__IDTitle" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__CategoryTitle" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__NameTitle" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__PriceTitle" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__QuantityTitle" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__IDTitle" alignment="0" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="Toolbar__CategoryInput" alignment="0" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__QuantityInput" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__IDInput" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__NameInput" alignment="0" max="-2" attributes="0"/>
-                                                  <Component id="Toolbar__PriceInput" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__CategoryInput" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__QuantityInput" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__IDInput" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__NameInput" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="toolbar__PriceInput" alignment="0" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Toolbar__SearchTitle" min="-2" max="-2" attributes="0"/>
+                                              <Component id="toolbar__SearchTitle" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Toolbar__SearchInput" max="-2" attributes="0"/>
+                                              <Component id="toolbar__SearchInput" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Toolbar__SearchMinInput" min="-2" max="-2" attributes="0"/>
+                                              <Component id="toolbar__SearchMinInput" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                              <Component id="Toolbar__Decorate" min="-2" max="-2" attributes="0"/>
+                                              <Component id="toolbar__Decorate" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                              <Component id="Toolbar__SearchMaxInput" min="-2" max="-2" attributes="0"/>
+                                              <Component id="toolbar__SearchMaxInput" min="-2" max="-2" attributes="0"/>
                                           </Group>
-                                          <Component id="Toolbar__ButtonFileChooser" alignment="1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="toolbar__ButtonFileChooser" alignment="1" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -146,15 +146,15 @@
               </Group>
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Toolbar__SeparatorBottom" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__SeparatorTop" alignment="0" max="-2" attributes="0"/>
+                      <Component id="toolbar__SeparatorBottom" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__SeparatorTop" alignment="0" max="-2" attributes="0"/>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
-                          <Component id="Toolbar__ButtonSearch" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="toolbar__ButtonSearch" min="-2" pref="100" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="Toolbar__ButtonResetSearch" min="-2" pref="100" max="-2" attributes="0"/>
+                          <Component id="toolbar__ButtonResetSearch" min="-2" pref="100" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="Toolbar__Title" alignment="0" max="-2" attributes="0"/>
+                      <Component id="toolbar__Title" alignment="0" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
@@ -163,89 +163,89 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
-                  <Component id="Toolbar__Title" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolbar__Title" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                  <Component id="Toolbar__SeparatorTop" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolbar__SeparatorTop" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__IDTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__IDInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__IDTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__IDInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__NameInput" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__NameTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__NameInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__NameTitle" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__CategoryTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__CategoryInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__CategoryTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__CategoryInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
-                      <Component id="Toolbar__QuantityTitle" alignment="0" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__QuantityInput" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__QuantityTitle" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__QuantityInput" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__PriceTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__PriceInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__PriceTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__PriceInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Toolbar__ExpiryTitle" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ExpiryInput" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ExpiryTitle" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ExpiryInput" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Toolbar__ManafacturerTitle" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ManafacturerInput" alignment="0" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ManafacturerTitle" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ManafacturerInput" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__ThumbnailInput" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ThumbnailTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ButtonFileChooser" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ThumbnailInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ThumbnailTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonFileChooser" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="Toolbar__DescriptionTitle" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolbar__DescriptionTitle" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="Toolbar__DescriptionScroll" min="-2" pref="90" max="-2" attributes="0"/>
+                  <Component id="toolbar__DescriptionScroll" min="-2" pref="90" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="2" max="-2" attributes="0"/>
-                  <Component id="Toolbar__Alert" min="-2" pref="20" max="-2" attributes="0"/>
+                  <Component id="toolbar__Alert" min="-2" pref="20" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__ButtonAdd" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ButtonEdit" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ButtonDelete" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ButtonReset" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonAdd" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonEdit" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonDelete" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonReset" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="Toolbar__SeparatorBottom" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolbar__SeparatorBottom" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                  <Component id="Toolbar__SortTitle" min="-2" pref="25" max="-2" attributes="0"/>
+                  <Component id="toolbar__SortTitle" min="-2" pref="25" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__ButtonSort" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__SortInput" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonSort" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__SortInput" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__SearchTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__SearchInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__SearchTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__SearchInput" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                  <Component id="Toolbar__SearchStringInput" min="-2" max="-2" attributes="0"/>
+                  <Component id="toolbar__SearchStringInput" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__SearchMinInput" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__SearchMaxInput" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="Toolbar__Decorate" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__SearchMinInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__SearchMaxInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="toolbar__Decorate" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="Toolbar__ButtonSearch" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
-                      <Component id="Toolbar__ButtonResetSearch" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonSearch" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
+                      <Component id="toolbar__ButtonResetSearch" alignment="3" min="-2" pref="35" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
               </Group>
@@ -253,7 +253,7 @@
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="Toolbar__NameTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__NameTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 80px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;T&#xea;n s&#x1ea3;n ph&#x1ea9;m&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -261,7 +261,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__NameInput">
+        <Component class="javax.swing.JTextField" name="toolbar__NameInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -274,13 +274,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="Toolbar__NameInputCaretUpdate"/>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="toolbar__NameInputCaretUpdate"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__CategoryTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__CategoryTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 60px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;Danh m&#x1ee5;c&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -288,7 +288,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="Toolbar__CategoryInput">
+        <Component class="javax.swing.JComboBox" name="toolbar__CategoryInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -317,7 +317,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__QuantityTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__QuantityTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 60px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 56px; word-wrap: break-word&quot;&gt;S&#x1ed1; l&#x1b0;&#x1ee3;ng&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -325,7 +325,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__QuantityInput">
+        <Component class="javax.swing.JTextField" name="toolbar__QuantityInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -335,13 +335,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="Toolbar__QuantityInputCaretUpdate"/>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="toolbar__QuantityInputCaretUpdate"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__PriceTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__PriceTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 90px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word&quot;&gt;&#x110;&#x1a1;n gi&#xe1;&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -352,7 +352,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__PriceInput">
+        <Component class="javax.swing.JTextField" name="toolbar__PriceInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -362,13 +362,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="Toolbar__PriceInputCaretUpdate"/>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="toolbar__PriceInputCaretUpdate"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__ExpiryTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__ExpiryTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 80px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;H&#x1ea1;n s&#x1eed; d&#x1ee5;ng&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -379,7 +379,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="com.toedter.calendar.JDateChooser" name="Toolbar__ExpiryInput">
+        <Component class="com.toedter.calendar.JDateChooser" name="toolbar__ExpiryInput">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -395,7 +395,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__ManafacturerTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__ManafacturerTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 90px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;Nh&#xe0; s&#x1ea3;n xu&#x1ea5;t&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -403,7 +403,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__ManafacturerInput">
+        <Component class="javax.swing.JTextField" name="toolbar__ManafacturerInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -413,13 +413,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="Toolbar__ManafacturerInputCaretUpdate"/>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="toolbar__ManafacturerInputCaretUpdate"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonAdd">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonAdd">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -431,13 +431,13 @@
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonAddMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonAddMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonEdit">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonEdit">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -449,13 +449,13 @@
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonEditMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonEditMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonDelete">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonDelete">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -467,13 +467,13 @@
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonDeleteMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonDeleteMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__Title">
+        <Component class="javax.swing.JLabel" name="toolbar__Title">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 290px; text-align: center; color: rgba(76, 175, 79, 0.8) ; font-size: 20px; font-family: Karla; font-weight: 500; line-height: 20px; word-wrap: break-word&quot;&gt;Qu&#x1ea3;n l&#xfd; kho h&#xe0;ng&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -481,7 +481,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonReset">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonReset">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -493,13 +493,13 @@
             <Property name="borderPainted" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonResetMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonResetMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__SortTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__SortTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 85px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;S&#x1eaf;p x&#x1ebf;p theo:&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -507,7 +507,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="Toolbar__SortInput">
+        <Component class="javax.swing.JComboBox" name="toolbar__SortInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -537,7 +537,7 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonSort">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonSort">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -553,13 +553,13 @@
             <Property name="rolloverEnabled" type="boolean" value="false"/>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonSortMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonSortMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__SearchTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__SearchTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 85px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;T&#xec;m ki&#x1ebf;m theo:&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -567,7 +567,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JComboBox" name="Toolbar__SearchInput">
+        <Component class="javax.swing.JComboBox" name="toolbar__SearchInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -592,13 +592,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="Toolbar__SearchInputItemStateChanged"/>
+            <EventHandler event="itemStateChanged" listener="java.awt.event.ItemListener" parameters="java.awt.event.ItemEvent" handler="toolbar__SearchInputItemStateChanged"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__SearchStringInput">
+        <Component class="javax.swing.JTextField" name="toolbar__SearchStringInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -608,14 +608,14 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Toolbar__SearchStringInputFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Toolbar__SearchStringInputKeyPressed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="toolbar__SearchStringInputFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="toolbar__SearchStringInputKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, new Color(0, 0, 0, 200))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonSearch">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonSearch">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -630,13 +630,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonSearchMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonSearchMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Container class="javax.swing.JPanel" name="Toolbar__SeparatorBottom">
+        <Container class="javax.swing.JPanel" name="toolbar__SeparatorBottom">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -661,7 +661,7 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Container class="javax.swing.JPanel" name="Toolbar__SeparatorTop">
+        <Container class="javax.swing.JPanel" name="toolbar__SeparatorTop">
           <Properties>
             <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
               <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -686,7 +686,7 @@
             </DimensionLayout>
           </Layout>
         </Container>
-        <Component class="javax.swing.JTextField" name="Toolbar__SearchMinInput">
+        <Component class="javax.swing.JTextField" name="toolbar__SearchMinInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -696,14 +696,14 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Toolbar__SearchMinInputFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Toolbar__SearchMinInputKeyPressed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="toolbar__SearchMinInputFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="toolbar__SearchMinInputKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, new Color(0, 0, 0, 200))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__SearchMaxInput">
+        <Component class="javax.swing.JTextField" name="toolbar__SearchMaxInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="15" style="0"/>
@@ -713,14 +713,14 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Toolbar__SearchMaxInputFocusGained"/>
-            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Toolbar__SearchMaxInputKeyPressed"/>
+            <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="toolbar__SearchMaxInputFocusGained"/>
+            <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="toolbar__SearchMaxInputKeyPressed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, new Color(0, 0, 0, 200))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__Decorate">
+        <Component class="javax.swing.JLabel" name="toolbar__Decorate">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 85px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 12px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;&#x111;&#x1ebf;n&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -728,12 +728,12 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__Alert">
+        <Component class="javax.swing.JLabel" name="toolbar__Alert">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word&quot;&gt;&lt;/div&gt;&lt;/html&gt;"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonFileChooser">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonFileChooser">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -748,13 +748,13 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonFileChooserMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonFileChooserMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__ThumbnailInput">
+        <Component class="javax.swing.JTextField" name="toolbar__ThumbnailInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -767,7 +767,7 @@
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__ThumbnailTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__ThumbnailTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 90px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;&#x1ea2;nh minh h&#x1ecd;a&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -775,7 +775,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JLabel" name="Toolbar__DescriptionTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__DescriptionTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 90px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;M&#xf4; t&#x1ea3;&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -783,7 +783,7 @@
             </Property>
           </Properties>
         </Component>
-        <Container class="javax.swing.JScrollPane" name="Toolbar__DescriptionScroll">
+        <Container class="javax.swing.JScrollPane" name="toolbar__DescriptionScroll">
           <Properties>
             <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
           </Properties>
@@ -802,7 +802,7 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JLabel" name="Toolbar__IDTitle">
+        <Component class="javax.swing.JLabel" name="toolbar__IDTitle">
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 80px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;M&#xe3; s&#x1ed1;&lt;/div&gt;&lt;/html&gt;"/>
             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -810,7 +810,7 @@
             </Property>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="Toolbar__IDInput">
+        <Component class="javax.swing.JTextField" name="toolbar__IDInput">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="14" style="0"/>
@@ -823,13 +823,13 @@
             <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Toolbar__IDInput"/>
           </AccessibilityProperties>
           <Events>
-            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="Toolbar__IDInputCaretUpdate"/>
+            <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="toolbar__IDInputCaretUpdate"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JButton" name="Toolbar__ButtonResetSearch">
+        <Component class="javax.swing.JButton" name="toolbar__ButtonResetSearch">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -844,7 +844,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Toolbar__ButtonResetSearchMouseClicked"/>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="toolbar__ButtonResetSearchMouseClicked"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
@@ -852,7 +852,7 @@
         </Component>
       </SubComponents>
     </Container>
-    <Container class="javax.swing.JPanel" name="Main">
+    <Container class="javax.swing.JPanel" name="main">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
           <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -868,8 +868,8 @@
               <Group type="102" attributes="0">
                   <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="Main__Pages" alignment="0" max="32767" attributes="0"/>
-                      <Component id="Navbar" alignment="0" pref="790" max="32767" attributes="0"/>
+                      <Component id="main__Pages" alignment="0" max="32767" attributes="0"/>
+                      <Component id="navbar" alignment="0" pref="790" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
               </Group>
@@ -879,16 +879,16 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="Navbar" min="-2" pref="80" max="-2" attributes="0"/>
+                  <Component id="navbar" min="-2" pref="80" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                  <Component id="Main__Pages" max="32767" attributes="0"/>
+                  <Component id="main__Pages" max="32767" attributes="0"/>
                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="Main__Pages">
+        <Container class="javax.swing.JPanel" name="main__Pages">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -904,7 +904,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="Pages__Home">
+            <Container class="javax.swing.JPanel" name="pages__Home">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -918,7 +918,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Pages__Home"/>
+                  <CardConstraints cardName="pages__Home"/>
                 </Constraint>
               </Constraints>
 
@@ -927,7 +927,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                          <Component id="Home__Table" max="32767" attributes="0"/>
+                          <Component id="home__Table" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -936,14 +936,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="Home__Table" max="32767" attributes="0"/>
+                          <Component id="home__Table" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="Home__Table">
+                <Container class="javax.swing.JPanel" name="home__Table">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -960,7 +960,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="Pages__Products">
+            <Container class="javax.swing.JPanel" name="pages__Products">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -974,7 +974,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Pages__Products"/>
+                  <CardConstraints cardName="pages__Products"/>
                 </Constraint>
               </Constraints>
 
@@ -983,7 +983,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="Products__Scroll" max="32767" attributes="0"/>
+                          <Component id="products__Scroll" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -992,21 +992,21 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="Products__Scroll" max="32767" attributes="0"/>
+                          <Component id="products__Scroll" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="Products__Scroll">
+                <Container class="javax.swing.JScrollPane" name="products__Scroll">
                   <Properties>
                     <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="Products__Main">
+                    <Container class="javax.swing.JPanel" name="products__Main">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1022,7 +1022,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="Pages__Statistic">
+            <Container class="javax.swing.JPanel" name="pages__Statistic">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1036,7 +1036,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Pages__Statistic"/>
+                  <CardConstraints cardName="pages__Statistic"/>
                 </Constraint>
               </Constraints>
 
@@ -1045,7 +1045,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="Statistic__Scroll" max="32767" attributes="0"/>
+                          <Component id="statistic__Scroll" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1054,14 +1054,14 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                          <Component id="Statistic__Scroll" pref="670" max="32767" attributes="0"/>
+                          <Component id="statistic__Scroll" pref="670" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="Statistic__Scroll">
+                <Container class="javax.swing.JScrollPane" name="statistic__Scroll">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1077,7 +1077,7 @@
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="Statistic__Main">
+                    <Container class="javax.swing.JPanel" name="statistic__Main">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1094,26 +1094,26 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                          <Component id="Statistic__PieChart" pref="0" max="32767" attributes="0"/>
+                                          <Component id="statistic__PieChart" pref="0" max="32767" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                               <Group type="102" attributes="0">
                                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                                                  <Component id="Statistic__Menu" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="statistic__Menu" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" attributes="0">
                                                   <EmptySpace max="32767" attributes="0"/>
-                                                  <Component id="Statistic__TotalProducts" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="statistic__TotalProducts" min="-2" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                                  <Component id="Statistic__TotalQuanity" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="statistic__TotalQuanity" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="Statistic__BarChart" max="32767" attributes="0"/>
+                                          <Component id="statistic__BarChart" max="32767" attributes="0"/>
                                           <EmptySpace min="15" pref="15" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="Statistic__Category" min="-2" max="-2" attributes="0"/>
-                                              <Component id="Statistic__Manafacturer" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="statistic__Category" min="-2" max="-2" attributes="0"/>
+                                              <Component id="statistic__Manafacturer" alignment="0" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -1125,26 +1125,26 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="Statistic__BarChart" max="32767" attributes="0"/>
+                                      <Component id="statistic__BarChart" max="32767" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="Statistic__Category" pref="155" max="32767" attributes="0"/>
+                                          <Component id="statistic__Category" pref="155" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="Statistic__Manafacturer" pref="155" max="32767" attributes="0"/>
+                                          <Component id="statistic__Manafacturer" pref="155" max="32767" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="Statistic__TotalProducts" min="-2" max="-2" attributes="0"/>
-                                              <Component id="Statistic__TotalQuanity" min="-2" max="-2" attributes="0"/>
+                                              <Component id="statistic__TotalProducts" min="-2" max="-2" attributes="0"/>
+                                              <Component id="statistic__TotalQuanity" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                          <Component id="Statistic__Menu" min="-2" max="-2" attributes="0"/>
+                                          <Component id="statistic__Menu" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="Statistic__PieChart" pref="0" max="32767" attributes="0"/>
+                                          <Component id="statistic__PieChart" pref="0" max="32767" attributes="0"/>
                                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -1153,14 +1153,14 @@
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Component class="hvan.qlkh.chart.Chart" name="Statistic__BarChart">
+                        <Component class="hvan.qlkh.chart.Chart" name="statistic__BarChart">
                           <Properties>
                             <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                               <Dimension value="[600, 320]"/>
                             </Property>
                           </Properties>
                         </Component>
-                        <Container class="hvan.qlkh.chart.PieChart" name="Statistic__PieChart">
+                        <Container class="hvan.qlkh.chart.PieChart" name="statistic__PieChart">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="sansserif" size="12" style="1"/>
@@ -1174,7 +1174,7 @@
                             <Property name="useNullLayout" type="boolean" value="true"/>
                           </Layout>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="Statistic__Menu">
+                        <Container class="javax.swing.JPanel" name="statistic__Menu">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1333,7 +1333,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="Statistic__Category">
+                        <Container class="javax.swing.JPanel" name="statistic__Category">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1399,7 +1399,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="Statistic__Manafacturer">
+                        <Container class="javax.swing.JPanel" name="statistic__Manafacturer">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1465,7 +1465,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="Statistic__TotalProducts">
+                        <Container class="javax.swing.JPanel" name="statistic__TotalProducts">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1538,7 +1538,7 @@
                             </Component>
                           </SubComponents>
                         </Container>
-                        <Container class="javax.swing.JPanel" name="Statistic__TotalQuanity">
+                        <Container class="javax.swing.JPanel" name="statistic__TotalQuanity">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1610,7 +1610,7 @@
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="Pages__Sort">
+            <Container class="javax.swing.JPanel" name="pages__Sort">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1624,7 +1624,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Pages__Sort"/>
+                  <CardConstraints cardName="pages__Sort"/>
                 </Constraint>
               </Constraints>
 
@@ -1633,7 +1633,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="Sort__Scroll" max="32767" attributes="0"/>
+                          <Component id="sort__Scroll" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
@@ -1642,37 +1642,34 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="Sort__Scroll" max="32767" attributes="0"/>
+                          <Component id="sort__Scroll" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JScrollPane" name="Sort__Scroll">
+                <Container class="javax.swing.JScrollPane" name="sort__Scroll">
                   <Properties>
                     <Property name="horizontalScrollBarPolicy" type="int" value="31"/>
                   </Properties>
 
                   <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                   <SubComponents>
-                    <Container class="javax.swing.JPanel" name="Sort__Main">
+                    <Container class="javax.swing.JPanel" name="sort__Main">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f9" green="fb" red="f6" type="rgb"/>
                         </Property>
                       </Properties>
 
-                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
-                        <Property name="columns" type="int" value="0"/>
-                        <Property name="rows" type="int" value="5"/>
-                      </Layout>
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
                     </Container>
                   </SubComponents>
                 </Container>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="Pages__Authorization">
+            <Container class="javax.swing.JPanel" name="pages__Authorization">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1686,7 +1683,7 @@
               </AuxValues>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-                  <CardConstraints cardName="Pages__Authorization"/>
+                  <CardConstraints cardName="pages__Authorization"/>
                 </Constraint>
               </Constraints>
 
@@ -1695,15 +1692,15 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="jPanel1" pref="450" max="32767" attributes="0"/>
+                          <Component id="authorization__Table" pref="450" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                  <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="authorization__Information" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="jPanel3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="authorization__Filter" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
@@ -1716,12 +1713,12 @@
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="jPanel2" min="-2" pref="285" max="-2" attributes="0"/>
+                                  <Component id="authorization__Information" min="-2" pref="285" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                  <Component id="jPanel3" pref="355" max="32767" attributes="0"/>
+                                  <Component id="authorization__Filter" pref="355" max="32767" attributes="0"/>
                                   <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jPanel1" pref="665" max="32767" attributes="0"/>
+                              <Component id="authorization__Table" pref="665" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                       </Group>
@@ -1729,7 +1726,7 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Container class="javax.swing.JPanel" name="jPanel1">
+                <Container class="javax.swing.JPanel" name="authorization__Table">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -1745,7 +1742,7 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <EmptySpace min="0" pref="450" max="32767" attributes="0"/>
+                          <EmptySpace min="0" pref="430" max="32767" attributes="0"/>
                       </Group>
                     </DimensionLayout>
                     <DimensionLayout dim="1">
@@ -1755,7 +1752,7 @@
                     </DimensionLayout>
                   </Layout>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel2">
+                <Container class="javax.swing.JPanel" name="authorization__Information">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f4" green="f4" red="f4" type="rgb"/>
@@ -1778,38 +1775,38 @@
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="102" attributes="0">
                                               <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                                              <Component id="Information__ButtonEdit" min="-2" max="-2" attributes="0"/>
+                                              <Component id="information__ButtonEdit" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Information__ButtonReset" min="-2" max="-2" attributes="0"/>
+                                              <Component id="information__ButtonReset" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Information__ButtonDelete" min="-2" max="-2" attributes="0"/>
+                                              <Component id="information__ButtonDelete" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
-                                              <Component id="Toolbar__NameTitle4" max="-2" attributes="0"/>
+                                              <Component id="information__WriteTitle" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Information__WriteInput" max="-2" attributes="0"/>
+                                              <Component id="information__WriteInput" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" attributes="0">
-                                              <Component id="Toolbar__NameTitle3" max="-2" attributes="0"/>
+                                              <Component id="information__ReadTitle" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Information__ReadInput" min="-2" max="-2" attributes="0"/>
+                                              <Component id="information__ReadInput" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="Toolbar__NameTitle1" max="32767" attributes="0"/>
-                                                  <Component id="Toolbar__NameTitle2" max="32767" attributes="0"/>
+                                                  <Component id="information__UsernameTitle" max="32767" attributes="0"/>
+                                                  <Component id="information__RegisterDate" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="Information__RegisterInput" alignment="0" max="-2" attributes="0"/>
-                                                  <Component id="Information__UsernameInput" alignment="1" max="-2" attributes="0"/>
+                                                  <Component id="information__RegisterDateInput" alignment="0" max="-2" attributes="0"/>
+                                                  <Component id="information__UsernameInput" alignment="1" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__NameTitle11" min="-2" max="-2" attributes="0"/>
+                                      <Component id="information__Title" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -1820,32 +1817,32 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                              <Component id="Toolbar__NameTitle11" min="-2" max="-2" attributes="0"/>
+                              <Component id="information__Title" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Toolbar__NameTitle1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Information__UsernameInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__UsernameTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__UsernameInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Toolbar__NameTitle2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Information__RegisterInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__RegisterDate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__RegisterDateInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Toolbar__NameTitle3" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Information__ReadInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__ReadTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__ReadInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="Toolbar__NameTitle4" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Information__WriteInput" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__WriteTitle" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__WriteInput" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Information__ButtonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Information__ButtonEdit" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Information__ButtonReset" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__ButtonDelete" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__ButtonEdit" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="information__ButtonReset" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
@@ -1853,7 +1850,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JTextField" name="Information__UsernameInput">
+                    <Component class="javax.swing.JTextField" name="information__UsernameInput">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1867,7 +1864,7 @@
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle1">
+                    <Component class="javax.swing.JLabel" name="information__UsernameTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 75px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;T&#xea;n t&#xe0;i kho&#x1ea3;n:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1875,7 +1872,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle2">
+                    <Component class="javax.swing.JLabel" name="information__RegisterDate">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 75px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;Ng&#xe0;y t&#x1ea1;o:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1883,7 +1880,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="Information__RegisterInput">
+                    <Component class="javax.swing.JTextField" name="information__RegisterDateInput">
                       <Properties>
                         <Property name="editable" type="boolean" value="false"/>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -1897,7 +1894,7 @@
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle3">
+                    <Component class="javax.swing.JLabel" name="information__ReadTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 75px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;Cho ph&#xe9;p &#x111;&#x1ecd;c:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1905,7 +1902,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="Information__ReadInput">
+                    <Component class="javax.swing.JCheckBox" name="information__ReadInput">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1917,10 +1914,10 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="Information__ReadInputStateChanged"/>
+                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="information__ReadInputStateChanged"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle4">
+                    <Component class="javax.swing.JLabel" name="information__WriteTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 75px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;Cho ph&#xe9;p ghi:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -1928,7 +1925,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="Information__WriteInput">
+                    <Component class="javax.swing.JCheckBox" name="information__WriteInput">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -1940,10 +1937,10 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="Information__WriteInputStateChanged"/>
+                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="information__WriteInputStateChanged"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="Information__ButtonDelete">
+                    <Component class="javax.swing.JButton" name="information__ButtonDelete">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="56" green="56" red="ff" type="rgb"/>
@@ -1958,13 +1955,13 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Information__ButtonDeleteMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="information__ButtonDeleteMouseClicked"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(255, 86, 86), new Color(195, 52, 52), new Color(149, 39, 39))"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JButton" name="Information__ButtonEdit">
+                    <Component class="javax.swing.JButton" name="information__ButtonEdit">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -1979,13 +1976,13 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Information__ButtonEditMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="information__ButtonEditMouseClicked"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JButton" name="Information__ButtonReset">
+                    <Component class="javax.swing.JButton" name="information__ButtonReset">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2000,13 +1997,13 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Information__ButtonResetMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="information__ButtonResetMouseClicked"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle11">
+                    <Component class="javax.swing.JLabel" name="information__Title">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 125px; text-align: center; color:rgba(76, 175, 79, 0.8); font-size: 13px; font-family: Karla; font-weight: 500; line-height: 15px; word-wrap: break-word&quot;&gt;Th&#xf4;ng tin t&#xe0;i kho&#x1ea3;n&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2016,7 +2013,7 @@
                     </Component>
                   </SubComponents>
                 </Container>
-                <Container class="javax.swing.JPanel" name="jPanel3">
+                <Container class="javax.swing.JPanel" name="authorization__Filter">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                       <Color blue="f4" green="f4" red="f4" type="rgb"/>
@@ -2034,9 +2031,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="Filter__ButtonFilter" min="-2" max="-2" attributes="0"/>
+                              <Component id="filter__ButtonFilter" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="Navbar__ButtonAuthorization3" min="-2" max="-2" attributes="0"/>
+                              <Component id="filter__ButtonReset" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
@@ -2044,35 +2041,35 @@
                                   <Group type="102" attributes="0">
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="Toolbar__NameTitle6" alignment="0" max="-2" attributes="0"/>
+                                          <Component id="filter__RegisterDateTitle" alignment="0" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Toolbar__NameTitle5" max="-2" attributes="0"/>
+                                              <Component id="filter__UsernameTitle" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Filter__UsernameInput" min="-2" max="-2" attributes="0"/>
+                                              <Component id="filter__UsernameInput" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                                  <Component id="Toolbar__NameTitle8" max="32767" attributes="0"/>
-                                                  <Component id="Toolbar__NameTitle9" max="32767" attributes="0"/>
+                                                  <Component id="filter__ReadTitle" max="32767" attributes="0"/>
+                                                  <Component id="filter__WriteTitle" max="32767" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="10" pref="10" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="Filter__WriteInput" max="-2" attributes="0"/>
-                                                  <Component id="Filter__ReadInput" alignment="0" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="filter__WriteInput" max="-2" attributes="0"/>
+                                                  <Component id="filter__ReadInput" alignment="0" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="Filter__DateMin" max="-2" attributes="0"/>
+                                              <Component id="filter__RegisterDateMin" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Toolbar__NameTitle7" min="-2" max="-2" attributes="0"/>
+                                              <Component id="filter__Decorate" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                              <Component id="Filter__DateMax" max="-2" attributes="0"/>
+                                              <Component id="filter__RegisterDateMax" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <EmptySpace min="-2" pref="90" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__NameTitle10" min="-2" max="-2" attributes="0"/>
+                                      <Component id="filter_Title" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
@@ -2083,36 +2080,36 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                              <Component id="Toolbar__NameTitle10" min="-2" max="-2" attributes="0"/>
+                              <Component id="filter_Title" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Toolbar__NameTitle5" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Filter__UsernameInput" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__UsernameTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__UsernameInput" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="1" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="Toolbar__NameTitle6" min="-2" max="-2" attributes="0"/>
+                                      <Component id="filter__RegisterDateTitle" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="3" attributes="0">
-                                          <Component id="Filter__DateMin" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="Toolbar__NameTitle7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          <Component id="Filter__DateMax" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="filter__RegisterDateMin" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="filter__Decorate" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="filter__RegisterDateMax" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                                      <Component id="Toolbar__NameTitle8" min="-2" max="-2" attributes="0"/>
+                                      <Component id="filter__ReadTitle" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <Component id="Filter__ReadInput" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__ReadInput" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="Toolbar__NameTitle9" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Filter__WriteInput" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__WriteTitle" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__WriteInput" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="Filter__ButtonFilter" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="Navbar__ButtonAuthorization3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__ButtonFilter" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="filter__ButtonReset" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           </Group>
@@ -2120,7 +2117,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle5">
+                    <Component class="javax.swing.JLabel" name="filter__UsernameTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 75px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;T&#xea;n t&#xe0;i kho&#x1ea3;n:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2128,7 +2125,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle6">
+                    <Component class="javax.swing.JLabel" name="filter__RegisterDateTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 75px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;Ng&#xe0;y t&#x1ea1;o:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2136,7 +2133,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="Filter__ButtonFilter">
+                    <Component class="javax.swing.JButton" name="filter__ButtonFilter">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2151,13 +2148,13 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Filter__ButtonFilterMouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="filter__ButtonFilterMouseClicked"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="Filter__UsernameInput">
+                    <Component class="javax.swing.JTextField" name="filter__UsernameInput">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
@@ -2167,14 +2164,14 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Filter__UsernameInputFocusGained"/>
-                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Filter__UsernameInputKeyPressed"/>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="filter__UsernameInputFocusGained"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filter__UsernameInputKeyPressed"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="Filter__DateMin">
+                    <Component class="javax.swing.JTextField" name="filter__RegisterDateMin">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
@@ -2184,14 +2181,14 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Filter__DateMinFocusGained"/>
-                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Filter__DateMinKeyPressed"/>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="filter__RegisterDateMinFocusGained"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filter__RegisterDateMinKeyPressed"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JTextField" name="Filter__DateMax">
+                    <Component class="javax.swing.JTextField" name="filter__RegisterDateMax">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Segoe UI" size="14" style="0"/>
@@ -2201,14 +2198,14 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="Filter__DateMaxFocusGained"/>
-                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Filter__DateMaxKeyPressed"/>
+                        <EventHandler event="focusGained" listener="java.awt.event.FocusListener" parameters="java.awt.event.FocusEvent" handler="filter__RegisterDateMaxFocusGained"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filter__RegisterDateMaxKeyPressed"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(0, Color.BLACK)"/>
                       </AuxValues>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle7">
+                    <Component class="javax.swing.JLabel" name="filter__Decorate">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 30px; text-align: center; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;&#x111;&#x1ebf;n&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2216,7 +2213,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle8">
+                    <Component class="javax.swing.JLabel" name="filter__ReadTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 80px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;&#x110;&#x1b0;&#x1ee3;c ph&#xe9;p &#x111;&#x1ecd;c:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2227,7 +2224,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="Filter__ReadInput">
+                    <Component class="javax.swing.JCheckBox" name="filter__ReadInput">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2238,11 +2235,11 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="Filter__ReadInputStateChanged"/>
-                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Filter__ReadInputKeyPressed"/>
+                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="filter__ReadInputStateChanged"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filter__ReadInputKeyPressed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle9">
+                    <Component class="javax.swing.JLabel" name="filter__WriteTitle">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 80px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word&quot;&gt;&#x110;&#x1b0;&#x1ee3;c ph&#xe9;p ghi:&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2250,7 +2247,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JCheckBox" name="Filter__WriteInput">
+                    <Component class="javax.swing.JCheckBox" name="filter__WriteInput">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -2261,11 +2258,11 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="Filter__WriteInputStateChanged"/>
-                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="Filter__WriteInputKeyPressed"/>
+                        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="filter__WriteInputStateChanged"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="filter__WriteInputKeyPressed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JLabel" name="Toolbar__NameTitle10">
+                    <Component class="javax.swing.JLabel" name="filter_Title">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 90px; text-align: center; color:rgba(76, 175, 79, 0.8); font-size: 13px; font-family: Karla; font-weight: 500; line-height: 15px; word-wrap: break-word&quot;&gt;L&#x1ecd;c t&#xe0;i kho&#x1ea3;n&lt;/div&gt;&lt;/html&gt;"/>
                         <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
@@ -2273,7 +2270,7 @@
                         </Property>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JButton" name="Navbar__ButtonAuthorization3">
+                    <Component class="javax.swing.JButton" name="filter__ButtonReset">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                           <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2288,7 +2285,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Navbar__ButtonAuthorization3MouseClicked"/>
+                        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="filter__ButtonResetMouseClicked"/>
                       </Events>
                       <AuxValues>
                         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
@@ -2300,7 +2297,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="Navbar">
+        <Container class="javax.swing.JPanel" name="navbar">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -2318,15 +2315,15 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="Navbar__ButtonHome" min="-2" max="-2" attributes="0"/>
+                      <Component id="navbar__ButtonHome" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="Navbar__ButtonProducts" min="-2" max="-2" attributes="0"/>
+                      <Component id="navbar__ButtonProducts" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="Navbar__ButtonStatistic" min="-2" max="-2" attributes="0"/>
+                      <Component id="navbar__ButtonStatistic" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
-                      <Component id="Navbar__ButtonAuthorization" min="-2" max="-2" attributes="0"/>
+                      <Component id="navbar__ButtonAuthorization" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
-                      <Component id="Navbar__ButtonSignOut" min="-2" max="-2" attributes="0"/>
+                      <Component id="navbar__ButtonSignOut" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -2336,12 +2333,12 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="Navbar__ButtonHome" min="-2" max="-2" attributes="0"/>
+                          <Component id="navbar__ButtonHome" min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="Navbar__ButtonProducts" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="Navbar__ButtonStatistic" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="Navbar__ButtonSignOut" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="Navbar__ButtonAuthorization" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="navbar__ButtonProducts" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="navbar__ButtonStatistic" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="navbar__ButtonSignOut" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="navbar__ButtonAuthorization" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace pref="23" max="32767" attributes="0"/>
@@ -2350,7 +2347,7 @@
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Component class="javax.swing.JButton" name="Navbar__ButtonHome">
+            <Component class="javax.swing.JButton" name="navbar__ButtonHome">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2365,13 +2362,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Navbar__ButtonHomeMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navbar__ButtonHomeMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="Navbar__ButtonProducts">
+            <Component class="javax.swing.JButton" name="navbar__ButtonProducts">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2386,13 +2383,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Navbar__ButtonProductsMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navbar__ButtonProductsMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="Navbar__ButtonStatistic">
+            <Component class="javax.swing.JButton" name="navbar__ButtonStatistic">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2407,13 +2404,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Navbar__ButtonStatisticMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navbar__ButtonStatisticMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="Navbar__ButtonSignOut">
+            <Component class="javax.swing.JButton" name="navbar__ButtonSignOut">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="56" green="56" red="ff" type="rgb"/>
@@ -2428,13 +2425,13 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Navbar__ButtonSignOutMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navbar__ButtonSignOutMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(255, 86, 86), new Color(195, 52, 52), new Color(149, 39, 39))"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="Navbar__ButtonAuthorization">
+            <Component class="javax.swing.JButton" name="navbar__ButtonAuthorization">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                   <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -2452,7 +2449,7 @@
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" value="Navbar__ButtonAuthorization"/>
               </AccessibilityProperties>
               <Events>
-                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="Navbar__ButtonAuthorizationMouseClicked"/>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="navbar__ButtonAuthorizationMouseClicked"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>

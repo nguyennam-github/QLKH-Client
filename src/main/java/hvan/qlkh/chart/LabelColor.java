@@ -5,6 +5,11 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import javax.swing.JLabel;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class LabelColor extends JLabel {
 
     @Override

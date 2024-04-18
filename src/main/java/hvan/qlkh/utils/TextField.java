@@ -9,8 +9,9 @@ import javax.swing.JTextField;
 
 /**
  *
- * @author super
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class TextField extends JTextField {
 
     private final int radius;

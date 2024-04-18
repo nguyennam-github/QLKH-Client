@@ -11,6 +11,11 @@ import java.text.DecimalFormat;
 import javax.swing.JComponent;
 import javax.swing.border.EmptyBorder;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class BlankPlotChart extends JComponent {
 
     public BlankPlotChatRender getBlankPlotChatRender() {

@@ -8,6 +8,11 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JButton;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class Button extends JButton {
 
     public boolean isOver() {

@@ -5,23 +5,22 @@
 package hvan.qlkh.main;
 
 import hvan.qlkh.services.Services;
-import java.io.IOException;
 import javax.swing.SwingUtilities;
-import javax.xml.bind.JAXBException;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class App {
 
-    public static void main(String[] args) throws IOException, JAXBException, ClassNotFoundException{
+    public static void main(String[] args){
         SwingUtilities.invokeLater(() -> {
-            hvan.qlkh.views.App.main(args);
             try {
+                hvan.qlkh.views.App.main(args);
                 Services.getInstance().getUser();
                 Services.getInstance().get();
-            } catch (IOException | JAXBException ex) {
+            } catch (Exception ex) {
             }
         });
     }

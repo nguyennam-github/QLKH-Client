@@ -11,6 +11,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class Table extends JTable {
 
     public Table() {

@@ -17,16 +17,17 @@ import javax.swing.JScrollPane;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class UserController {
-    
+
     private static UserController instance;
-    private static JPanel Toolbar;
-    private static JPanel Navbar;
-    private static Map<String, Integer> ToolbarMap = new HashMap<>();
-    private static Map<String, Integer> NavbarMap = new HashMap<>();
-    
+    private static JPanel toolbar;
+    private static JPanel navbar;
+    private static Map<String, Integer> toolbarMap = new HashMap<>();
+    private static Map<String, Integer> navbarMap = new HashMap<>();
+
     public static UserController getInstance(){
         if (instance == null){
             instance = new UserController();
@@ -36,91 +37,86 @@ public class UserController {
 
     private UserController() {
     }
-    
-    private void setComponetsMap(){
-        for (int i = 0; i < Toolbar.getComponentCount(); i++) {
-            ToolbarMap.put(Toolbar.getComponent(i).getName(), i);
+
+    private void setComponentsMap(){
+        for (int i = 0; i < toolbar.getComponentCount(); i++) {
+            toolbarMap.put(toolbar.getComponent(i).getName(), i);
         }
-        for (int i = 0; i < Navbar.getComponentCount(); i++) {
-            NavbarMap.put(Navbar.getComponent(i).getName(), i);
+        for (int i = 0; i < navbar.getComponentCount(); i++) {
+            navbarMap.put(navbar.getComponent(i).getName(), i);
         }
     }
-    
+
     public void initMain(){
-        
+
         try {
-            
-            setComponetsMap();
-            
+
+            setComponentsMap();
+            navbar.getComponent(navbarMap.get("Navbar__ButtonAuthorization")).setVisible(false);
+
             if (Services.getInstance().getCurrentUser().getUsername().equals("admin")){
-                Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(true);
+                navbar.getComponent(navbarMap.get("Navbar__ButtonAuthorization")).setVisible(true);
             }
-            else{
-                Navbar.getComponent(NavbarMap.get("Navbar__ButtonAuthorization")).setVisible(false);
-            }
-            
+
             if (!Services.getInstance().getCurrentUser().isWrite()) {
-                for (int i = 0; i < Toolbar.getComponentCount(); i++) {
-                    if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
-                        ((TextField)Toolbar.getComponent(i)).setEditable(false);
-                        ((TextField)Toolbar.getComponent(i)).setEnabled(false);
+                for (int i = 0; i < toolbar.getComponentCount(); i++) {
+                    if (toolbar.getComponent(i).getClass().equals(TextField.class)){
+                        ((TextField)toolbar.getComponent(i)).setEditable(false);
+                        ((TextField)toolbar.getComponent(i)).setEnabled(false);
                     }
-                    if (Toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
-                        ((JDateChooser) Toolbar.getComponent(i)).setEnabled(false);
+                    if (toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
+                        ((JDateChooser) toolbar.getComponent(i)).setEnabled(false);
                     }
-                    if (Toolbar.getComponent(i).getClass().equals(JComboBox.class)){
-                        ((JComboBox) Toolbar.getComponent(i)).setEnabled(false);
+                    if (toolbar.getComponent(i).getClass().equals(JComboBox.class)){
+                        ((JComboBox) toolbar.getComponent(i)).setEnabled(false);
                     }
-                    if (Toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
-                        ((JScrollPane)Toolbar.getComponent(i)).getViewport().getView().setEnabled(false);
+                    if (toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
+                        ((JScrollPane)toolbar.getComponent(i)).getViewport().getView().setEnabled(false);
                     }
-                    if (Toolbar.getComponent(i).getName() != null) {
-                        if (Toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
-                            Toolbar.getComponent(i).setEnabled(false);
+                    if (toolbar.getComponent(i).getName() != null) {
+                        if (toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
+                            toolbar.getComponent(i).setEnabled(false);
                         }
-                        if (Toolbar.getComponent(i).getName().toLowerCase().contains("search") ||
-                                Toolbar.getComponent(i).getName().toLowerCase().contains("sort")) {
-                            Toolbar.getComponent(i).setEnabled(true);
-                            if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
-                                ((TextField)Toolbar.getComponent(i)).setEditable(true);
+                        if (toolbar.getComponent(i).getName().toLowerCase().contains("search") ||
+                                toolbar.getComponent(i).getName().toLowerCase().contains("sort")) {
+                            toolbar.getComponent(i).setEnabled(true);
+                            if (toolbar.getComponent(i).getClass().equals(TextField.class)){
+                                ((TextField)toolbar.getComponent(i)).setEditable(true);
                             }
                         }
                     }
                 }
             }
             else{
-                for (int i = 0; i < Toolbar.getComponentCount(); i++) {
-                    if (Toolbar.getComponent(i).getClass().equals(TextField.class)){
-                        ((TextField)Toolbar.getComponent(i)).setEditable(true);
-                        ((TextField)Toolbar.getComponent(i)).setEnabled(true);
+                for (int i = 0; i < toolbar.getComponentCount(); i++) {
+                    if (toolbar.getComponent(i).getClass().equals(TextField.class)){
+                        ((TextField)toolbar.getComponent(i)).setEditable(true);
+                        ((TextField)toolbar.getComponent(i)).setEnabled(true);
                     }
-                    if (Toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
-                        ((JDateChooser) Toolbar.getComponent(i)).setEnabled(true);
+                    if (toolbar.getComponent(i).getClass().equals(JDateChooser.class)){
+                        ((JDateChooser) toolbar.getComponent(i)).setEnabled(true);
                     }
-                    if (Toolbar.getComponent(i).getClass().equals(JComboBox.class)){
-                        ((JComboBox) Toolbar.getComponent(i)).setEnabled(true);
-                        ((JComboBox) Toolbar.getComponent(i)).setBackground(Color.white);
+                    if (toolbar.getComponent(i).getClass().equals(JComboBox.class)){
+                        ((JComboBox) toolbar.getComponent(i)).setEnabled(true);
+                        ((JComboBox) toolbar.getComponent(i)).setBackground(Color.white);
                     }
-                    if (Toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
-                        ((JScrollPane)Toolbar.getComponent(i)).getViewport().getView().setEnabled(true);
+                    if (toolbar.getComponent(i).getClass().equals(JScrollPane.class)){
+                        ((JScrollPane)toolbar.getComponent(i)).getViewport().getView().setEnabled(true);
                     }
-                    if (Toolbar.getComponent(i).getName() != null) {
-                        if (Toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser")) {
-                            Toolbar.getComponent(i).setEnabled(true);
-                        }
+                    if (toolbar.getComponent(i).getName() != null &&  (toolbar.getComponent(i).getName().equals("Toolbar__ButtonFileChooser"))) {
+                        toolbar.getComponent(i).setEnabled(true);
                     }
                 }
             }
-            
         } catch (IOException ex) {
         }
     }
 
-    public static void setComponents(JPanel ToolBar, JPanel NavBar) {
-        
-        UserController.Toolbar = ToolBar;
-        UserController.Navbar = NavBar;
-        
+    public static void setComponents(JPanel toolBar, JPanel navBar) {
+
+        UserController.toolbar = toolBar;
+        UserController.navbar = navBar;
+
     }
-    
+
 }

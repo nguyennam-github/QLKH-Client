@@ -8,6 +8,11 @@ import java.awt.Insets;
 import javax.swing.JScrollPane;
 import javax.swing.SwingUtilities;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class WrapLayout extends FlowLayout {
 
     public WrapLayout() {

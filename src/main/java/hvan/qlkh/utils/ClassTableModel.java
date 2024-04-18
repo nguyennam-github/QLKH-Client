@@ -4,10 +4,6 @@
  */
 package hvan.qlkh.utils;
 
-/**
- *
- * @author PC
- */
 import hvan.qlkh.models.Product;
 import hvan.qlkh.models.User;
 import java.text.NumberFormat;
@@ -15,6 +11,11 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.table.DefaultTableModel;
+
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
 
 public class ClassTableModel {
 

@@ -2,6 +2,11 @@ package hvan.qlkh.utils;
 
 import java.awt.Graphics2D;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public abstract class BlankPlotChatRender {
 
     public abstract String getLabelText(int index);

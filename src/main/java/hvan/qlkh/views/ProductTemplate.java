@@ -18,14 +18,11 @@ import static javax.swing.ScrollPaneConstants.UPPER_RIGHT_CORNER;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class ProductTemplate extends javax.swing.JPanel {
 
-    /**
-     * Creates new form ProductTemplate
-     */
-    
     private Product product;
 
     @SuppressWarnings("deprecation")
@@ -40,7 +37,7 @@ public class ProductTemplate extends javax.swing.JPanel {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
+
     private void initScroll(){
         scroll.setBorder(null);
         scroll.setVerticalScrollBar(new ScrollBar());
@@ -71,7 +68,7 @@ public class ProductTemplate extends javax.swing.JPanel {
             ProductTemplate__Description.setText(product.getDescription());
         }
     }
-    
+
     public ProductTemplate(Product product) {
         this.product = product;
         initComponents();

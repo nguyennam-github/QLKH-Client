@@ -11,8 +11,9 @@ import javax.swing.JPanel;
 
 /**
  *
- * @author super
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class Panel extends JPanel{
 
     private final int radius;

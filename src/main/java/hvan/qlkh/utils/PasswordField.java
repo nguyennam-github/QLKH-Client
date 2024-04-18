@@ -14,7 +14,7 @@ import javax.swing.border.EmptyBorder;
 
 /**
  *
- * @author super
+ * @author Nguyễn Phan Hoài Nam
  */
 
 public class PasswordField extends JPasswordField {

@@ -12,8 +12,9 @@ import java.util.Locale;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class BigDecimalConverter {
 
     private BigDecimalConverter() {

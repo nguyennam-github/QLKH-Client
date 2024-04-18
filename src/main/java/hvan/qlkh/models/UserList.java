@@ -12,8 +12,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 @XmlRootElement(name = "users")
 @XmlAccessorType(XmlAccessType.FIELD)
 public class UserList {

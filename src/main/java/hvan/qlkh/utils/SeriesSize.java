@@ -1,5 +1,10 @@
 package hvan.qlkh.utils;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class SeriesSize {
 
     public double getX() {

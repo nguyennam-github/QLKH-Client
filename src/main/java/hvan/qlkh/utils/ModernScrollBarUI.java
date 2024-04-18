@@ -13,6 +13,11 @@ import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class ModernScrollBarUI extends BasicScrollBarUI {
 
     private static final int THUMB_SIZE = 5;

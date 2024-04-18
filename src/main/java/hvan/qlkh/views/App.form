@@ -26,7 +26,7 @@
 
   <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
   <SubComponents>
-    <Container class="javax.swing.JPanel" name="App">
+    <Container class="javax.swing.JPanel" name="app">
       <Properties>
         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
           <Color blue="ff" green="ff" red="ff" type="rgb"/>
@@ -43,7 +43,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
       <SubComponents>
-        <Container class="javax.swing.JPanel" name="App__SignIn">
+        <Container class="javax.swing.JPanel" name="app__SignIn">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -54,13 +54,13 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="SignIn"/>
+              <CardConstraints cardName="app__SignIn"/>
             </Constraint>
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="SignIn">
+            <Container class="javax.swing.JPanel" name="signIn">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -84,33 +84,33 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="SignIn__Password" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignIn__Username" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignIn__UsernameInput" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signIn__Password" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="signIn__Username" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="signIn__UsernameInput" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="SignIn__Description" min="-2" max="-2" attributes="0"/>
+                                  <Component id="signIn__Description" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="SignIn__PasswordInput" alignment="0" min="-2" pref="460" max="-2" attributes="0"/>
-                              <Component id="SignIn__Alert" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signIn__PasswordInput" alignment="0" min="-2" pref="460" max="-2" attributes="0"/>
+                              <Component id="signIn__Alert" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="SignIn__Button" min="-2" pref="290" max="-2" attributes="0"/>
+                          <Component id="signIn__Button" min="-2" pref="290" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="156" max="-2" attributes="0"/>
-                          <Component id="SignIn__SignUpTitle" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__SwitchTitle" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="SignIn__SignUp" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__Switch" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="170" max="-2" attributes="0"/>
-                          <Component id="SignIn__Title" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__Title" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -119,25 +119,25 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="SignIn__Title" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__Title" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="SignIn__Description" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__Description" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="SignIn__Username" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__Username" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="SignIn__UsernameInput" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signIn__UsernameInput" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="SignIn__Password" min="-2" max="-2" attributes="0"/>
+                          <Component id="signIn__Password" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="SignIn__PasswordInput" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signIn__PasswordInput" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="SignIn__Alert" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="signIn__Alert" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="SignIn__Button" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signIn__Button" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="SignIn__SignUpTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignIn__SignUp" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="signIn__SwitchTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="signIn__Switch" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                       </Group>
@@ -145,36 +145,36 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="SignIn__Title">
+                <Component class="javax.swing.JLabel" name="signIn__Title">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center; color: rgba(33, 43, 39, 0.7); font-size: 30px; font-family: Karla; font-weight: 550; line-height: 45px; word-wrap: break-word&quot;&gt;&#x110;&#x103;ng nh&#x1ead;p&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignIn__Username">
+                <Component class="javax.swing.JLabel" name="signIn__Username">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word&quot;&gt;T&#xea;n t&#xe0;i kho&#x1ea3;n&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="SignIn__UsernameInput">
+                <Component class="javax.swing.JTextField" name="signIn__UsernameInput">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="20" style="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="SignIn__UsernameInputCaretUpdate"/>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SignIn__UsernameInputKeyPressed"/>
+                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="signIn__UsernameInputCaretUpdate"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="signIn__UsernameInputKeyPressed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(12, new Color(0, 0, 0, 30))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignIn__Password">
+                <Component class="javax.swing.JLabel" name="signIn__Password">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word&quot;&gt;M&#x1ead;t kh&#x1ea9;u&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="SignIn__Button">
+                <Component class="javax.swing.JButton" name="signIn__Button">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -186,46 +186,46 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignIn__ButtonMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signIn__ButtonMouseClicked"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignIn__Description">
+                <Component class="javax.swing.JLabel" name="signIn__Description">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 320px; text-align: center; color: #32403B; font-size: 15px; font-family: Karla; font-weight: 400; line-height: 19.50px; word-wrap: break-word&quot;&gt;Vui l&#xf2;ng &#x111;&#x103;ng nh&#x1ead;p v&#xe0;o t&#xe0;i kho&#x1ea3;n &#x111;&#x1ec3; s&#x1eed; d&#x1ee5;ng c&#xe1;c d&#x1ecb;ch v&#x1ee5; c&#x1ee7;a ch&#xfa;ng t&#xf4;i.&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="SignIn__PasswordInput">
+                <Component class="javax.swing.JPasswordField" name="signIn__PasswordInput">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="20" style="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SignIn__PasswordInputKeyPressed"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="signIn__PasswordInputKeyPressed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new PasswordField(15, new Color(0, 0, 0, 30))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignIn__SignUpTitle">
+                <Component class="javax.swing.JLabel" name="signIn__SwitchTitle">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center&quot;&gt;&lt;span style=&quot;color: #32403B; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word&quot;&gt;B&#x1ea1;n ch&#x1b0;a c&#xf3; t&#xe0;i kho&#x1ea3;n?&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignIn__SignUp">
+                <Component class="javax.swing.JLabel" name="signIn__Switch">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&quot;color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word&quot;&gt;&#x110;&#x103;ng k&#xfd;&lt;/span&gt;&lt;/html&gt;"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignIn__SignUpMouseClicked"/>
-                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignIn__SignUpMouseEntered"/>
-                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignIn__SignUpMouseExited"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signIn__SwitchMouseClicked"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signIn__SwitchMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signIn__SwitchMouseExited"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignIn__Alert">
+                <Component class="javax.swing.JLabel" name="signIn__Alert">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word&quot;&gt;&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
@@ -234,7 +234,7 @@
             </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JPanel" name="App__SignUp">
+        <Container class="javax.swing.JPanel" name="app__SignUp">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
               <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -242,13 +242,13 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignCardLayout" value="org.netbeans.modules.form.compat2.layouts.DesignCardLayout$CardConstraintsDescription">
-              <CardConstraints cardName="SignUp"/>
+              <CardConstraints cardName="app__SignUp"/>
             </Constraint>
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="SignUp">
+            <Container class="javax.swing.JPanel" name="signUp">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="f9" green="fb" red="f6" type="rgb"/>
@@ -271,31 +271,31 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="SignUp__Button" min="-2" pref="290" max="-2" attributes="0"/>
+                          <Component id="signUp__Button" min="-2" pref="290" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="155" max="-2" attributes="0"/>
-                          <Component id="SignUp__SignInTitle" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__SwitchTitle" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="SignUp__SignIn" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__Switch" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="SignUp__Retype" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignUp__Password" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignUp__Username" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignUp__UsernameInput" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signUp__Retype" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="signUp__Password" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="signUp__Username" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="signUp__UsernameInput" alignment="0" max="32767" attributes="0"/>
                               <Group type="102" alignment="1" attributes="0">
-                                  <Component id="SignUp__Description" min="-2" max="-2" attributes="0"/>
+                                  <Component id="signUp__Description" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="SignUp__PasswordInput" alignment="0" max="32767" attributes="0"/>
-                              <Component id="SignUp__Alert" alignment="0" max="32767" attributes="0"/>
-                              <Component id="SignUp__RetypeInput" alignment="0" max="32767" attributes="0"/>
-                              <Component id="SignUp__Title" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signUp__PasswordInput" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signUp__Alert" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signUp__RetypeInput" alignment="0" max="32767" attributes="0"/>
+                              <Component id="signUp__Title" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="45" pref="45" max="-2" attributes="0"/>
                       </Group>
@@ -305,29 +305,29 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
-                          <Component id="SignUp__Title" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__Title" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="SignUp__Description" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__Description" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
-                          <Component id="SignUp__Username" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__Username" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="SignUp__UsernameInput" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signUp__UsernameInput" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="SignUp__Password" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__Password" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="5" max="-2" attributes="0"/>
-                          <Component id="SignUp__PasswordInput" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signUp__PasswordInput" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
-                          <Component id="SignUp__Retype" min="-2" max="-2" attributes="0"/>
+                          <Component id="signUp__Retype" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="SignUp__RetypeInput" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signUp__RetypeInput" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="SignUp__Alert" min="-2" pref="20" max="-2" attributes="0"/>
+                          <Component id="signUp__Alert" min="-2" pref="20" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
-                          <Component id="SignUp__Button" min="-2" pref="65" max="-2" attributes="0"/>
+                          <Component id="signUp__Button" min="-2" pref="65" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="SignUp__SignInTitle" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="SignUp__SignIn" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="signUp__SwitchTitle" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="signUp__Switch" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -335,41 +335,41 @@
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="SignUp__Title">
+                <Component class="javax.swing.JLabel" name="signUp__Title">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 354px; text-align: center; color: rgba(33, 43, 39, 0.7); font-size: 30px; font-family: Karla; font-weight: 550; line-height: 45px; word-wrap: break-word&quot;&gt;T&#x1ea1;o t&#xe0;i kho&#x1ea3;n m&#x1edb;i&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__Username">
+                <Component class="javax.swing.JLabel" name="signUp__Username">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word&quot;&gt;T&#xea;n t&#xe0;i kho&#x1ea3;n&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="SignUp__UsernameInput">
+                <Component class="javax.swing.JTextField" name="signUp__UsernameInput">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="20" style="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="SignUp__UsernameInputCaretUpdate"/>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SignUp__UsernameInputKeyPressed"/>
+                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="signUp__UsernameInputCaretUpdate"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="signUp__UsernameInputKeyPressed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.TextField(12, new Color(0, 0, 0, 30))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__Password">
+                <Component class="javax.swing.JLabel" name="signUp__Password">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word&quot;&gt;M&#x1ead;t kh&#x1ea9;u&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__Retype">
+                <Component class="javax.swing.JLabel" name="signUp__Retype">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word&quot;&gt;Nh&#x1ead;p l&#x1ea1;i m&#x1ead;t kh&#x1ea9;u&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="SignUp__Button">
+                <Component class="javax.swing.JButton" name="signUp__Button">
                   <Properties>
                     <Property name="background" type="java.awt.Color" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
                       <Connection code="new Color(76, 175, 79, 200)" type="code"/>
@@ -381,61 +381,61 @@
                     <Property name="borderPainted" type="boolean" value="false"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignUp__ButtonMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signUp__ButtonMouseClicked"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__Description">
+                <Component class="javax.swing.JLabel" name="signUp__Description">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;width: 320px; text-align: center; color: #32403B; font-size: 15px; font-family: Karla; font-weight: 400; line-height: 19.50px; word-wrap: break-word&quot;&gt;T&#x1ea1;o t&#xe0;i kho&#x1ea3;n &#x111;&#x1ec3; s&#x1eed; d&#x1ee5;ng c&#xe1;c d&#x1ecb;ch v&#x1ee5; c&#x1ee7;a ch&#xfa;ng t&#xf4;i. N&#xf3; ho&#xe0;n to&#xe0;n mi&#x1ec5;n ph&#xed;!&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="SignUp__PasswordInput">
+                <Component class="javax.swing.JPasswordField" name="signUp__PasswordInput">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="20" style="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="SignUp__PasswordInputCaretUpdate"/>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SignUp__PasswordInputKeyPressed"/>
+                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="signUp__PasswordInputCaretUpdate"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="signUp__PasswordInputKeyPressed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new PasswordField(15, new Color(0, 0, 0, 30))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JPasswordField" name="SignUp__RetypeInput">
+                <Component class="javax.swing.JPasswordField" name="signUp__RetypeInput">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Segoe UI" size="20" style="0"/>
                     </Property>
                   </Properties>
                   <Events>
-                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="SignUp__RetypeInputCaretUpdate"/>
-                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="SignUp__RetypeInputKeyPressed"/>
+                    <EventHandler event="caretUpdate" listener="javax.swing.event.CaretListener" parameters="javax.swing.event.CaretEvent" handler="signUp__RetypeInputCaretUpdate"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="signUp__RetypeInputKeyPressed"/>
                   </Events>
                   <AuxValues>
                     <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new PasswordField(15, new Color(0, 0, 0, 30))"/>
                   </AuxValues>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__SignInTitle">
+                <Component class="javax.swing.JLabel" name="signUp__SwitchTitle">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center&quot;&gt;&lt;span style=&quot;color: #32403B; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word&quot;&gt;B&#x1ea1;n &#x111;&#xe3; c&#xf3; t&#xe0;i kho&#x1ea3;n?&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__SignIn">
+                <Component class="javax.swing.JLabel" name="signUp__Switch">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;span style=&quot;color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word&quot;&gt;&#x110;&#x103;ng nh&#x1ead;p&lt;/span&gt;&lt;/html&gt;"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignUp__SignInMouseClicked"/>
-                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignUp__SignInMouseEntered"/>
-                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="SignUp__SignInMouseExited"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signUp__SwitchMouseClicked"/>
+                    <EventHandler event="mouseEntered" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signUp__SwitchMouseEntered"/>
+                    <EventHandler event="mouseExited" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="signUp__SwitchMouseExited"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="SignUp__Alert">
+                <Component class="javax.swing.JLabel" name="signUp__Alert">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&lt;html&gt;&lt;div style=&quot;text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word&quot;&gt;&lt;/div&gt;&lt;/html&gt;"/>
                   </Properties>

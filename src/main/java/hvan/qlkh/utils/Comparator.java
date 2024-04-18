@@ -8,8 +8,9 @@ import hvan.qlkh.models.Product;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class Comparator {
 
     private Comparator() {

@@ -1,5 +1,10 @@
 package hvan.qlkh.chart;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 import java.awt.Color;
 
 public class ModelPieChart {

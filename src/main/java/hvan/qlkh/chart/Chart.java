@@ -10,6 +10,11 @@ import java.awt.RenderingHints;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class Chart extends javax.swing.JPanel {
 
     private transient List<ModelLegend> legends = new ArrayList<>();

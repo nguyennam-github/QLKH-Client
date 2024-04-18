@@ -23,8 +23,9 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class Controller {
 
     private JPanel pagesHome;

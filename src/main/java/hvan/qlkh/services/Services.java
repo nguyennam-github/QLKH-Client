@@ -1,4 +1,4 @@
- /*
+/*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -20,7 +20,6 @@ import java.io.StringReader;
 import java.io.StringWriter;
 import java.math.BigDecimal;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -35,27 +34,27 @@ import javax.xml.bind.Unmarshaller;
 
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class Services{
+
+    @SuppressWarnings("deprecation")
+    private Locale vn = new Locale("vi", "VN");
 
     private static Services instance;
     private static Product selectedProduct;
-    private static volatile List<Product> products = new ArrayList<>();
+    private volatile List<Product> products = new ArrayList<>();
     private static User currentUser;
     private static User selectedUser;
-    private static volatile List<User> users = new ArrayList<>();
-    @SuppressWarnings("deprecation")
-    private Locale vn = new Locale("vi", "VN");
-    
-    private static Thread thread;
-    private static volatile BufferedWriter os;
-    private static volatile BufferedReader is;
-    Controller appController = Main.getInstance().getAppController();
-    Table productsTable = Main.getInstance().getProductsTable();
-    Controller adminController = Main.getInstance().getAdminController();
-    Table usersTable = Main.getInstance().getUsersTable();
-    
+    private volatile List<User> users = new ArrayList<>();
+    private volatile BufferedWriter os;
+    private volatile BufferedReader is;
+    private static Controller appController = Main.getInstance().getAppController();
+    private static Table productsTable = Main.getInstance().getProductsTable();
+    private static Controller adminController = Main.getInstance().getAdminController();
+    private static Table usersTable = Main.getInstance().getUsersTable();
+
     private void write(String message) throws IOException{
         os.write(message);
         os.newLine();
@@ -63,19 +62,20 @@ public class Services{
     }
     public static synchronized Services getInstance() throws IOException{
         if(instance == null){
-            instance = new Services(); 
+            instance = new Services();
         }
         return instance;
     }
-    
+
     private Services() throws IOException {
-        Socket socketOfClient = new Socket("localhost", 7777);
-        os = new BufferedWriter(new OutputStreamWriter(socketOfClient.getOutputStream()));
-        is = new BufferedReader(new InputStreamReader(socketOfClient.getInputStream()));
+        Socket socket = new Socket("localhost", 7777);
+        os = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
+        is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         setUpSocket();
     }
-    
+
     private void setUpSocket() {
+        Thread thread;
         try {
             thread = new Thread() {
                 @Override
@@ -93,7 +93,7 @@ public class Services{
                                 if(method.equals("Reset")){
                                     StringBuilder sb = new StringBuilder();
                                     sb.append(payload);
-                                    while (true) {     
+                                    while (true) {
                                         String line = is.readLine();
                                         if (line.trim().equals("")){
                                             break;
@@ -105,16 +105,14 @@ public class Services{
                                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
                                     ProductList pl = (ProductList) unmarshaller.unmarshal(sr);
                                     products.clear();
-                                    if (pl != null){
-                                        if (pl.getProducts() != null) {
-                                            products = pl.getProducts();
-                                        }
+                                    if (pl != null &&  (pl.getProducts() != null)) {
+                                        products = pl.getProducts();
                                     }
                                     try {
                                         appController.setProductsTable(productsTable, products);
-                                        Main.getInstance().initSort();
-                                        Main.getInstance().initStatistic();
                                         Main.getInstance().resetToolbar(true);
+                                        Main.getInstance().setSort(products);
+                                        Main.getInstance().setStatistic();
                                         Main.getInstance().setProductTemplates(products);
                                     } catch (Exception e) {
                                     }
@@ -124,7 +122,7 @@ public class Services{
                                     String data = payload.substring(payload.indexOf("/") + 1);
                                     StringBuilder sb = new StringBuilder();
                                     sb.append(data);
-                                    while (true) {     
+                                    while (true) {
                                         String line = is.readLine();
                                         if (line.trim().equals("")){
                                             break;
@@ -136,24 +134,20 @@ public class Services{
                                     Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
                                     UserList ul = (UserList) unmarshaller.unmarshal(sr);
                                     users.clear();
-                                    if (ul != null){
-                                        if (ul.getUsers() != null) {
-                                            users = ul.getUsers();
-                                        }
+                                    if (ul != null &&  (ul.getUsers() != null)) {
+                                        users = ul.getUsers();
                                     }
                                     try {
                                         adminController.setUsersTable(usersTable, users);
                                         if (username.equals(getCurrentUser().getUsername())) {
-                                            Main.getInstance().SignOut();
+                                            Main.getInstance().signOut();
                                         }
                                         setSelectedUser(null);
                                     } catch (Exception e) {
                                     }
                                 }
                             }
-
                         }
-                    } catch (UnknownHostException e) {
                     } catch (IOException | JAXBException e) {
                     }
                 }
@@ -162,12 +156,12 @@ public class Services{
         } catch (Exception e) {
         }
     }
-    
-    public void get() throws IOException, JAXBException{
+
+    public void get() throws IOException{
         String message = "Get/";
         write(message);
     }
-    
+
     public void create(Product product) throws IOException{
         String message;
         StringWriter sw = new StringWriter();
@@ -176,7 +170,7 @@ public class Services{
         message = "Create/" + xmlString;
         write(message);
     }
-    
+
     public void update(String id, Product product) throws IOException{
         String message;
         StringWriter sw = new StringWriter();
@@ -185,17 +179,17 @@ public class Services{
         message = "Update/" + id + "/" + xmlString;
         write(message);
     }
-    
+
     public void delete(String id) throws IOException{
         String message = "Delete/" + id;
         write(message);
     }
-    
-    public void getUser() throws IOException, JAXBException{
+
+    public void getUser() throws IOException{
         String message = "Get-User/";
         write(message);
     }
-    
+
     public void createUser(User user) throws IOException{
         String message;
         StringWriter sw = new StringWriter();
@@ -204,7 +198,7 @@ public class Services{
         message = "Create-User/" + xmlString;
         write(message);
     }
-    
+
     public void updateUser(String username, User user) throws IOException{
         String message;
         StringWriter sw = new StringWriter();
@@ -213,17 +207,17 @@ public class Services{
         message = "Update-User/" + username+ "/" + xmlString;
         write(message);
     }
-    
+
     public void deleteUser(String username) throws IOException{
         String message = "Delete-User/" + username;
         write(message);
     }
-    
+
     public List<Product> getProducts(){
         return products;
     }
 
-    public static List<User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
@@ -235,15 +229,15 @@ public class Services{
         Services.selectedProduct = product;
     }
 
-    public static User getCurrentUser() {
+    public User getCurrentUser() {
         return currentUser;
     }
 
-    public static void setCurrentUser(User currentUser) {
+    public void setCurrentUser(User currentUser) {
         Services.currentUser = currentUser;
     }
 
-    public static User getSelectedUser() {
+    public User getSelectedUser() {
         return selectedUser;
     }
 
@@ -318,6 +312,7 @@ public class Services{
         }
     }
 
+    @SuppressWarnings("deprecation")
     public List<Product> filterByExpiry(Date dateMin, Date dateMax){
         dateMax.setHours(23);
         dateMax.setMinutes(59);
@@ -333,7 +328,8 @@ public class Services{
             .findAny()
             .orElse(null);
     }
-    
+
+    @SuppressWarnings("deprecation")
     public List<User> filter(String username, Date dateMin, Date dateMax, boolean read, boolean write){
         List<User> temp = getUsers();
         if (!username.equals("")){

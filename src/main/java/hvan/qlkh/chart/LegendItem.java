@@ -1,5 +1,10 @@
 package hvan.qlkh.chart;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class LegendItem extends javax.swing.JPanel {
 
     public LegendItem(ModelLegend data) {

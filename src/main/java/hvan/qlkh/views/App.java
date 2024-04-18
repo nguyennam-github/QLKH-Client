@@ -17,15 +17,14 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import org.apache.commons.codec.digest.DigestUtils;
+
 /**
  *
- * @author PC
+ * @author Nguyễn Phan Hoài Nam
  */
+
 public class App extends javax.swing.JFrame {
 
-    /**
-     * Creates new form StartView
-     */
     private static App instance;
     private User user;
     private boolean check = true;
@@ -33,16 +32,16 @@ public class App extends javax.swing.JFrame {
     CardLayout layout;
 
     private void initApp(){
-        layout = (CardLayout) App.getLayout();
-        App.add(Main.getInstance(), "Main");
+        layout = (CardLayout) app.getLayout();
+        app.add(Main.getInstance(), "app__Main");
     }
 
-    public App() {
+    private App() {
         initComponents();
         initApp();
     }
 
-    public static synchronized App getInstance(){
+    public static App getInstance(){
         if(instance == null){
             instance = new App();
         }
@@ -50,16 +49,16 @@ public class App extends javax.swing.JFrame {
     }
 
     private void resetSignIn(){
-        SignIn__UsernameInput.setText("");
-        SignIn__PasswordInput.setText("");
-        SignIn__Alert.setText("");
+        signIn__UsernameInput.setText("");
+        signIn__PasswordInput.setText("");
+        signIn__Alert.setText("");
     }
 
     private void resetSignUp(){
-        SignUp__UsernameInput.setText("");
-        SignUp__PasswordInput.setText("");
-        SignUp__RetypeInput.setText("");
-        SignUp__Alert.setText("");
+        signUp__UsernameInput.setText("");
+        signUp__PasswordInput.setText("");
+        signUp__RetypeInput.setText("");
+        signUp__Alert.setText("");
     }
 
     public void showMessage(String message, boolean type) {
@@ -80,349 +79,349 @@ public class App extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        App = new javax.swing.JPanel();
-        App__SignIn = new javax.swing.JPanel();
-        SignIn = new hvan.qlkh.utils.Panel(50);
-        SignIn__Title = new javax.swing.JLabel();
-        SignIn__Username = new javax.swing.JLabel();
-        SignIn__UsernameInput = new hvan.qlkh.utils.TextField(12, new Color(0, 0, 0, 30));
-        SignIn__Password = new javax.swing.JLabel();
-        SignIn__Button = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
-        SignIn__Description = new javax.swing.JLabel();
-        SignIn__PasswordInput = new PasswordField(15, new Color(0, 0, 0, 30));
-        SignIn__SignUpTitle = new javax.swing.JLabel();
-        SignIn__SignUp = new javax.swing.JLabel();
-        SignIn__Alert = new javax.swing.JLabel();
-        App__SignUp = new javax.swing.JPanel();
-        SignUp = new hvan.qlkh.utils.Panel(50);
-        SignUp__Title = new javax.swing.JLabel();
-        SignUp__Username = new javax.swing.JLabel();
-        SignUp__UsernameInput = new hvan.qlkh.utils.TextField(12, new Color(0, 0, 0, 30));
-        SignUp__Password = new javax.swing.JLabel();
-        SignUp__Retype = new javax.swing.JLabel();
-        SignUp__Button = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
-        SignUp__Description = new javax.swing.JLabel();
-        SignUp__PasswordInput = new PasswordField(15, new Color(0, 0, 0, 30));
-        SignUp__RetypeInput = new PasswordField(15, new Color(0, 0, 0, 30));
-        SignUp__SignInTitle = new javax.swing.JLabel();
-        SignUp__SignIn = new javax.swing.JLabel();
-        SignUp__Alert = new javax.swing.JLabel();
+        app = new javax.swing.JPanel();
+        app__SignIn = new javax.swing.JPanel();
+        signIn = new hvan.qlkh.utils.Panel(50);
+        signIn__Title = new javax.swing.JLabel();
+        signIn__Username = new javax.swing.JLabel();
+        signIn__UsernameInput = new hvan.qlkh.utils.TextField(12, new Color(0, 0, 0, 30));
+        signIn__Password = new javax.swing.JLabel();
+        signIn__Button = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
+        signIn__Description = new javax.swing.JLabel();
+        signIn__PasswordInput = new PasswordField(15, new Color(0, 0, 0, 30));
+        signIn__SwitchTitle = new javax.swing.JLabel();
+        signIn__Switch = new javax.swing.JLabel();
+        signIn__Alert = new javax.swing.JLabel();
+        app__SignUp = new javax.swing.JPanel();
+        signUp = new hvan.qlkh.utils.Panel(50);
+        signUp__Title = new javax.swing.JLabel();
+        signUp__Username = new javax.swing.JLabel();
+        signUp__UsernameInput = new hvan.qlkh.utils.TextField(12, new Color(0, 0, 0, 30));
+        signUp__Password = new javax.swing.JLabel();
+        signUp__Retype = new javax.swing.JLabel();
+        signUp__Button = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
+        signUp__Description = new javax.swing.JLabel();
+        signUp__PasswordInput = new PasswordField(15, new Color(0, 0, 0, 30));
+        signUp__RetypeInput = new PasswordField(15, new Color(0, 0, 0, 30));
+        signUp__SwitchTitle = new javax.swing.JLabel();
+        signUp__Switch = new javax.swing.JLabel();
+        signUp__Alert = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setLocation((int) ((dimension.getWidth() - 1175) / 2), (int)((dimension.getHeight() - 880) / 2));
         getContentPane().setLayout(new java.awt.CardLayout());
 
-        App.setBackground(new java.awt.Color(255, 255, 255));
-        App.setPreferredSize(new java.awt.Dimension(1175, 800));
-        App.setLayout(new java.awt.CardLayout());
+        app.setBackground(new java.awt.Color(255, 255, 255));
+        app.setPreferredSize(new java.awt.Dimension(1175, 800));
+        app.setLayout(new java.awt.CardLayout());
 
-        App__SignIn.setBackground(new Color(76, 175, 79, 200));
-        App__SignIn.setPreferredSize(new java.awt.Dimension(1200, 800));
-        App__SignIn.setLayout(new java.awt.GridBagLayout());
+        app__SignIn.setBackground(new Color(76, 175, 79, 200));
+        app__SignIn.setPreferredSize(new java.awt.Dimension(1200, 800));
+        app__SignIn.setLayout(new java.awt.GridBagLayout());
 
-        SignIn.setBackground(new java.awt.Color(246, 251, 249));
-        SignIn.setPreferredSize(new java.awt.Dimension(550, 580));
+        signIn.setBackground(new java.awt.Color(246, 251, 249));
+        signIn.setPreferredSize(new java.awt.Dimension(550, 580));
 
-        SignIn__Title.setText("<html><div style=\"text-align: center; color: rgba(33, 43, 39, 0.7); font-size: 30px; font-family: Karla; font-weight: 550; line-height: 45px; word-wrap: break-word\">Đăng nhập</div></html>");
+        signIn__Title.setText("<html><div style=\"text-align: center; color: rgba(33, 43, 39, 0.7); font-size: 30px; font-family: Karla; font-weight: 550; line-height: 45px; word-wrap: break-word\">Đăng nhập</div></html>");
 
-        SignIn__Username.setText("<html><div style=\"width: 150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Tên tài khoản</div></html>");
+        signIn__Username.setText("<html><div style=\"width: 150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Tên tài khoản</div></html>");
 
-        SignIn__UsernameInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        SignIn__UsernameInput.addCaretListener(new javax.swing.event.CaretListener() {
+        signIn__UsernameInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        signIn__UsernameInput.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                SignIn__UsernameInputCaretUpdate(evt);
+                signIn__UsernameInputCaretUpdate(evt);
             }
         });
-        SignIn__UsernameInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        signIn__UsernameInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                SignIn__UsernameInputKeyPressed(evt);
+                signIn__UsernameInputKeyPressed(evt);
             }
         });
 
-        SignIn__Password.setText("<html><div style=\"width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Mật khẩu</div></html>");
+        signIn__Password.setText("<html><div style=\"width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Mật khẩu</div></html>");
 
-        SignIn__Button.setBackground(new Color(76, 175, 79, 200));
-        SignIn__Button.setText("<html><div style=\"text-align: center; color:white; font-size: 22px; font-family: Karla; font-weight: 700; line-height: 28.60px; word-wrap: break-word\">Đăng nhập</div></html>");
-        SignIn__Button.setBorder(null);
-        SignIn__Button.setBorderPainted(false);
-        SignIn__Button.addMouseListener(new java.awt.event.MouseAdapter() {
+        signIn__Button.setBackground(new Color(76, 175, 79, 200));
+        signIn__Button.setText("<html><div style=\"text-align: center; color:white; font-size: 22px; font-family: Karla; font-weight: 700; line-height: 28.60px; word-wrap: break-word\">Đăng nhập</div></html>");
+        signIn__Button.setBorder(null);
+        signIn__Button.setBorderPainted(false);
+        signIn__Button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SignIn__ButtonMouseClicked(evt);
+                signIn__ButtonMouseClicked(evt);
             }
         });
 
-        SignIn__Description.setText("<html><div style=\"width: 320px; text-align: center; color: #32403B; font-size: 15px; font-family: Karla; font-weight: 400; line-height: 19.50px; word-wrap: break-word\">Vui lòng đăng nhập vào tài khoản để sử dụng các dịch vụ của chúng tôi.</div></html>");
+        signIn__Description.setText("<html><div style=\"width: 320px; text-align: center; color: #32403B; font-size: 15px; font-family: Karla; font-weight: 400; line-height: 19.50px; word-wrap: break-word\">Vui lòng đăng nhập vào tài khoản để sử dụng các dịch vụ của chúng tôi.</div></html>");
 
-        SignIn__PasswordInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        SignIn__PasswordInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        signIn__PasswordInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        signIn__PasswordInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                SignIn__PasswordInputKeyPressed(evt);
+                signIn__PasswordInputKeyPressed(evt);
             }
         });
 
-        SignIn__SignUpTitle.setText("<html><div style=\"text-align: center\"><span style=\"color: #32403B; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn chưa có tài khoản?</div></html>");
+        signIn__SwitchTitle.setText("<html><div style=\"text-align: center\"><span style=\"color: #32403B; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn chưa có tài khoản?</div></html>");
 
-        SignIn__SignUp.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng ký</span></html>");
-        SignIn__SignUp.addMouseListener(new java.awt.event.MouseAdapter() {
+        signIn__Switch.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng ký</span></html>");
+        signIn__Switch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SignIn__SignUpMouseClicked(evt);
+                signIn__SwitchMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SignIn__SignUpMouseEntered(evt);
+                signIn__SwitchMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                SignIn__SignUpMouseExited(evt);
+                signIn__SwitchMouseExited(evt);
             }
         });
 
-        SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+        signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
 
-        javax.swing.GroupLayout SignInLayout = new javax.swing.GroupLayout(SignIn);
-        SignIn.setLayout(SignInLayout);
-        SignInLayout.setHorizontalGroup(
-            SignInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SignInLayout.createSequentialGroup()
+        javax.swing.GroupLayout signInLayout = new javax.swing.GroupLayout(signIn);
+        signIn.setLayout(signInLayout);
+        signInLayout.setHorizontalGroup(
+            signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(signInLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(SignInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SignIn__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignIn__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignIn__UsernameInput)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignInLayout.createSequentialGroup()
-                        .addComponent(SignIn__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(signIn__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signIn__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signIn__UsernameInput)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signInLayout.createSequentialGroup()
+                        .addComponent(signIn__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))
-                    .addComponent(SignIn__PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignIn__Alert))
+                    .addComponent(signIn__PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 460, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signIn__Alert))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignInLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signInLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SignIn__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(SignInLayout.createSequentialGroup()
+            .addGroup(signInLayout.createSequentialGroup()
                 .addGap(156, 156, 156)
-                .addComponent(SignIn__SignUpTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__SwitchTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(SignIn__SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Switch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(SignInLayout.createSequentialGroup()
+            .addGroup(signInLayout.createSequentialGroup()
                 .addGap(170, 170, 170)
-                .addComponent(SignIn__Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        SignInLayout.setVerticalGroup(
-            SignInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SignInLayout.createSequentialGroup()
+        signInLayout.setVerticalGroup(
+            signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(signInLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(SignIn__Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SignIn__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(SignIn__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(SignIn__UsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__UsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SignIn__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(SignIn__PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(SignIn__Alert, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Alert, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(SignIn__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signIn__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(SignInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SignIn__SignUpTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignIn__SignUp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(signInLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signIn__SwitchTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signIn__Switch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(45, 45, 45))
         );
 
-        App__SignIn.add(SignIn, new java.awt.GridBagConstraints());
+        app__SignIn.add(signIn, new java.awt.GridBagConstraints());
 
-        App.add(App__SignIn, "SignIn");
+        app.add(app__SignIn, "app__SignIn");
 
-        App__SignUp.setBackground(new Color(76, 175, 79, 200));
-        App__SignUp.setLayout(new java.awt.GridBagLayout());
+        app__SignUp.setBackground(new Color(76, 175, 79, 200));
+        app__SignUp.setLayout(new java.awt.GridBagLayout());
 
-        SignUp.setBackground(new java.awt.Color(246, 251, 249));
-        SignUp.setPreferredSize(new java.awt.Dimension(550, 690));
+        signUp.setBackground(new java.awt.Color(246, 251, 249));
+        signUp.setPreferredSize(new java.awt.Dimension(550, 690));
 
-        SignUp__Title.setText("<html><div style=\"width: 354px; text-align: center; color: rgba(33, 43, 39, 0.7); font-size: 30px; font-family: Karla; font-weight: 550; line-height: 45px; word-wrap: break-word\">Tạo tài khoản mới</div></html>");
+        signUp__Title.setText("<html><div style=\"width: 354px; text-align: center; color: rgba(33, 43, 39, 0.7); font-size: 30px; font-family: Karla; font-weight: 550; line-height: 45px; word-wrap: break-word\">Tạo tài khoản mới</div></html>");
 
-        SignUp__Username.setText("<html><div style=\"width: 150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Tên tài khoản</div></html>");
+        signUp__Username.setText("<html><div style=\"width: 150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Tên tài khoản</div></html>");
 
-        SignUp__UsernameInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        SignUp__UsernameInput.addCaretListener(new javax.swing.event.CaretListener() {
+        signUp__UsernameInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        signUp__UsernameInput.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                SignUp__UsernameInputCaretUpdate(evt);
+                signUp__UsernameInputCaretUpdate(evt);
             }
         });
-        SignUp__UsernameInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        signUp__UsernameInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                SignUp__UsernameInputKeyPressed(evt);
+                signUp__UsernameInputKeyPressed(evt);
             }
         });
 
-        SignUp__Password.setText("<html><div style=\"width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Mật khẩu</div></html>");
+        signUp__Password.setText("<html><div style=\"width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Mật khẩu</div></html>");
 
-        SignUp__Retype.setText("<html><div style=\"width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Nhập lại mật khẩu</div></html>");
+        signUp__Retype.setText("<html><div style=\"width:150px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 15px; font-family: Karla; font-weight: 500; line-height: 19.50px; word-wrap: break-word\">Nhập lại mật khẩu</div></html>");
 
-        SignUp__Button.setBackground(new Color(76, 175, 79, 200));
-        SignUp__Button.setText("<html><div style=\"text-align: center; color:white; font-size: 22px; font-family: Karla; font-weight: 700; line-height: 28.60px; word-wrap: break-word\">Tạo tài khoản</div></html>");
-        SignUp__Button.setBorder(null);
-        SignUp__Button.setBorderPainted(false);
-        SignUp__Button.addMouseListener(new java.awt.event.MouseAdapter() {
+        signUp__Button.setBackground(new Color(76, 175, 79, 200));
+        signUp__Button.setText("<html><div style=\"text-align: center; color:white; font-size: 22px; font-family: Karla; font-weight: 700; line-height: 28.60px; word-wrap: break-word\">Tạo tài khoản</div></html>");
+        signUp__Button.setBorder(null);
+        signUp__Button.setBorderPainted(false);
+        signUp__Button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SignUp__ButtonMouseClicked(evt);
+                signUp__ButtonMouseClicked(evt);
             }
         });
 
-        SignUp__Description.setText("<html><div style=\"width: 320px; text-align: center; color: #32403B; font-size: 15px; font-family: Karla; font-weight: 400; line-height: 19.50px; word-wrap: break-word\">Tạo tài khoản để sử dụng các dịch vụ của chúng tôi. Nó hoàn toàn miễn phí!</div></html>");
+        signUp__Description.setText("<html><div style=\"width: 320px; text-align: center; color: #32403B; font-size: 15px; font-family: Karla; font-weight: 400; line-height: 19.50px; word-wrap: break-word\">Tạo tài khoản để sử dụng các dịch vụ của chúng tôi. Nó hoàn toàn miễn phí!</div></html>");
 
-        SignUp__PasswordInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        SignUp__PasswordInput.addCaretListener(new javax.swing.event.CaretListener() {
+        signUp__PasswordInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        signUp__PasswordInput.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                SignUp__PasswordInputCaretUpdate(evt);
+                signUp__PasswordInputCaretUpdate(evt);
             }
         });
-        SignUp__PasswordInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        signUp__PasswordInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                SignUp__PasswordInputKeyPressed(evt);
+                signUp__PasswordInputKeyPressed(evt);
             }
         });
 
-        SignUp__RetypeInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
-        SignUp__RetypeInput.addCaretListener(new javax.swing.event.CaretListener() {
+        signUp__RetypeInput.setFont(new java.awt.Font("Segoe UI", 0, 20)); // NOI18N
+        signUp__RetypeInput.addCaretListener(new javax.swing.event.CaretListener() {
             public void caretUpdate(javax.swing.event.CaretEvent evt) {
-                SignUp__RetypeInputCaretUpdate(evt);
+                signUp__RetypeInputCaretUpdate(evt);
             }
         });
-        SignUp__RetypeInput.addKeyListener(new java.awt.event.KeyAdapter() {
+        signUp__RetypeInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                SignUp__RetypeInputKeyPressed(evt);
+                signUp__RetypeInputKeyPressed(evt);
             }
         });
 
-        SignUp__SignInTitle.setText("<html><div style=\"text-align: center\"><span style=\"color: #32403B; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã có tài khoản?</div></html>");
+        signUp__SwitchTitle.setText("<html><div style=\"text-align: center\"><span style=\"color: #32403B; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã có tài khoản?</div></html>");
 
-        SignUp__SignIn.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng nhập</span></html>");
-        SignUp__SignIn.addMouseListener(new java.awt.event.MouseAdapter() {
+        signUp__Switch.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng nhập</span></html>");
+        signUp__Switch.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                SignUp__SignInMouseClicked(evt);
+                signUp__SwitchMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                SignUp__SignInMouseEntered(evt);
+                signUp__SwitchMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                SignUp__SignInMouseExited(evt);
+                signUp__SwitchMouseExited(evt);
             }
         });
 
-        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
 
-        javax.swing.GroupLayout SignUpLayout = new javax.swing.GroupLayout(SignUp);
-        SignUp.setLayout(SignUpLayout);
-        SignUpLayout.setHorizontalGroup(
-            SignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignUpLayout.createSequentialGroup()
+        javax.swing.GroupLayout signUpLayout = new javax.swing.GroupLayout(signUp);
+        signUp.setLayout(signUpLayout);
+        signUpLayout.setHorizontalGroup(
+            signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signUpLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(SignUp__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(SignUpLayout.createSequentialGroup()
+            .addGroup(signUpLayout.createSequentialGroup()
                 .addGap(155, 155, 155)
-                .addComponent(SignUp__SignInTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__SwitchTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(SignUp__SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Switch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(SignUpLayout.createSequentialGroup()
+            .addGroup(signUpLayout.createSequentialGroup()
                 .addGap(45, 45, 45)
-                .addGroup(SignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(SignUp__Retype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignUp__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignUp__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignUp__UsernameInput)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SignUpLayout.createSequentialGroup()
-                        .addComponent(SignUp__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(signUp__Retype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signUp__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signUp__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signUp__UsernameInput)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, signUpLayout.createSequentialGroup()
+                        .addComponent(signUp__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(22, 22, 22))
-                    .addComponent(SignUp__PasswordInput)
-                    .addComponent(SignUp__Alert)
-                    .addComponent(SignUp__RetypeInput)
-                    .addComponent(SignUp__Title))
+                    .addComponent(signUp__PasswordInput)
+                    .addComponent(signUp__Alert)
+                    .addComponent(signUp__RetypeInput)
+                    .addComponent(signUp__Title))
                 .addGap(45, 45, 45))
         );
-        SignUpLayout.setVerticalGroup(
-            SignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SignUpLayout.createSequentialGroup()
+        signUpLayout.setVerticalGroup(
+            signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(signUpLayout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addComponent(SignUp__Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Title, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SignUp__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Description, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30)
-                .addComponent(SignUp__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Username, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(SignUp__UsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__UsernameInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(SignUp__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(SignUp__PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__PasswordInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(15, 15, 15)
-                .addComponent(SignUp__Retype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Retype, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(SignUp__RetypeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__RetypeInput, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(SignUp__Alert, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Alert, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(SignUp__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(signUp__Button, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(10, 10, 10)
-                .addGroup(SignUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SignUp__SignInTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SignUp__SignIn, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(signUpLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(signUp__SwitchTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(signUp__Switch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        App__SignUp.add(SignUp, new java.awt.GridBagConstraints());
+        app__SignUp.add(signUp, new java.awt.GridBagConstraints());
 
-        App.add(App__SignUp, "SignUp");
+        app.add(app__SignUp, "app__SignUp");
 
-        getContentPane().add(App, "card2");
+        getContentPane().add(app, "card2");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void SignIn__UsernameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_SignIn__UsernameInputCaretUpdate
+    private void signIn__UsernameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_signIn__UsernameInputCaretUpdate
         try {
-            user = Services.getInstance().findByUsername(SignIn__UsernameInput.getText());
+            user = Services.getInstance().findByUsername(signIn__UsernameInput.getText());
             if (user != null){
-                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
             }
             else{
                 user = null;
-                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tài khoản này không tồn tại!</div></html>");
+                signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tài khoản này không tồn tại!</div></html>");
             }
         } catch (IOException ex) {
             //
         }
-    }//GEN-LAST:event_SignIn__UsernameInputCaretUpdate
+    }//GEN-LAST:event_signIn__UsernameInputCaretUpdate
 
-    private void SignIn__ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignIn__ButtonMouseClicked
-        if (SignIn__UsernameInput.getText().equals("")){
-            SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản không được để trống!</div></html>");
+    @SuppressWarnings("deprecation")
+    private void signIn__ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signIn__ButtonMouseClicked
+        if (signIn__UsernameInput.getText().equals("")){
+            signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản không được để trống!</div></html>");
         }
         else{
-            if (SignIn__PasswordInput.getText().equals("")){
-                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
+            if (signIn__PasswordInput.getText().equals("")){
+                signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
             }
         }
         if (user != null){
-            String md5Hex = DigestUtils.md5Hex(SignIn__PasswordInput.getText());
+            String md5Hex = DigestUtils.md5Hex(signIn__PasswordInput.getText());
             if (md5Hex.equals(user.getPassword())){
                 if (user.isRead()){
-                    layout.show(App, "Main");
+                    layout.show(app, "app__Main");
                     try {
                         Services.getInstance().setCurrentUser(user);
                     } catch (IOException ex) {
-                        //
                     }
-                    SignIn__UsernameInput.setText("");
-                    SignIn__PasswordInput.setText("");
-                    SignIn__Alert.setText("");
+                    signIn__UsernameInput.setText("");
+                    signIn__PasswordInput.setText("");
+                    signIn__Alert.setText("");
                     UserController.getInstance().initMain();
                 }
                 else{
@@ -430,141 +429,144 @@ public class App extends javax.swing.JFrame {
                 }
             }
             else{
-                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
+                signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
             }
         }
-    }//GEN-LAST:event_SignIn__ButtonMouseClicked
+    }//GEN-LAST:event_signIn__ButtonMouseClicked
 
-    private void SignIn__SignUpMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignIn__SignUpMouseClicked
-        layout.show(App, "SignUp");
+    private void signIn__SwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signIn__SwitchMouseClicked
+        layout.show(app, "app__SignUp");
         resetSignIn();
-    }//GEN-LAST:event_SignIn__SignUpMouseClicked
+    }//GEN-LAST:event_signIn__SwitchMouseClicked
 
-    private void SignIn__SignUpMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignIn__SignUpMouseEntered
-        SignIn__SignUp.setText("<html><span style=\"color:rgba(76,175,79,0.8); font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng ký</span></html>");
-    }//GEN-LAST:event_SignIn__SignUpMouseEntered
+    private void signIn__SwitchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signIn__SwitchMouseEntered
+        signIn__Switch.setText("<html><span style=\"color:rgba(76,175,79,0.8); font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng ký</span></html>");
+    }//GEN-LAST:event_signIn__SwitchMouseEntered
 
-    private void SignIn__SignUpMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignIn__SignUpMouseExited
-        SignIn__SignUp.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng ký</span></html>");
-    }//GEN-LAST:event_SignIn__SignUpMouseExited
+    private void signIn__SwitchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signIn__SwitchMouseExited
+        signIn__Switch.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng ký</span></html>");
+    }//GEN-LAST:event_signIn__SwitchMouseExited
 
-    private void SignUp__UsernameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_SignUp__UsernameInputCaretUpdate
+    private void signUp__UsernameInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_signUp__UsernameInputCaretUpdate
         Pattern pattern = Pattern.compile("^[a-zA-Z0-9_-]{5,15}$");
-        if (pattern.matcher(SignUp__UsernameInput.getText()).find()){
+        if (pattern.matcher(signUp__UsernameInput.getText()).find()){
             try {
-                if (Services.getInstance().findByUsername(SignUp__UsernameInput.getText()) == null){
+                if (Services.getInstance().findByUsername(signUp__UsernameInput.getText()) == null){
                     check = true;
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                 }
                 else{
                     check = false;
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản đã tồn tại!</div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản đã tồn tại!</div></html>");
                 }
             } catch (IOException ex) {
             }
         }
         else{
             check = false;
-            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
+            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
         }
-    }//GEN-LAST:event_SignUp__UsernameInputCaretUpdate
+    }//GEN-LAST:event_signUp__UsernameInputCaretUpdate
 
-    private void SignUp__ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignUp__ButtonMouseClicked
-        if (SignUp__UsernameInput.getText().equals("")){
+    @SuppressWarnings("deprecation")
+    private void signUp__ButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUp__ButtonMouseClicked
+        if (signUp__UsernameInput.getText().equals("")){
             if(check){
                 check = false;
-                SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
+                signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
             }
         }
         else{
-            if (SignUp__PasswordInput.getText().equals("")){
+            if (signUp__PasswordInput.getText().equals("")){
                 if (check){
                     check = false;
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
                 }
             }
             else{
-                if (SignUp__RetypeInput.getText().equals("")){
+                if (signUp__RetypeInput.getText().equals("")){
                     if (check){
                         check = false;
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
                     }
                 }
                 else{
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                 }
             }
         }
         if (check){
-            User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+            User temp = new User(signUp__UsernameInput.getText(), signUp__PasswordInput.getText());
             try {
                 Services.getInstance().createUser(temp);
             } catch (IOException ex) {
             }
-            layout.show(App, "SignIn");
+            layout.show(app, "app__SignIn");
             resetSignUp();
         }
-    }//GEN-LAST:event_SignUp__ButtonMouseClicked
+    }//GEN-LAST:event_signUp__ButtonMouseClicked
 
-    private void SignUp__PasswordInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_SignUp__PasswordInputCaretUpdate
+    @SuppressWarnings("deprecation")
+    private void signUp__PasswordInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_signUp__PasswordInputCaretUpdate
         Pattern pattern = Pattern.compile("^(?=.*\\d)(?=.*[a-zA-Z]).{8,}$");
-        if (pattern.matcher(SignUp__PasswordInput.getText()).find()){
+        if (pattern.matcher(signUp__PasswordInput.getText()).find()){
             check = true;
-            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
         }
         else{
             check = false;
-            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
+            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
         }
-    }//GEN-LAST:event_SignUp__PasswordInputCaretUpdate
+    }//GEN-LAST:event_signUp__PasswordInputCaretUpdate
 
-    private void SignUp__RetypeInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_SignUp__RetypeInputCaretUpdate
-        if(SignUp__PasswordInput.getText().equals(SignUp__RetypeInput.getText())){
+    @SuppressWarnings("deprecation")
+    private void signUp__RetypeInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_signUp__RetypeInputCaretUpdate
+        if(signUp__PasswordInput.getText().equals(signUp__RetypeInput.getText())){
             check = true;
-            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
         }
         else{
             check = false;
-            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
+            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
         }
-    }//GEN-LAST:event_SignUp__RetypeInputCaretUpdate
+    }//GEN-LAST:event_signUp__RetypeInputCaretUpdate
 
-    private void SignUp__SignInMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignUp__SignInMouseEntered
-        SignUp__SignIn.setText("<html><span style=\"color:rgba(76,175,79,0.8); font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng nhập</span></html>");
-    }//GEN-LAST:event_SignUp__SignInMouseEntered
+    private void signUp__SwitchMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUp__SwitchMouseEntered
+        signUp__Switch.setText("<html><span style=\"color:rgba(76,175,79,0.8); font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng nhập</span></html>");
+    }//GEN-LAST:event_signUp__SwitchMouseEntered
 
-    private void SignUp__SignInMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignUp__SignInMouseExited
-        SignUp__SignIn.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng nhập</span></html>");
-    }//GEN-LAST:event_SignUp__SignInMouseExited
+    private void signUp__SwitchMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUp__SwitchMouseExited
+        signUp__Switch.setText("<html><span style=\"color: #32403B; font-size: 14px; font-family: Karla; font-weight: 400; text-decoration: underline; line-height: 18.20px; word-wrap: break-word\">Đăng nhập</span></html>");
+    }//GEN-LAST:event_signUp__SwitchMouseExited
 
-    private void SignUp__SignInMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SignUp__SignInMouseClicked
-        layout.show(App, "SignIn");
+    private void signUp__SwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_signUp__SwitchMouseClicked
+        layout.show(app, "app__SignIn");
         resetSignUp();
-    }//GEN-LAST:event_SignUp__SignInMouseClicked
+    }//GEN-LAST:event_signUp__SwitchMouseClicked
 
-    private void SignIn__PasswordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SignIn__PasswordInputKeyPressed
+    @SuppressWarnings("deprecation")
+    private void signIn__PasswordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_signIn__PasswordInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (SignIn__UsernameInput.getText().equals("")){
-                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản không được để trống!</div></html>");
+            if (signIn__UsernameInput.getText().equals("")){
+                signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản không được để trống!</div></html>");
             }
             else{
-                if (SignIn__PasswordInput.getText().equals("")){
-                    SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
+                if (signIn__PasswordInput.getText().equals("")){
+                    signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
                 }
             }
             if (user != null){
-                String md5Hex = DigestUtils.md5Hex(SignIn__PasswordInput.getText());
+                String md5Hex = DigestUtils.md5Hex(signIn__PasswordInput.getText());
                 if (md5Hex.equals(user.getPassword())){
                     if (user.isRead()){
-                        layout.show(App, "Main");
+                        layout.show(app, "app__Main");
                         try {
                             Services.getInstance().setCurrentUser(user);
                         } catch (IOException ex) {
-                            //
                         }
-                        SignIn__UsernameInput.setText("");
-                        SignIn__PasswordInput.setText("");
-                        SignIn__Alert.setText("");
+                        signIn__UsernameInput.setText("");
+                        signIn__PasswordInput.setText("");
+                        signIn__Alert.setText("");
                         UserController.getInstance().initMain();
                     }
                     else{
@@ -572,34 +574,35 @@ public class App extends javax.swing.JFrame {
                     }
                 }
                 else{
-                    SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
+                    signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
                 }
             }
         }
-    }//GEN-LAST:event_SignIn__PasswordInputKeyPressed
+    }//GEN-LAST:event_signIn__PasswordInputKeyPressed
 
-    private void SignIn__UsernameInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SignIn__UsernameInputKeyPressed
+    @SuppressWarnings("deprecation")
+    private void signIn__UsernameInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_signIn__UsernameInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (SignIn__UsernameInput.getText().equals("")){
-                SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản không được để trống!</div></html>");
+            if (signIn__UsernameInput.getText().equals("")){
+                signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản không được để trống!</div></html>");
             }
             else{
-                if (SignIn__PasswordInput.getText().equals("")){
-                    SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
+                if (signIn__PasswordInput.getText().equals("")){
+                    signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
                 }
             }
             if (user != null){
-                String md5Hex = DigestUtils.md5Hex(SignIn__PasswordInput.getText());
+                String md5Hex = DigestUtils.md5Hex(signIn__PasswordInput.getText());
                 if (md5Hex.equals(user.getPassword())){
                     if (user.isRead()){
-                        layout.show(App, "Main");
+                        layout.show(app, "app__Main");
                         try {
                             Services.getInstance().setCurrentUser(user);
                         } catch (IOException ex) {
                         }
-                        SignIn__UsernameInput.setText("");
-                        SignIn__PasswordInput.setText("");
-                        SignIn__Alert.setText("");
+                        signIn__UsernameInput.setText("");
+                        signIn__PasswordInput.setText("");
+                        signIn__Alert.setText("");
                         UserController.getInstance().initMain();
                     }
                     else{
@@ -607,128 +610,131 @@ public class App extends javax.swing.JFrame {
                     }
                 }
                 else{
-                    SignIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
+                    signIn__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Bạn đã nhập sai mật khẩu cho tài khoản này!</div></html>");
                 }
             }
         }
-    }//GEN-LAST:event_SignIn__UsernameInputKeyPressed
+    }//GEN-LAST:event_signIn__UsernameInputKeyPressed
 
-    private void SignUp__UsernameInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SignUp__UsernameInputKeyPressed
+    @SuppressWarnings("deprecation")
+    private void signUp__UsernameInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_signUp__UsernameInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (SignUp__UsernameInput.getText().equals("")){
+            if (signUp__UsernameInput.getText().equals("")){
                 if(check){
                     check = false;
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
                 }
             }
             else{
-                if (SignUp__PasswordInput.getText().equals("")){
+                if (signUp__PasswordInput.getText().equals("")){
                     if (check){
                         check = false;
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
                     }
                 }
                 else{
-                    if (SignUp__RetypeInput.getText().equals("")){
+                    if (signUp__RetypeInput.getText().equals("")){
                         if (check){
                             check = false;
-                            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
+                            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
                         }
                     }
                     else{
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                     }
                 }
             }
             if (check){
-            User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+            User temp = new User(signUp__UsernameInput.getText(), signUp__PasswordInput.getText());
             try {
                 Services.getInstance().createUser(temp);
             } catch (IOException ex) {
             }
-            layout.show(App, "SignIn");
+            layout.show(app, "app__SignIn");
             resetSignUp();
             }
         }
-    }//GEN-LAST:event_SignUp__UsernameInputKeyPressed
+    }//GEN-LAST:event_signUp__UsernameInputKeyPressed
 
-    private void SignUp__PasswordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SignUp__PasswordInputKeyPressed
+    @SuppressWarnings("deprecation")
+    private void signUp__PasswordInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_signUp__PasswordInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (SignUp__UsernameInput.getText().equals("")){
+            if (signUp__UsernameInput.getText().equals("")){
                 if(check){
                     check = false;
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
                 }
             }
             else{
-                if (SignUp__PasswordInput.getText().equals("")){
+                if (signUp__PasswordInput.getText().equals("")){
                     if (check){
                         check = false;
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
                     }
                 }
                 else{
-                    if (SignUp__RetypeInput.getText().equals("")){
+                    if (signUp__RetypeInput.getText().equals("")){
                         if (check){
                             check = false;
-                            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
+                            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
                         }
                     }
                     else{
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                     }
                 }
             }
             if (check){
-                User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+                User temp = new User(signUp__UsernameInput.getText(), signUp__PasswordInput.getText());
                 try {
                     Services.getInstance().createUser(temp);
                 } catch (IOException ex) {
                 }
-                layout.show(App, "SignIn");
+                layout.show(app, "app__SignIn");
                 resetSignUp();
             }
         }
-    }//GEN-LAST:event_SignUp__PasswordInputKeyPressed
+    }//GEN-LAST:event_signUp__PasswordInputKeyPressed
 
-    private void SignUp__RetypeInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_SignUp__RetypeInputKeyPressed
+    @SuppressWarnings("deprecation")
+    private void signUp__RetypeInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_signUp__RetypeInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            if (SignUp__UsernameInput.getText().equals("")){
+            if (signUp__UsernameInput.getText().equals("")){
                 if(check){
                     check = false;
-                    SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
+                    signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên tài khoản dài từ 5 - 15 ký tự và không chứa ký tự đặc biệt!</div></html>");
                 }
             }
             else{
-                if (SignUp__PasswordInput.getText().equals("")){
+                if (signUp__PasswordInput.getText().equals("")){
                     if (check){
                         check = false;
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu dài hơn 8 ký tự và chứa ký tự số, chữ cái!</div></html>");
                     }
                 }
                 else{
-                    if (SignUp__RetypeInput.getText().equals("")){
+                    if (signUp__RetypeInput.getText().equals("")){
                         if (check){
                             check = false;
-                            SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
+                            signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mật khẩu và nhập lại mật khẩu không khớp!</div></html>");
                         }
                     }
                     else{
-                        SignUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                        signUp__Alert.setText("<html><div style=\"text-align: center; width: 354px; color: red; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
                     }
                 }
             }
             if (check){
-                User temp = new User(SignUp__UsernameInput.getText(), SignUp__PasswordInput.getText());
+                User temp = new User(signUp__UsernameInput.getText(), signUp__PasswordInput.getText());
                 try {
                     Services.getInstance().createUser(temp);
                 } catch (IOException ex) {
                 }
-                layout.show(App, "SignIn");
+                layout.show(app, "app__SignIn");
                 resetSignUp();
             }
         }
-    }//GEN-LAST:event_SignUp__RetypeInputKeyPressed
+    }//GEN-LAST:event_signUp__RetypeInputKeyPressed
 
     /**
      * @param args the command line arguments
@@ -746,13 +752,7 @@ public class App extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(App.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -765,32 +765,32 @@ public class App extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel App;
-    private javax.swing.JPanel App__SignIn;
-    private javax.swing.JPanel App__SignUp;
-    private javax.swing.JPanel SignIn;
-    private javax.swing.JLabel SignIn__Alert;
-    private javax.swing.JButton SignIn__Button;
-    private javax.swing.JLabel SignIn__Description;
-    private javax.swing.JLabel SignIn__Password;
-    private javax.swing.JPasswordField SignIn__PasswordInput;
-    private javax.swing.JLabel SignIn__SignUp;
-    private javax.swing.JLabel SignIn__SignUpTitle;
-    private javax.swing.JLabel SignIn__Title;
-    private javax.swing.JLabel SignIn__Username;
-    private javax.swing.JTextField SignIn__UsernameInput;
-    private javax.swing.JPanel SignUp;
-    private javax.swing.JLabel SignUp__Alert;
-    private javax.swing.JButton SignUp__Button;
-    private javax.swing.JLabel SignUp__Description;
-    private javax.swing.JLabel SignUp__Password;
-    private javax.swing.JPasswordField SignUp__PasswordInput;
-    private javax.swing.JLabel SignUp__Retype;
-    private javax.swing.JPasswordField SignUp__RetypeInput;
-    private javax.swing.JLabel SignUp__SignIn;
-    private javax.swing.JLabel SignUp__SignInTitle;
-    private javax.swing.JLabel SignUp__Title;
-    private javax.swing.JLabel SignUp__Username;
-    private javax.swing.JTextField SignUp__UsernameInput;
+    private javax.swing.JPanel app;
+    private javax.swing.JPanel app__SignIn;
+    private javax.swing.JPanel app__SignUp;
+    private javax.swing.JPanel signIn;
+    private javax.swing.JLabel signIn__Alert;
+    private javax.swing.JButton signIn__Button;
+    private javax.swing.JLabel signIn__Description;
+    private javax.swing.JLabel signIn__Password;
+    private javax.swing.JPasswordField signIn__PasswordInput;
+    private javax.swing.JLabel signIn__Switch;
+    private javax.swing.JLabel signIn__SwitchTitle;
+    private javax.swing.JLabel signIn__Title;
+    private javax.swing.JLabel signIn__Username;
+    private javax.swing.JTextField signIn__UsernameInput;
+    private javax.swing.JPanel signUp;
+    private javax.swing.JLabel signUp__Alert;
+    private javax.swing.JButton signUp__Button;
+    private javax.swing.JLabel signUp__Description;
+    private javax.swing.JLabel signUp__Password;
+    private javax.swing.JPasswordField signUp__PasswordInput;
+    private javax.swing.JLabel signUp__Retype;
+    private javax.swing.JPasswordField signUp__RetypeInput;
+    private javax.swing.JLabel signUp__Switch;
+    private javax.swing.JLabel signUp__SwitchTitle;
+    private javax.swing.JLabel signUp__Title;
+    private javax.swing.JLabel signUp__Username;
+    private javax.swing.JTextField signUp__UsernameInput;
     // End of variables declaration//GEN-END:variables
 }

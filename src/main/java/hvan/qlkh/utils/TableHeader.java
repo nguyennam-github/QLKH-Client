@@ -5,6 +5,11 @@ import java.awt.Font;
 import java.awt.Graphics;
 import javax.swing.JLabel;
 
+/**
+ *
+ * @author Nguyễn Phan Hoài Nam
+ */
+
 public class TableHeader extends JLabel {
 
     public TableHeader(String text) {
