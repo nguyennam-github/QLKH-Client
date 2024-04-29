@@ -7,6 +7,7 @@ import java.awt.Component;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -43,6 +44,7 @@ public class Table extends JTable {
                 return com;
             }
         });
+        setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
     }
 
     @Override

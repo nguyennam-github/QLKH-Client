@@ -68,7 +68,7 @@ public class Services{
     }
 
     private Services() throws IOException {
-        Socket socket = new Socket("localhost", 7777);
+        Socket socket = new Socket("localhost", 3000);
         os = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
         is = new BufferedReader(new InputStreamReader(socket.getInputStream()));
         setUpSocket();
@@ -346,9 +346,23 @@ public class Services{
                     .filter(user -> user.getRegister().compareTo(dateMax) <= 0)
                     .collect(Collectors.toList());
         }
-        return temp.stream()
-                .filter(user -> user.isRead() == read)
-                .filter(user -> user.isWrite() == write)
-                .collect(Collectors.toList());
+        if (read){
+            if (write){
+                return temp.stream()
+                    .filter(user -> user.isWrite() == write)
+                    .collect(Collectors.toList());
+            }
+            else{
+                return temp.stream()
+                    .filter(user -> user.isRead() == read)
+                    .collect(Collectors.toList());
+            }
+        }
+        else{
+            return temp.stream()
+                    .filter(user -> user.isRead() == read)
+                    .filter(user -> user.isWrite() == write)
+                    .collect(Collectors.toList()); 
+        }
     }
 }

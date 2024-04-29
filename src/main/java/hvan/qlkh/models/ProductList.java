@@ -22,7 +22,7 @@ public class ProductList {
 
     private static ProductList instance;
     @XmlElement(name = "product")
-    public List<Product> products;
+    private List<Product> products;
 
     public static synchronized ProductList getInstance(){
         if(instance == null){

@@ -23,6 +23,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -36,14 +37,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.regex.Pattern;
+import javax.imageio.ImageIO;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.LineBorder;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import org.imgscalr.Scalr;
 
 /**
  *
@@ -52,19 +56,82 @@ import javax.swing.event.ListSelectionListener;
 
 public final class Main extends javax.swing.JPanel implements ListSelectionListener{
 
-    private final int PAGES_HOME = 0;
-    private final int PAGES_PRODUCTS = 1;
-    private final int PAGES_STATISTIC = 2;
-    private final int PAGES_AUTHORIZATION = 3;
+    private static final int PAGES_HOME = 0;
+    private static final int PAGES_PRODUCTS = 1;
+    private static final int PAGES_STATISTIC = 2;
+    private static final int PAGES_AUTHORIZATION = 3;
+
+    private static final String IMAGES_DIR = "images/";
+
+    private static final String ID_FORMAT = "^[a-zA-Z\\d]{1,9}$";
+    private static final String DATE_FORMAT = "dd/MM/yyyy";
+
+    private static final String ID = "Mã số sản phẩm";
+    private static final String NAME = "Tên sản phẩm";
+    private static final String CATEGORY = "Danh mục";
+    private static final String MANAFACTURER = "Nhà sản xuất";
+    private static final String PRICE = "Đơn giá";
+    private static final String EXPIRY = "Hạn sử dụng";
+
+    private static final String CARD_HOME = "pages__Home";
+    private static final String CARD_PRODUCTS = "pages__Products";
+    private static final String CARD_STATISTIC = "pages__Statistic";
+    private static final String CARD_AUTHORIZATION = "pages__Authorization";
+    private static final String CARD_SORT = "pages__Sort";
+
+    private static final String STATISTIC_HEADER = "<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">";
+    private static final String STATISTIC_FOOTER = "</div></html>";
+    private static final String ID_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm không hợp lệ!</div></html>";
+    private static final String ID_EXIST_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>";
+    private static final String NAME_EXIST_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>";
+    private static final String QUANTITY_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>";
+    private static final String PRICE_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>";
+    private static final String ID_BLANK_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>";
+    private static final String NAME_BLANK_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>";
+    private static final String QUANTITY_BLANK_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>";
+    private static final String PRICE_BLANK_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>";
+    private static final String DATE_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>";
+    private static final String MANAFACTURER_BLANK_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>";
+    private static final String NULL_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>";
+
+    private static final String TYPE_DIALOG_MESSAGE = "Cảnh báo";
+    private static final String UNKNOWN_ERROR_DIALOG_MESSAGE = "Một lỗi không xác định đã xảy ra";
+    private static final String PRICE_FORMAT_ERROR_DIALOG_MESSAGE = "Đơn giá sản phẩm không hợp lệ";
+    private static final String AUTHORIZATION_ERROR_DIALOG_MESSAGE = "Bạn chưa được cho phép để thực hiện hành động này";
+    private static final String EXPIRY_FORMAT_ERROR_DIALOG_MESSAGE = "Hạn sử dụng sản phẩm không hợp lệ";
+    private static final String CREATE_FORMAT_ERROR_DIALOG_MESSAGE = "Ngày tạo tài khoản không hợp lệ";
+
     private static Main instance;
+
     private transient Controller appController;
     private transient Controller adminController;
+
     private Table productsTable = new Table();
     private Table usersTable = new Table();
+
     private static List<ProductTemplate> productTemplates = new ArrayList<>();
-    private static List<ProductTemplate> sortTemplates = new ArrayList<>();
+
     private int accessPage;
     private JPanel p = new JPanel();
+    private static final Color [] CHART_COLOR = {
+                                                    new Color(221, 65, 65),
+                                                    new Color(235, 121, 0),
+                                                    new Color(245, 83, 118),
+                                                    new Color(47, 157, 64),
+                                                    new Color(180, 96, 96),
+                                                    new Color(128, 72, 156),
+                                                    new Color(149, 205, 65),
+                                                    new Color(23, 126, 238),
+                                                    new Color(255, 175, 69)
+                                                };
+    private static final String [] PRICE_RANGES = {
+                                                    "dưới 1tr",
+                                                    "1tr - 5tr",
+                                                    "5tr - 10tr",
+                                                    "10tr - 20tr",
+                                                    "trên 20tr"
+                                                };
+
     private boolean idCheck = true;
     private boolean nameCheck = true;
     private boolean quantityCheck = true;
@@ -72,19 +139,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private boolean dateCheck = true;
     private boolean manafacturerCheck = true;
     private boolean productSearchModify = false;
-    private static final Color [] CHART_COLOR = {new Color(23, 126, 238),
-                                                new Color(47, 157, 64),
-                                                new Color(221, 65, 65),
-                                                new Color(196, 151, 58),
-                                                new Color(204, 93, 232),
-                                                new Color(32, 201, 151),
-                                                new Color(245, 83, 118),
-                                                new Color(235, 121, 0)};
-    private static final String [] PRICE = {"dưới 1tr",
-                                            "1tr - 5tr",
-                                            "5tr - 10tr",
-                                            "10tr - 20tr",
-                                            "trên 20tr"};
 
     public Controller getAppController(){
         return appController;
@@ -107,6 +161,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__DescriptionScroll.setVerticalScrollBar(new ScrollBar());
         toolbar__DescriptionScroll.getVerticalScrollBar().setBackground(Color.WHITE);
         toolbar__DescriptionScroll.getViewport().setBackground(Color.WHITE);
+        Toolbar__DescriptionInput.setCaretPosition(0);
         toolbar__ButtonEdit.setEnabled(false);
         toolbar__ButtonDelete.setEnabled(false);
         toolbar__ExpiryInput.getJCalendar().setPreferredSize(new Dimension(365, 300));
@@ -116,6 +171,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__CategoryInput.setBackground(Color.white);
         toolbar__SortInput.setBackground(Color.white);
         toolbar__SearchInput.setBackground(Color.white);
+        toolbar__ThumbnailInput.setEditable(false);
     }
 
     public void resetToolbar(boolean state){
@@ -133,13 +189,12 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonEdit.setEnabled(false);
         toolbar__ButtonDelete.setEnabled(false);
         toolbar__ButtonReset.setEnabled(state);
+        toolbar__ThumbnailInput.setEditable(false);
         Services.setSelectedProduct(null);
-        toolbar.repaint();
-        toolbar.revalidate();
     }
 
     public void initSearchField(){
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(ID)){
             toolbar__SearchStringInput.setVisible(true);
             toolbar__SearchMinInput.setText("");
             toolbar__SearchMinInput.setVisible(false);
@@ -147,7 +202,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             toolbar__SearchMaxInput.setVisible(false);
             toolbar__Decorate.setVisible(false);
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(NAME)){
             toolbar__SearchStringInput.setVisible(true);
             toolbar__SearchMinInput.setText("");
             toolbar__SearchMinInput.setVisible(false);
@@ -155,7 +210,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             toolbar__SearchMaxInput.setVisible(false);
             toolbar__Decorate.setVisible(false);
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(CATEGORY)){
             toolbar__SearchStringInput.setVisible(true);
             toolbar__SearchMinInput.setText("");
             toolbar__SearchMinInput.setVisible(false);
@@ -163,7 +218,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             toolbar__SearchMaxInput.setVisible(false);
             toolbar__Decorate.setVisible(false);
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(MANAFACTURER)){
             toolbar__SearchStringInput.setVisible(true);
             toolbar__SearchMinInput.setText("");
             toolbar__SearchMinInput.setVisible(false);
@@ -171,14 +226,14 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             toolbar__SearchMaxInput.setVisible(false);
             toolbar__Decorate.setVisible(false);
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(PRICE)){
             toolbar__SearchStringInput.setText("");
             toolbar__SearchStringInput.setVisible(false);
             toolbar__SearchMinInput.setVisible(true);
             toolbar__SearchMaxInput.setVisible(true);
             toolbar__Decorate.setVisible(true);
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Hạn sử dụng")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(EXPIRY)){
             toolbar__SearchStringInput.setText("");
             toolbar__SearchStringInput.setVisible(false);
             toolbar__SearchMinInput.setVisible(true);
@@ -205,7 +260,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         try {
             if (Services.getInstance().getSelectedProduct() != null){
                 Product product = Services.getInstance().getSelectedProduct();
-                if (toolbar__ExpiryInput.getDate() != null){
+                if (idCheck == nameCheck == quantityCheck == priceCheck == manafacturerCheck){
                     temp = !(toolbar__IDInput.getText().equals(product.getId())&&
                             toolbar__NameInput.getText().equals(product.getName())&&
                             ((String)toolbar__CategoryInput.getSelectedItem()).equals(product.getCategory())&&
@@ -216,23 +271,20 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             toolbar__ThumbnailInput.getText().equals(product.getThumbnail())&&
                             Toolbar__DescriptionInput.getText().equals(product.getDescription()));
                 }
-                else{
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
-                }
         }
         } catch (IOException | NumberFormatException  e) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         return temp;
     }
-    
+
     public void initProductTemplates(){
         products__Main.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
         products__Scroll.setBorder(null);
         products__Scroll.setVerticalScrollBar(new ScrollBar());
         products__Scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         products__Scroll.getViewport().setBackground(Color.WHITE);
-        products__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        products__Scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, p);
     }
 
     public void setProductTemplates(List<Product> products){
@@ -248,16 +300,17 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     }
 
     private void resetProductTemplates(){
+        products__Scroll.getVerticalScrollBar().setValue(0);
         productTemplates.forEach(pt ->  pt.setVisible(true));
     }
-    
+
     private void initSort(){
         sort__Main.setLayout(new WrapLayout(WrapLayout.LEFT, 10, 10));
         sort__Scroll.setBorder(null);
         sort__Scroll.setVerticalScrollBar(new ScrollBar());
         sort__Scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         sort__Scroll.getViewport().setBackground(Color.WHITE);
-        sort__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        sort__Scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, p);
     }
 
     public void setSort(List<Product> products){
@@ -280,14 +333,15 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         });
     }
 
-    private void initBarChart(String lengend, List<ModelChart> modelCharts){
-        statistic__BarChart.addLegend(lengend, new Color(245, 189, 135));
+    private void initBarChart(String legend, List<ModelChart> modelCharts){
+        statistic__BarChart.addLegend(legend, new Color(245, 189, 135));
         modelCharts.forEach(mc -> statistic__BarChart.addData(mc));
     }
 
+    @SuppressWarnings("deprecation")
     private void setBarChart(){
         statistic__BarChart.clearData();
-        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Hạn sử dụng")){
+        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals(EXPIRY)){
             Map<Integer, Integer> expStatistic = new HashMap<>();
             try {
                 Services.getInstance().getProducts().forEach(product -> {
@@ -300,7 +354,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     }
                 });
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
 
             List<ModelChart> modelCharts = new ArrayList<>();
@@ -309,11 +363,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 Integer value = entry.getValue();
                 modelCharts.add(new ModelChart(key + "", new double[]{value}));
             }
-            initBarChart("Hạn sử dụng", modelCharts);
+            initBarChart(EXPIRY, modelCharts);
             statistic__BarChart.repaint();
             statistic__BarChart.revalidate();
         }
-        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Danh mục")){
+        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals(CATEGORY)){
             Map<String, Integer> categoryStatistic = new HashMap<>();
             try {
                 Services.getInstance().getProducts().forEach(product -> {
@@ -326,7 +380,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     }
                 });
             } catch (IOException ex ){
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             List<ModelChart> modelCharts = new ArrayList<>();
             for (Entry<String, Integer> entry : categoryStatistic.entrySet()) {
@@ -334,11 +388,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 Integer value = entry.getValue();
                 modelCharts.add(new ModelChart(key, new double[]{value}));
             }
-            initBarChart("Danh mục", modelCharts);
+            initBarChart(CATEGORY, modelCharts);
             statistic__BarChart.repaint();
             statistic__BarChart.revalidate();
         }
-        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals("Nhà sản xuất")){
+        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals(MANAFACTURER)){
             Map<String, Integer> manafacturerStatistic = new HashMap<>();
             try {
                 Services.getInstance().getProducts().forEach(product -> {
@@ -351,7 +405,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     }
                 });
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             List<ModelChart> modelCharts = new ArrayList<>();
             for (Entry<String, Integer> entry : manafacturerStatistic.entrySet()) {
@@ -359,16 +413,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 Integer value = entry.getValue();
                 modelCharts.add(new ModelChart(key, new double[]{value}));
             }
-            initBarChart("Nhà sản xuất", modelCharts);
+            initBarChart(MANAFACTURER, modelCharts);
             statistic__BarChart.repaint();
             statistic__BarChart.revalidate();
         }
     }
-    
+
     private void setPieChart(){
         statistic__PieChart.clearData();
         statistic__PieChart.setChartType(PieChart.PeiChartType.DONUT_CHART);
-        if (Statistic__PercentStatistic.getSelectedItem().toString().equals("Danh mục")) {
+        if (Statistic__PercentStatistic.getSelectedItem().toString().equals(CATEGORY)) {
             Map<String, Integer> categoryStatistic = new HashMap<>();
             for (int i = 0; i < toolbar__CategoryInput.getItemCount(); i++) {
                 String key = toolbar__CategoryInput.getItemAt(i);
@@ -376,7 +430,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 try {
                     value = Services.getInstance().filterByCategory(key).size();
                 } catch (IOException  e) {
-                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                 }
                 categoryStatistic.put(key, value);
             }
@@ -390,16 +444,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__PieChart.repaint();
             statistic__PieChart.revalidate();
         }
-        if (Statistic__PercentStatistic.getSelectedItem().toString().equals("Đơn giá")) {
+        if (Statistic__PercentStatistic.getSelectedItem().toString().equals(PRICE)) {
             Map<String, Integer> priceStatistic = new HashMap<>();
             try {
-                priceStatistic.put(PRICE[0], Services.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
-                priceStatistic.put(PRICE[1], Services.getInstance().filterByPrice(new BigDecimal("1000000"), new BigDecimal("5000000")).size());
-                priceStatistic.put(PRICE[2], Services.getInstance().filterByPrice(new BigDecimal("5000000"), new BigDecimal("10000000")).size());
-                priceStatistic.put(PRICE[3], Services.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
-                priceStatistic.put(PRICE[4], Services.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
+                priceStatistic.put(PRICE_RANGES[0], Services.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
+                priceStatistic.put(PRICE_RANGES[1], Services.getInstance().filterByPrice(new BigDecimal("1000000"), new BigDecimal("5000000")).size());
+                priceStatistic.put(PRICE_RANGES[2], Services.getInstance().filterByPrice(new BigDecimal("5000000"), new BigDecimal("10000000")).size());
+                priceStatistic.put(PRICE_RANGES[3], Services.getInstance().filterByPrice(new BigDecimal("10000000"), new BigDecimal("20000000")).size());
+                priceStatistic.put(PRICE_RANGES[4], Services.getInstance().filterByPrice(new BigDecimal("20000000"), new BigDecimal("-12345")).size());
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             int ci = 0;
             for (Entry<String, Integer> entry : priceStatistic.entrySet()) {
@@ -412,13 +466,12 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__PieChart.revalidate();
         }
     }
-
     private void setOveralStatistic(){
         int totalProducts = 0;
         try {
             totalProducts = Services.getInstance().getProducts().size();
         } catch (IOException e) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         int totalQuantity = 0;
         int totalCategory = toolbar__CategoryInput.getItemCount();
@@ -429,22 +482,22 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 manafacturer.add(product.getManafacturer());
             }
         } catch (IOException  e) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         int totalManafaturer = manafacturer.size();
-        Statistic__TotalProductsStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalProducts +"</div></html>");
-        Statistic__TotalQuantityStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalQuantity +"</div></html>");
-        Statistic__CategoryStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalCategory +"</div></html>");
-        Statistic__ManafacturerStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">" + totalManafaturer +"</div></html>");
+        Statistic__TotalProductsStatistic.setText(STATISTIC_HEADER + totalProducts + STATISTIC_FOOTER);
+        Statistic__TotalQuantityStatistic.setText(STATISTIC_HEADER + totalQuantity + STATISTIC_FOOTER);
+        Statistic__CategoryStatistic.setText(STATISTIC_HEADER + totalCategory + STATISTIC_FOOTER);
+        Statistic__ManafacturerStatistic.setText(STATISTIC_HEADER + totalManafaturer + STATISTIC_FOOTER);
     }
-    
+
     public void initStatistic(){
-        statistic__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        statistic__Scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, p);
         statistic__Scroll.setBorder(new LineBorder(new Color(246,251,249), 1));
         statistic__Scroll.setVerticalScrollBar(new ScrollBar());
         statistic__Scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         statistic__Scroll.getViewport().setBackground(Color.WHITE);
-        statistic__Scroll.setCorner(JScrollPane.UPPER_RIGHT_CORNER, p);
+        statistic__Scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, p);
         Statistic__QuantityStatistic.setBackground(Color.WHITE);
         Statistic__PercentStatistic.setBackground(Color.WHITE);
     }
@@ -481,7 +534,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         authorization__Filter.repaint();
         authorization__Filter.revalidate();
     }
-    
+
     private boolean isUserModify(){
         boolean temp = false;
         try {
@@ -491,7 +544,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         information__WriteInput.isSelected() == user.isWrite());
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         return temp;
     }
@@ -500,11 +553,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         CardLayout appCardLayout = (CardLayout) main__Pages.getParent().getParent().getParent().getLayout();
         appCardLayout.show(main__Pages.getParent().getParent().getParent(), "app__SignIn");
         CardLayout userCardLayout = (CardLayout) main__Pages.getLayout();
-        userCardLayout.show(main__Pages, "pages__Home");
+        userCardLayout.show(main__Pages, CARD_HOME);
         try {
             appController.setProductsTable(productsTable, Services.getInstance().getProducts());
         } catch (IOException e) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         resetProductTemplates();
         products__Scroll.getVerticalScrollBar().setValue(0);
@@ -514,7 +567,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         try {
             Services.getInstance().setCurrentUser(null);
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         accessPage = PAGES_HOME;
         this.repaint();
@@ -523,6 +576,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
 
     private void initGeneral(){
         p.setBackground(new Color(246,251,249,0));
+        toolbar__ThumbnailInput.setEditable(false);
         navbar__ButtonAuthorization.setName("Navbar__ButtonAuthorization");
         toolbar__ButtonFileChooser.setName("Toolbar__ButtonFileChooser");
         toolbar__SearchStringInput.setName("Toolbar__SearchStringInput");
@@ -535,7 +589,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         addProductSelectionListener(new ProductSelectionListener());
         addUserSelectionListener(new UserSelectionListener());
     }
-    
+
     private Main(){
         initComponents();
         initGeneral();
@@ -702,7 +756,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__CategoryTitle.setPreferredSize(new java.awt.Dimension(105, 35));
 
         toolbar__CategoryInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        toolbar__CategoryInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Điện thoại", "Máy tính", "Thực Phẩm", "Mỹ Phẩm", "Đồ Chơi", "Thời trang Nam", "Thời trang Nữ" }));
+        toolbar__CategoryInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Điện thoại", "Máy tính", "Nội thất", "Gia dụng", "Trang trí", "Thời trang", "Thể thao", "Mỹ phẩm", "Thực phẩm" }));
         toolbar__CategoryInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         toolbar__CategoryInput.setPreferredSize(new java.awt.Dimension(230, 35));
 
@@ -754,6 +808,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonAdd.setBorder(null);
         toolbar__ButtonAdd.setBorderPainted(false);
         toolbar__ButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonAddMouseClicked(evt);
             }
@@ -764,6 +819,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonEdit.setBorder(null);
         toolbar__ButtonEdit.setBorderPainted(false);
         toolbar__ButtonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonEditMouseClicked(evt);
             }
@@ -774,6 +830,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonDelete.setBorder(null);
         toolbar__ButtonDelete.setBorderPainted(false);
         toolbar__ButtonDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonDeleteMouseClicked(evt);
             }
@@ -787,6 +844,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonReset.setBorder(null);
         toolbar__ButtonReset.setBorderPainted(false);
         toolbar__ButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonResetMouseClicked(evt);
             }
@@ -796,7 +854,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SortTitle.setPreferredSize(new java.awt.Dimension(340, 30));
 
         toolbar__SortInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        toolbar__SortInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mặc định", "Mã số sản phẩm", "Tên sản phẩm", "Số lượng tăng", "Số lượng giảm", "Đơn giá tăng", "Đơn giá giảm", "Hạn sử dụng" }));
+        toolbar__SortInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mặc định", ID, NAME, "Số lượng tăng", "Số lượng giảm", "Đơn giá tăng", "Đơn giá giảm", EXPIRY }));
         toolbar__SortInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         toolbar__SortInput.setPreferredSize(new java.awt.Dimension(230, 35));
 
@@ -807,6 +865,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonSort.setPreferredSize(new java.awt.Dimension(100, 35));
         toolbar__ButtonSort.setRolloverEnabled(false);
         toolbar__ButtonSort.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonSortMouseClicked(evt);
             }
@@ -816,7 +875,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchTitle.setPreferredSize(new java.awt.Dimension(100, 35));
 
         toolbar__SearchInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        toolbar__SearchInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã số sản phẩm", "Tên sản phẩm", "Danh mục", "Đơn giá", "Hạn sử dụng", "Nhà sản xuất" }));
+        toolbar__SearchInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ID, NAME, CATEGORY, PRICE, EXPIRY, MANAFACTURER }));
         toolbar__SearchInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         toolbar__SearchInput.setPreferredSize(new java.awt.Dimension(230, 35));
         toolbar__SearchInput.addItemListener(new java.awt.event.ItemListener() {
@@ -828,11 +887,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchStringInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         toolbar__SearchStringInput.setPreferredSize(new java.awt.Dimension(340, 35));
         toolbar__SearchStringInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 toolbar__SearchStringInputFocusGained(evt);
             }
         });
         toolbar__SearchStringInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchStringInputKeyPressed(evt);
             }
@@ -844,6 +905,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonSearch.setBorderPainted(false);
         toolbar__ButtonSearch.setPreferredSize(new java.awt.Dimension(100, 35));
         toolbar__ButtonSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonSearchMouseClicked(evt);
             }
@@ -880,11 +942,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchMinInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         toolbar__SearchMinInput.setPreferredSize(new java.awt.Dimension(135, 35));
         toolbar__SearchMinInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 toolbar__SearchMinInputFocusGained(evt);
             }
         });
         toolbar__SearchMinInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchMinInputKeyPressed(evt);
             }
@@ -893,11 +957,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchMaxInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         toolbar__SearchMaxInput.setPreferredSize(new java.awt.Dimension(135, 35));
         toolbar__SearchMaxInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 toolbar__SearchMaxInputFocusGained(evt);
             }
         });
         toolbar__SearchMaxInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchMaxInputKeyPressed(evt);
             }
@@ -914,11 +980,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonFileChooser.setBorderPainted(false);
         toolbar__ButtonFileChooser.setPreferredSize(new java.awt.Dimension(55, 35));
         toolbar__ButtonFileChooser.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonFileChooserMouseClicked(evt);
             }
         });
 
+        toolbar__ThumbnailInput.setEditable(false);
         toolbar__ThumbnailInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         toolbar__ThumbnailInput.setPreferredSize(new java.awt.Dimension(170, 35));
 
@@ -950,6 +1018,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonResetSearch.setBorderPainted(false);
         toolbar__ButtonResetSearch.setPreferredSize(new java.awt.Dimension(100, 35));
         toolbar__ButtonResetSearch.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonResetSearchMouseClicked(evt);
             }
@@ -1148,11 +1217,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             pages__HomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pages__HomeLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(home__Table, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(home__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
                 .addGap(30, 30, 30))
         );
 
-        main__Pages.add(pages__Home, "pages__Home");
+        main__Pages.add(pages__Home, CARD_HOME);
 
         pages__Products.setBackground(new java.awt.Color(246, 251, 249));
         pages__Products.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1180,7 +1249,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(15, 15, 15))
         );
 
-        main__Pages.add(pages__Products, "pages__Products");
+        main__Pages.add(pages__Products, CARD_PRODUCTS);
 
         pages__Statistic.setBackground(new java.awt.Color(246, 251, 249));
         pages__Statistic.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1193,6 +1262,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         statistic__Main.setBackground(new java.awt.Color(246, 251, 249));
         statistic__Main.setPreferredSize(new java.awt.Dimension(715, 650));
 
+        statistic__BarChart.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
         statistic__BarChart.setPreferredSize(new java.awt.Dimension(600, 320));
 
         statistic__PieChart.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
@@ -1201,7 +1271,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         statistic__Menu.setBackground(new java.awt.Color(255, 255, 255));
         statistic__Menu.setPreferredSize(new java.awt.Dimension(390, 200));
 
-        Statistic__QuantityStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Danh mục", "Nhà sản xuất", "Hạn sử dụng" }));
+        Statistic__QuantityStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { CATEGORY, MANAFACTURER, EXPIRY }));
         Statistic__QuantityStatistic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Statistic__QuantityStatistic.setPreferredSize(new java.awt.Dimension(225, 35));
 
@@ -1211,7 +1281,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         Statistic__PercentStatisticTitle.setText("<html><div style=\"width: 300px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word\">Thống kê tỉ lệ sản phẩm theo:</div></html>");
         Statistic__PercentStatisticTitle.setPreferredSize(new java.awt.Dimension(240, 30));
 
-        Statistic__PercentStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Danh mục", "Đơn giá" }));
+        Statistic__PercentStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { CATEGORY, PRICE }));
         Statistic__PercentStatistic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         Statistic__PercentStatistic.setPreferredSize(new java.awt.Dimension(225, 35));
 
@@ -1219,6 +1289,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         Statistic__ButtonPercent.setText("<html><div style=\"text-align: center; color:white; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 160px; word-wrap: break-word\">Áp dụng</div></html>");
         Statistic__ButtonPercent.setPreferredSize(new java.awt.Dimension(100, 35));
         Statistic__ButtonPercent.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Statistic__ButtonPercentMouseClicked(evt);
             }
@@ -1228,6 +1299,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         Statistic__ButtonPercent1.setText("<html><div style=\"text-align: center; color:white; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 160px; word-wrap: break-word\">Áp dụng</div></html>");
         Statistic__ButtonPercent1.setPreferredSize(new java.awt.Dimension(100, 35));
         Statistic__ButtonPercent1.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 Statistic__ButtonPercent1MouseClicked(evt);
             }
@@ -1270,7 +1342,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGroup(statistic__MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Statistic__ButtonPercent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(Statistic__PercentStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         statistic__Category.setBackground(new java.awt.Color(255, 255, 255));
@@ -1429,7 +1501,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(statistic__MainLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(statistic__MainLayout.createSequentialGroup()
                                 .addGap(5, 5, 5)
@@ -1441,7 +1513,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                 .addComponent(statistic__TotalQuanity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(statistic__MainLayout.createSequentialGroup()
                         .addComponent(statistic__BarChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(15, 15, 15)
+                        .addGap(10, 10, 10)
                         .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(statistic__Category, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(statistic__Manafacturer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
@@ -1458,15 +1530,15 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         .addComponent(statistic__Manafacturer, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))
                 .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(statistic__MainLayout.createSequentialGroup()
-                        .addGap(15, 15, 15)
+                        .addGap(10, 10, 10)
                         .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(statistic__TotalProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(statistic__TotalQuanity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(15, 15, 15)
-                        .addComponent(statistic__Menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(15, 15, 15))
+                        .addGap(10, 10, 10)
+                        .addComponent(statistic__Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10))
                     .addGroup(statistic__MainLayout.createSequentialGroup()
-                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
                         .addGap(5, 5, 5))))
         );
 
@@ -1479,17 +1551,17 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             .addGroup(pages__StatisticLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(statistic__Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(20, 20, 20))
+                .addGap(15, 15, 15))
         );
         pages__StatisticLayout.setVerticalGroup(
             pages__StatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pages__StatisticLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(statistic__Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 670, Short.MAX_VALUE)
+                .addComponent(statistic__Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
-        main__Pages.add(pages__Statistic, "pages__Statistic");
+        main__Pages.add(pages__Statistic, CARD_STATISTIC);
 
         pages__Sort.setBackground(new java.awt.Color(246, 251, 249));
         pages__Sort.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1516,7 +1588,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(15, 15, 15))
         );
 
-        main__Pages.add(pages__Sort, "pages__Sort");
+        main__Pages.add(pages__Sort, CARD_SORT);
 
         pages__Authorization.setBackground(new java.awt.Color(246, 251, 249));
         pages__Authorization.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1584,6 +1656,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         information__ButtonDelete.setBorderPainted(false);
         information__ButtonDelete.setPreferredSize(new java.awt.Dimension(70, 35));
         information__ButtonDelete.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 information__ButtonDeleteMouseClicked(evt);
             }
@@ -1595,6 +1668,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         information__ButtonEdit.setBorderPainted(false);
         information__ButtonEdit.setPreferredSize(new java.awt.Dimension(70, 35));
         information__ButtonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 information__ButtonEditMouseClicked(evt);
             }
@@ -1606,6 +1680,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         information__ButtonReset.setBorderPainted(false);
         information__ButtonReset.setPreferredSize(new java.awt.Dimension(70, 35));
         information__ButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 information__ButtonResetMouseClicked(evt);
             }
@@ -1695,6 +1770,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__ButtonFilter.setBorderPainted(false);
         filter__ButtonFilter.setPreferredSize(new java.awt.Dimension(70, 35));
         filter__ButtonFilter.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filter__ButtonFilterMouseClicked(evt);
             }
@@ -1703,11 +1779,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__UsernameInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filter__UsernameInput.setPreferredSize(new java.awt.Dimension(150, 35));
         filter__UsernameInput.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 filter__UsernameInputFocusGained(evt);
             }
         });
         filter__UsernameInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__UsernameInputKeyPressed(evt);
             }
@@ -1716,11 +1794,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__RegisterDateMin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filter__RegisterDateMin.setPreferredSize(new java.awt.Dimension(100, 35));
         filter__RegisterDateMin.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 filter__RegisterDateMinFocusGained(evt);
             }
         });
         filter__RegisterDateMin.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__RegisterDateMinKeyPressed(evt);
             }
@@ -1729,11 +1809,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__RegisterDateMax.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filter__RegisterDateMax.setPreferredSize(new java.awt.Dimension(100, 35));
         filter__RegisterDateMax.addFocusListener(new java.awt.event.FocusAdapter() {
+            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 filter__RegisterDateMaxFocusGained(evt);
             }
         });
         filter__RegisterDateMax.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__RegisterDateMaxKeyPressed(evt);
             }
@@ -1755,6 +1837,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             }
         });
         filter__ReadInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__ReadInputKeyPressed(evt);
             }
@@ -1772,6 +1855,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             }
         });
         filter__WriteInput.addKeyListener(new java.awt.event.KeyAdapter() {
+            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__WriteInputKeyPressed(evt);
             }
@@ -1786,6 +1870,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__ButtonReset.setBorderPainted(false);
         filter__ButtonReset.setPreferredSize(new java.awt.Dimension(70, 35));
         filter__ButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filter__ButtonResetMouseClicked(evt);
             }
@@ -1868,7 +1953,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             pages__AuthorizationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pages__AuthorizationLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
+                .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
                 .addGroup(pages__AuthorizationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pages__AuthorizationLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -1886,13 +1971,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     .addGroup(pages__AuthorizationLayout.createSequentialGroup()
                         .addComponent(authorization__Information, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(authorization__Filter, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
+                        .addComponent(authorization__Filter, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                         .addGap(5, 5, 5))
-                    .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE))
+                    .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
 
-        main__Pages.add(pages__Authorization, "pages__Authorization");
+        main__Pages.add(pages__Authorization, CARD_AUTHORIZATION);
 
         navbar.setBackground(new java.awt.Color(246, 251, 249));
         navbar.setPreferredSize(new java.awt.Dimension(770, 70));
@@ -1903,6 +1988,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonHome.setBorderPainted(false);
         navbar__ButtonHome.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonHomeMouseClicked(evt);
             }
@@ -1914,6 +2000,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonProducts.setBorderPainted(false);
         navbar__ButtonProducts.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonProducts.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonProductsMouseClicked(evt);
             }
@@ -1925,6 +2012,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonStatistic.setBorderPainted(false);
         navbar__ButtonStatistic.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonStatistic.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonStatisticMouseClicked(evt);
             }
@@ -1936,6 +2024,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonSignOut.setBorderPainted(false);
         navbar__ButtonSignOut.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonSignOut.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonSignOutMouseClicked(evt);
             }
@@ -1947,6 +2036,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonAuthorization.setBorderPainted(false);
         navbar__ButtonAuthorization.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonAuthorization.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonAuthorizationMouseClicked(evt);
             }
@@ -1993,7 +2083,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(15, 15, 15)
                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(main__Pages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(navbar, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE))
+                    .addComponent(navbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
         mainLayout.setVerticalGroup(
@@ -2036,48 +2126,64 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()){
                 if (toolbar__ButtonAdd.isEnabled()){
                     if (!idCheck){
-                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
+                        Pattern pattern = Pattern.compile(ID_FORMAT);
+                        if (!pattern.matcher(toolbar__IDInput.getText()).find()){
+                            toolbar__Alert.setText(ID_FORMAT_ERROR_MESSAGE);
+                        }
+                        else{
+                            toolbar__Alert.setText(ID_EXIST_ERROR_MESSAGE);
+                        }
                     }
                     else{
                         if (!nameCheck){
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                            toolbar__Alert.setText(NAME_EXIST_ERROR_MESSAGE);
                         }
                         else{
                             if (!quantityCheck){
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                                toolbar__Alert.setText(QUANTITY_FORMAT_ERROR_MESSAGE);
                             }
                             else {
                                 if (!priceCheck){
-                                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
+                                    toolbar__Alert.setText(PRICE_FORMAT_ERROR_MESSAGE);
                                 }
                             }
                         }
                     }
                     if (toolbar__IDInput.getText().equals("")){
-                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");  
+                        toolbar__Alert.setText(ID_BLANK_ERROR_MESSAGE);
                     }
                     else{
                         if (toolbar__NameInput.getText().equals("")){
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");
+                            toolbar__Alert.setText(NAME_BLANK_ERROR_MESSAGE);
                         }
                         else{
                             if (toolbar__QuantityInput.getText().equals("")){
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
+                                toolbar__Alert.setText(QUANTITY_BLANK_ERROR_MESSAGE);
                             }
                             else{
                                 if(toolbar__PriceInput.getText().equals("")){
-                                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
+                                    toolbar__Alert.setText(PRICE_BLANK_ERROR_MESSAGE);
                                 }
                                 else{
                                     if (toolbar__ExpiryInput.getDate() == null){
-                                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
+                                        toolbar__Alert.setText(DATE_FORMAT_ERROR_MESSAGE);
                                     }
                                     else{
                                         if (toolbar__ManafacturerInput.getText().equals("")){
-                                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                                            toolbar__Alert.setText(MANAFACTURER_BLANK_ERROR_MESSAGE);
                                         }
                                         else{
-                                            if (idCheck == nameCheck == quantityCheck == priceCheck == manafacturerCheck == true){
+                                            if (idCheck == nameCheck == quantityCheck == priceCheck == manafacturerCheck){
+                                                String path = toolbar__ThumbnailInput.getText();
+                                                try {
+                                                        File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                        BufferedImage bufferedImage = ImageIO.read(new File(path));
+                                                        ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
+                                                        toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                    } catch (IOException ex) {
+                                                        toolbar__ThumbnailInput.setText("");
+                                                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
+                                                    }
                                                 try {
                                                     Product temp = new Product(toolbar__IDInput.getText(), toolbar__NameInput.getText(), (String) toolbar__CategoryInput.getSelectedItem(), Integer.parseInt(toolbar__QuantityInput.getText()), new BigDecimal(toolbar__PriceInput.getText()), toolbar__ExpiryInput.getDate(), toolbar__ManafacturerInput.getText());
                                                     if(!toolbar__ThumbnailInput.getText().equals("") || toolbar__ThumbnailInput.getText() == null){
@@ -2089,7 +2195,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                                     Services.getInstance().create(temp);
                                                     showMessage("Thêm mới sản phẩm thành công!", true);
                                                 } catch (IOException | NumberFormatException e) {
-                                                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                                                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                                                 }
                                             }
                                         }
@@ -2102,10 +2208,10 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             }
             else{
                 resetToolbar(true);
-                showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+                showMessage(AUTHORIZATION_ERROR_DIALOG_MESSAGE, false);
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__ButtonAddMouseClicked
 
@@ -2114,7 +2220,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()) {
                 if (toolbar__NameInput.getText().equals("")){
                     nameCheck = false;
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");
+                    toolbar__Alert.setText(NAME_BLANK_ERROR_MESSAGE);
                 }
                 else{
                     try {
@@ -2122,30 +2228,30 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             if (Services.getInstance().findByName(toolbar__NameInput.getText()) == null ||
                                     Services.getInstance().getSelectedProduct().getName().equals(toolbar__NameInput.getText())){
                                 nameCheck = true;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                                toolbar__Alert.setText(NULL_MESSAGE);
                             }
                             else{
                                 nameCheck = false;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                                toolbar__Alert.setText(NAME_EXIST_ERROR_MESSAGE);
                             }
                         }
                         else{
                             if (Services.getInstance().findByName(toolbar__NameInput.getText()) == null){
                                 nameCheck = true;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                                toolbar__Alert.setText(NULL_MESSAGE);
                             }
                             else{
                                 nameCheck = false;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                                toolbar__Alert.setText(NAME_EXIST_ERROR_MESSAGE);
                             }
                         }
                     } catch (IOException e) {
-                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__NameInputCaretUpdate
 
@@ -2154,27 +2260,22 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()){
                 if (toolbar__QuantityInput.getText().equals("")) {
                     quantityCheck = false;
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
+                    toolbar__Alert.setText(QUANTITY_BLANK_ERROR_MESSAGE);
                 }
                 else{
-                    try {
-                        int quantity = Integer.parseInt(toolbar__QuantityInput.getText());
-                        if (quantity >= 0){
-                            quantityCheck = true;
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-                        }
-                        else{
-                            quantityCheck = false;
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
-                        }
-                    } catch (NumberFormatException e) {
+                    Pattern pattern = Pattern.compile("^\\d+$");
+                    if (pattern.matcher(toolbar__QuantityInput.getText()).find()){
+                        quantityCheck = true;
+                        toolbar__Alert.setText(NULL_MESSAGE);
+                    }
+                    else{
                         quantityCheck = false;
-                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                        toolbar__Alert.setText(QUANTITY_FORMAT_ERROR_MESSAGE);
                     }
                 }
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__QuantityInputCaretUpdate
 
@@ -2183,37 +2284,38 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()){
                 if (toolbar__PriceInput.getText().equals("")) {
                     priceCheck = false;
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
+                    toolbar__Alert.setText(PRICE_BLANK_ERROR_MESSAGE);
                 }
                 else{
                     try {
-                        BigDecimal price = new BigDecimal(toolbar__PriceInput.getText());
-                        if (price.compareTo(BigDecimal.ZERO) >= 0){
-                            priceCheck = true;
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-                        }
-                        else{
-                            priceCheck = false;
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
-                        }
+                    Pattern pattern = Pattern.compile("^\\d+$");
+                    if (pattern.matcher(toolbar__PriceInput.getText()).find()){
+                        priceCheck = true;
+                        toolbar__Alert.setText(NULL_MESSAGE);
+                    }
+                    else{
+                        priceCheck = false;
+                        toolbar__Alert.setText(PRICE_FORMAT_ERROR_MESSAGE);
+                    }
                     } catch (Exception e) {
                         priceCheck = false;
-                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
+                        toolbar__Alert.setText(PRICE_FORMAT_ERROR_MESSAGE);
                     }
                 }
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__PriceInputCaretUpdate
 
     private void toolbar__ButtonFileChooserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toolbar__ButtonFileChooserMouseClicked
         if (toolbar__ButtonFileChooser.isEnabled()){
             JFileChooser fileChooser = new JFileChooser();
-            fileChooser.setCurrentDirectory(new File("src/main/resources/images"));
+            fileChooser.setCurrentDirectory(new File(IMAGES_DIR));
             int res = fileChooser.showOpenDialog(null);
             if (res == JFileChooser.APPROVE_OPTION){
-                toolbar__ThumbnailInput.setText(fileChooser.getSelectedFile().getAbsolutePath());
+                String path = fileChooser.getSelectedFile().getAbsolutePath();
+                toolbar__ThumbnailInput.setText(path);
             }
         }
     }//GEN-LAST:event_toolbar__ButtonFileChooserMouseClicked
@@ -2221,40 +2323,47 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private void toolbar__IDInputCaretUpdate(javax.swing.event.CaretEvent evt) {//GEN-FIRST:event_toolbar__IDInputCaretUpdate
         try {
             if (Services.getInstance().getCurrentUser().isWrite()){
-                if (toolbar__IDInput.getText().equals("")) {
-                    idCheck = false;
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");
+                Pattern pattern = Pattern.compile(ID_FORMAT);
+                if (pattern.matcher(toolbar__IDInput.getText()).find()){
+                    if (toolbar__IDInput.getText().equals("")) {
+                        idCheck = false;
+                        toolbar__Alert.setText(ID_BLANK_ERROR_MESSAGE);
+                    }
+                    else{
+                        try {
+                            if (Services.getInstance().getSelectedProduct() != null){
+                                if (Services.getInstance().findById(toolbar__IDInput.getText()) == null ||
+                                        Services.getInstance().getSelectedProduct().getId().equals(toolbar__IDInput.getText())){
+                                    idCheck = true;
+                                    toolbar__Alert.setText(NULL_MESSAGE);
+                                }
+                                else{
+                                    idCheck = false;
+                                    toolbar__Alert.setText(ID_EXIST_ERROR_MESSAGE);
+                                }
+                            }
+                            else{
+                                if (Services.getInstance().findById(toolbar__IDInput.getText()) == null){
+                                    idCheck = true;
+                                    toolbar__Alert.setText(NULL_MESSAGE);
+                                }
+                                else{
+                                    idCheck = false;
+                                    toolbar__Alert.setText(ID_EXIST_ERROR_MESSAGE);
+                                }
+                            }
+                        } catch (IOException e) {
+                            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
+                        }
+                    }
                 }
                 else{
-                    try {
-                        if (Services.getInstance().getSelectedProduct() != null){
-                            if (Services.getInstance().findById(toolbar__IDInput.getText()) == null ||
-                                    Services.getInstance().getSelectedProduct().getId().equals(toolbar__IDInput.getText())){
-                                idCheck = true;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-                            }
-                            else{
-                                idCheck = false;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
-                            }
-                        }
-                        else{
-                            if (Services.getInstance().findById(toolbar__IDInput.getText()) == null){
-                                idCheck = true;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
-                            }
-                            else{
-                                idCheck = false;
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
-                            }
-                        }
-                    } catch (IOException e) {
-                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
-                    }
+                    idCheck = false;
+                    toolbar__Alert.setText(ID_FORMAT_ERROR_MESSAGE);
                 }
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__IDInputCaretUpdate
 
@@ -2263,14 +2372,14 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         try {
             appController.setProductsTable(productsTable, Services.getInstance().getProducts());
         } catch (IOException  e) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         toolbar__SortInput.setSelectedIndex(0);
         toolbar__SearchInput.setSelectedIndex(0);
         resetToolbar(true);
         resetSearchField(true);
         CardLayout c = (CardLayout) main__Pages.getLayout();
-        c.show(main__Pages, "pages__Home");
+        c.show(main__Pages, CARD_HOME);
         this.repaint();
         this.revalidate();
     }//GEN-LAST:event_navbar__ButtonHomeMouseClicked
@@ -2285,7 +2394,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SortInput.setSelectedIndex(0);
         toolbar__SearchInput.setSelectedIndex(0);
         CardLayout c = (CardLayout) main__Pages.getLayout();
-        c.show(main__Pages, "pages__Products");
+        c.show(main__Pages, CARD_PRODUCTS);
         this.repaint();
         this.revalidate();
     }//GEN-LAST:event_navbar__ButtonProductsMouseClicked
@@ -2298,14 +2407,14 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchInput.setSelectedIndex(0);
         setStatistic();
         CardLayout c = (CardLayout) main__Pages.getLayout();
-        c.show(main__Pages, "pages__Statistic");
+        c.show(main__Pages, CARD_STATISTIC);
         this.repaint();
         this.revalidate();
     }//GEN-LAST:event_navbar__ButtonStatisticMouseClicked
 
     private void navbar__ButtonSignOutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navbar__ButtonSignOutMouseClicked
         JDialog.setDefaultLookAndFeelDecorated(true);
-        int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn đăng xuất tài khoản này?", "Cảnh báo",
+        int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn đăng xuất tài khoản này?", TYPE_DIALOG_MESSAGE,
             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         switch (response) {
             case JOptionPane.NO_OPTION: break;
@@ -2313,11 +2422,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 CardLayout appCardLayout = (CardLayout) main__Pages.getParent().getParent().getParent().getLayout();
                 appCardLayout.show(main__Pages.getParent().getParent().getParent(), "app__SignIn");
                 CardLayout userCardLayout = (CardLayout) main__Pages.getLayout();
-                userCardLayout.show(main__Pages, "pages__Home");
+                userCardLayout.show(main__Pages, CARD_HOME);
                 try {
                     appController.setProductsTable(productsTable, Services.getInstance().getProducts());
                 } catch (IOException e) {
-                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                 }
                     resetProductTemplates();
                     products__Scroll.getVerticalScrollBar().setValue(0);
@@ -2327,14 +2436,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 try {
                     Services.getInstance().setCurrentUser(null);
                 } catch (IOException ex) {
-                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                 }
                     accessPage = PAGES_HOME;
                     this.repaint();
                     this.revalidate();
+                    break;
                 }
             case JOptionPane.CLOSED_OPTION: break;
             default: {
+                break;
             }
         }
     }//GEN-LAST:event_navbar__ButtonSignOutMouseClicked
@@ -2344,27 +2455,23 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()){
                 if (toolbar__ManafacturerInput.getText().equals("")){
                     manafacturerCheck = false;
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                    toolbar__Alert.setText(MANAFACTURER_BLANK_ERROR_MESSAGE);
                 }
                 else{
                     manafacturerCheck = true;
-                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\"></div></html>");
+                    toolbar__Alert.setText(NULL_MESSAGE);
                 }
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__ManafacturerInputCaretUpdate
 
     private void toolbar__ButtonResetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toolbar__ButtonResetMouseClicked
         if (toolbar__ButtonReset.isEnabled()){
-            try {
-                productsTable.clearSelection();
-                Services.getInstance().setSelectedProduct(null);
-                resetToolbar(true);
-            } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
-            }
+            productsTable.clearSelection();
+            Services.setSelectedProduct(null);
+            resetToolbar(true);
         }
     }//GEN-LAST:event_toolbar__ButtonResetMouseClicked
 
@@ -2373,55 +2480,73 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()){
                 if (toolbar__ButtonEdit.isEnabled() && isModify()){
                     if (!idCheck){
-                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>");
+                        Pattern pattern = Pattern.compile(ID_FORMAT);
+                        if (!pattern.matcher(toolbar__IDInput.getText()).find()){
+                            toolbar__Alert.setText(ID_FORMAT_ERROR_MESSAGE);
+                        }
+                        else{
+                            toolbar__Alert.setText(ID_EXIST_ERROR_MESSAGE);
+                        }
                     }
                     else{
                         if (!nameCheck){
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>");
+                            toolbar__Alert.setText(NAME_EXIST_ERROR_MESSAGE);
                         }
                         else{
                             if (!quantityCheck){
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>");
+                                toolbar__Alert.setText(QUANTITY_FORMAT_ERROR_MESSAGE);
                             }
                             else {
                                 if (!priceCheck){
-                                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>");
+                                    toolbar__Alert.setText(PRICE_FORMAT_ERROR_MESSAGE);
                                 }
                             }
                         }
                     }
                     if (toolbar__IDInput.getText().equals("")){
-                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không được để trống!</div></html>");  
+                        toolbar__Alert.setText(ID_BLANK_ERROR_MESSAGE);
                     }
                     else{
                         if (toolbar__NameInput.getText().equals("")){
-                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Tên sản phẩm không được để trống!</div></html>");
+                            toolbar__Alert.setText(NAME_BLANK_ERROR_MESSAGE);
                         }
                         else{
                             if (toolbar__QuantityInput.getText().equals("")){
-                                toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không được để trống!</div></html>");
+                                toolbar__Alert.setText(QUANTITY_BLANK_ERROR_MESSAGE);
                             }
                             else{
                                 if(toolbar__PriceInput.getText().equals("")){
-                                    toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không được để trống!</div></html>");
+                                    toolbar__Alert.setText(PRICE_BLANK_ERROR_MESSAGE);
                                 }
                                 else{
                                     if (toolbar__ExpiryInput.getDate() == null){
                                         dateCheck = false;
-                                        toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Hạn sử dụng sản phẩm không hợp lệ!</div></html>");
+                                        toolbar__Alert.setText(DATE_FORMAT_ERROR_MESSAGE);
                                     }
                                     else{
                                         if (toolbar__ManafacturerInput.getText().equals("")){
-                                            toolbar__Alert.setText("<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Nhà sản xuất không được để trống!</div></html>");
+                                            toolbar__Alert.setText(MANAFACTURER_BLANK_ERROR_MESSAGE);
                                         }
                                         else{
-                                            if (idCheck&&nameCheck&&quantityCheck&&priceCheck&&dateCheck&&manafacturerCheck){
+                                            if (idCheck == nameCheck == quantityCheck == priceCheck == dateCheck == manafacturerCheck){
                                                 JDialog.setDefaultLookAndFeelDecorated(true);
-                                                int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa thông tin sản phẩm này?", "Cảnh báo",
+                                                int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa thông tin sản phẩm này?", TYPE_DIALOG_MESSAGE,
                                                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                                                 switch (response) {
                                                     case JOptionPane.NO_OPTION: break;
                                                     case JOptionPane.YES_OPTION: {
+                                                        String path = toolbar__ThumbnailInput.getText();
+                                                        if (!path.equals(Services.getInstance().getSelectedProduct().getThumbnail())) {
+                                                            try {
+                                                                    File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                                    BufferedImage bufferedImage = ImageIO.read(new File(path));
+                                                                    ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
+                                                                    toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                                } catch (IOException ex) {
+                                                                    toolbar__ThumbnailInput.setText("");
+                                                                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
+                                                                }
+                                                        }
                                                         try {
                                                             String id  = toolbar__IDInput.getText();
                                                             String name = toolbar__NameInput.getText();
@@ -2433,15 +2558,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                                             String thumbnail = toolbar__ThumbnailInput.getText();
                                                             String description = Toolbar__DescriptionInput.getText();
                                                             Product product = new Product(id, name, category, quantity, price, expDate, manafacturer, thumbnail, description);
-                                                            int index = Services.getInstance().getProducts().indexOf(Services.getInstance().findById(Services.getInstance().getSelectedProduct().getId()));
                                                             Services.getInstance().update(Services.getInstance().getSelectedProduct().getId(), product);
                                                             showMessage("Sửa thông tin sản phẩm thành công!", true);
                                                         } catch (IOException | NumberFormatException  e) {
-                                                            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                                                            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                                                         }
+                                                        break;
                                                     }
                                                     case JOptionPane.CLOSED_OPTION: break;
                                                     default: {
+                                                        break;
                                                     }
                                                 }
                                             }
@@ -2454,10 +2580,10 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 }
             }
             else{
-                showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+                showMessage(AUTHORIZATION_ERROR_DIALOG_MESSAGE, false);
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__ButtonEditMouseClicked
 
@@ -2466,7 +2592,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             if (Services.getInstance().getCurrentUser().isWrite()){
                 if (toolbar__ButtonDelete.isEnabled()){
                     JDialog.setDefaultLookAndFeelDecorated(true);
-                    int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa sản phẩm này?", "Cảnh báo",
+                    int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa sản phẩm này?", TYPE_DIALOG_MESSAGE,
                             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     switch (response) {
                         case JOptionPane.NO_OPTION: break;
@@ -2477,20 +2603,22 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                 productsTable.clearSelection();
                                 showMessage("Xóa thành công sản phẩm này", true);
                             } catch (IOException e) {
-                                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                             }
+                            break;
                         }
                         case JOptionPane.CLOSED_OPTION: break;
                         default: {
+                            break;
                         }
                     }
                 }
             }
             else{
-                showMessage("Bạn chưa được cho phép để thực hiện hành động này", false);
+                showMessage(AUTHORIZATION_ERROR_DIALOG_MESSAGE, false);
             }
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__ButtonDeleteMouseClicked
 
@@ -2503,27 +2631,27 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     }
                     if (accessPage == PAGES_PRODUCTS){
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Products");
+                        c.show(main__Pages, CARD_PRODUCTS);
                     }
                 }
-                if (toolbar__SortInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
+                if (toolbar__SortInput.getSelectedItem().toString().equals(ID)){
                     if (accessPage == PAGES_HOME){
-                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.IDComparator()));   
+                        appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.IDComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.IDComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
-                if (toolbar__SortInput.getSelectedItem().toString().equals("Tên sản phẩm")){
+                if (toolbar__SortInput.getSelectedItem().toString().equals(NAME)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.NameComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.NameComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
                 if (toolbar__SortInput.getSelectedItem().toString().equals("Số lượng tăng")){
@@ -2533,7 +2661,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.QuantityUpComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
                 if (toolbar__SortInput.getSelectedItem().toString().equals("Số lượng giảm")){
@@ -2543,7 +2671,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.QuantityDownComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
                 if (toolbar__SortInput.getSelectedItem().toString().equals("Đơn giá tăng")){
@@ -2553,7 +2681,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.PriceUpComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
                 if (toolbar__SortInput.getSelectedItem().toString().equals("Đơn giá giảm")){
@@ -2563,21 +2691,21 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.PriceDownComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
-                if (toolbar__SortInput.getSelectedItem().toString().equals("Hạn sử dụng")){
+                if (toolbar__SortInput.getSelectedItem().toString().equals(EXPIRY)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().sort(new Comparator.ExpiryComparator()));
                     }
                     if (accessPage == PAGES_PRODUCTS){
                         setSort(Services.getInstance().sort(new Comparator.ExpiryComparator()));
                         CardLayout c = (CardLayout) main__Pages.getLayout();
-                        c.show(main__Pages, "pages__Sort");
+                        c.show(main__Pages, CARD_SORT);
                     }
                 }
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
         }
     }//GEN-LAST:event_toolbar__ButtonSortMouseClicked
@@ -2591,7 +2719,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
 
     private void toolbar__ButtonSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toolbar__ButtonSearchMouseClicked
         try {
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(ID)){
             if (accessPage == PAGES_HOME){
                 appController.setProductsTable(productsTable, Services.getInstance().filterById(toolbar__SearchStringInput.getText()));
             }
@@ -2600,7 +2728,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 productSearchModify = true;
             }
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(NAME)){
             if (accessPage == PAGES_HOME){
                 appController.setProductsTable(productsTable, Services.getInstance().filterByName(toolbar__SearchStringInput.getText()));
             }
@@ -2609,7 +2737,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 productSearchModify = true;
             }
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(CATEGORY)){
             if (accessPage == PAGES_HOME){
                 appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(toolbar__SearchStringInput.getText()));
             }
@@ -2618,7 +2746,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 productSearchModify = true;
             }
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(MANAFACTURER)){
             if (accessPage == PAGES_HOME){
                 appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(toolbar__SearchStringInput.getText()));
             }
@@ -2627,7 +2755,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 productSearchModify = true;
             }
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(PRICE)){
             try {
                 BigDecimal minPrice = new BigDecimal(toolbar__SearchMinInput.getText());
                 BigDecimal maxPrice = new BigDecimal(toolbar__SearchMaxInput.getText());
@@ -2639,13 +2767,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     productSearchModify = true;
                 }
             } catch (IOException e) {
-                showMessage("Đơn giá sản phẩm không hợp lệ", false);
+                showMessage(PRICE_FORMAT_ERROR_DIALOG_MESSAGE, false);
             }
         }
-        if (toolbar__SearchInput.getSelectedItem().toString().equals("Hạn sử dụng")){
+        if (toolbar__SearchInput.getSelectedItem().toString().equals(EXPIRY)){
             try {
-                Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMinInput.getText());
-                Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMaxInput.getText());
+                Date minDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMinInput.getText());
+                Date maxDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMaxInput.getText());
                 if (accessPage == PAGES_HOME){
                     appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                 }
@@ -2654,15 +2782,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     productSearchModify = true;
                 }
             } catch (IOException | ParseException  e) {
-                showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
+                showMessage(EXPIRY_FORMAT_ERROR_DIALOG_MESSAGE, false);
             }
         }
         } catch (IOException e) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
+        products__Scroll.getVerticalScrollBar().setValue(0);
         if (accessPage == PAGES_PRODUCTS){
                 CardLayout c = (CardLayout) main__Pages.getLayout();
-                c.show(main__Pages, "pages__Products");
+                c.show(main__Pages, CARD_PRODUCTS);
         }
         initSearchField();
     }//GEN-LAST:event_toolbar__ButtonSearchMouseClicked
@@ -2676,7 +2805,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             try {
                 appController.setProductsTable(productsTable, Services.getInstance().getProducts());
             } catch (IOException  e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             resetSearchField(true);
         }
@@ -2709,46 +2838,45 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             accessPage = PAGES_AUTHORIZATION;
             resetToolbar(true);
             CardLayout c = (CardLayout) main__Pages.getLayout();
-            c.show(main__Pages, "pages__Authorization");
+            c.show(main__Pages, CARD_AUTHORIZATION);
             usersTable.setBackground(Color.WHITE);
             adminController.setUsersTable(usersTable, Services.getInstance().getUsers());
             this.repaint();
             this.revalidate();
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_navbar__ButtonAuthorizationMouseClicked
 
     private void information__ButtonDeleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_information__ButtonDeleteMouseClicked
         if (information__ButtonDelete.isEnabled()){
             JDialog.setDefaultLookAndFeelDecorated(true);
-            int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa tài khoản này?", "Cảnh báo",
+            int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa tài khoản này?", TYPE_DIALOG_MESSAGE,
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             switch (response) {
                 case JOptionPane.NO_OPTION: break;
                 case JOptionPane.YES_OPTION: {
                     try {
                         Services.getInstance().deleteUser(Services.getInstance().getSelectedUser().getUsername());
-                        resetUserEdit();
-                        this.repaint();
-                        this.revalidate();
                         showMessage("Bạn đã xóa thành công tài khoản", true);
                     } catch (IOException ex) {
-                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                     }
+                    break;
                 }
-
                 case JOptionPane.CLOSED_OPTION: break;
                 default: {
+                    break;
                 }
             }
+            resetUserEdit();
         }
     }//GEN-LAST:event_information__ButtonDeleteMouseClicked
 
     private void information__ButtonEditMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_information__ButtonEditMouseClicked
         if (information__ButtonEdit.isEnabled() && isUserModify()){
             JDialog.setDefaultLookAndFeelDecorated(true);
-            int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa quyền cho tài khoản này?", "Cảnh báo",
+            int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa quyền cho tài khoản này?", TYPE_DIALOG_MESSAGE,
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             switch (response) {
                 case JOptionPane.NO_OPTION: break;
@@ -2757,19 +2885,18 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         Services.getInstance().getSelectedUser().setRead(information__ReadInput.isSelected());
                         Services.getInstance().getSelectedUser().setWrite(information__WriteInput.isSelected());
                         Services.getInstance().updateUser(Services.getInstance().getSelectedUser().getUsername(), Services.getInstance().getSelectedUser());
-                        this.repaint();
-                        this.revalidate();
-                        resetUserEdit();
                         showMessage("Bạn đã chỉnh sửa thành công quyền cho tài khoản", true);
                     } catch (IOException ex) {
-                        showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                     }
+                    break;
                 }
-
                 case JOptionPane.CLOSED_OPTION: break;
                 default: {
+                    break;
                 }
             }
+            resetUserEdit();
         }
     }//GEN-LAST:event_information__ButtonEditMouseClicked
 
@@ -2779,16 +2906,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         Date dateMax = null;
         if (!filter__RegisterDateMin.getText().equals("") && !filter__RegisterDateMax.getText().equals("")){
             try {
-                dateMin = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMin.getText());
-                dateMax = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMax.getText());
+                dateMin = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMin.getText());
+                dateMax = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMax.getText());
             } catch (ParseException e) {
-                showMessage("Ngày tạo tài khoản không hợp lệ", false);
+                showMessage(CREATE_FORMAT_ERROR_DIALOG_MESSAGE, false);
             }
         }
         try {
             adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, filter__ReadInput.isSelected(), filter__WriteInput.isSelected()));
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         resetUserEdit();
     }//GEN-LAST:event_filter__ButtonFilterMouseClicked
@@ -2797,7 +2924,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         try {
             adminController.setUsersTable(usersTable, Services.getInstance().getUsers());
         } catch (IOException ex) {
-            showMessage("Một lỗi không mong muốn đã xảy ra", false);
+            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         resetUserFilter();
     }//GEN-LAST:event_filter__ButtonResetMouseClicked
@@ -2851,7 +2978,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private void toolbar__SearchStringInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_toolbar__SearchStringInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(ID)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterById(toolbar__SearchStringInput.getText()));
                     }
@@ -2860,7 +2987,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(NAME)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByName(toolbar__SearchStringInput.getText()));
                     }
@@ -2869,7 +2996,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(CATEGORY)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(toolbar__SearchStringInput.getText()));
                     }
@@ -2878,7 +3005,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(MANAFACTURER)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(toolbar__SearchStringInput.getText()));
                     }
@@ -2887,7 +3014,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(PRICE)){
                     try {
                         BigDecimal minPrice = new BigDecimal(toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(toolbar__SearchMaxInput.getText());
@@ -2899,13 +3026,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             productSearchModify = true;
                         }
                     } catch (IOException e) {
-                        showMessage("Đơn giá sản phẩm không hợp lệ", false);
+                        showMessage(PRICE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Hạn sử dụng")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(EXPIRY)){
                     try {
-                        Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMinInput.getText());
-                        Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMaxInput.getText());
+                        Date minDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMinInput.getText());
+                        Date maxDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
                             appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                         }
@@ -2914,15 +3041,15 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             productSearchModify = true;
                         }
                     } catch (IOException | ParseException  e) {
-                        showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
+                        showMessage(EXPIRY_FORMAT_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
         if (accessPage == PAGES_PRODUCTS){
                 CardLayout c = (CardLayout) main__Pages.getLayout();
-                c.show(main__Pages, "pages__Products");
+                c.show(main__Pages, CARD_PRODUCTS);
         }
         initSearchField();
         }
@@ -2931,7 +3058,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private void toolbar__SearchMinInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_toolbar__SearchMinInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(ID)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterById(toolbar__SearchStringInput.getText()));
                     }
@@ -2940,7 +3067,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(NAME)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByName(toolbar__SearchStringInput.getText()));
                     }
@@ -2949,7 +3076,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(CATEGORY)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(toolbar__SearchStringInput.getText()));
                     }
@@ -2958,7 +3085,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(MANAFACTURER)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(toolbar__SearchStringInput.getText()));
                     }
@@ -2967,7 +3094,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(PRICE)){
                     try {
                         BigDecimal minPrice = new BigDecimal(toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(toolbar__SearchMaxInput.getText());
@@ -2979,13 +3106,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             productSearchModify = true;
                         }
                     } catch (IOException e) {
-                        showMessage("Đơn giá sản phẩm không hợp lệ", false);
+                        showMessage(PRICE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Hạn sử dụng")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(EXPIRY)){
                     try {
-                        Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMinInput.getText());
-                        Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMaxInput.getText());
+                        Date minDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMinInput.getText());
+                        Date maxDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
                             appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                         }
@@ -2994,15 +3121,15 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             productSearchModify = true;
                         }
                     } catch (IOException | ParseException  e) {
-                        showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
+                        showMessage(EXPIRY_FORMAT_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
         if (accessPage == PAGES_PRODUCTS){
                 CardLayout c = (CardLayout) main__Pages.getLayout();
-                c.show(main__Pages, "pages__Products");
+                c.show(main__Pages, CARD_PRODUCTS);
         }
         initSearchField();
         }
@@ -3011,7 +3138,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private void toolbar__SearchMaxInputKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_toolbar__SearchMaxInputKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             try {
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Mã số sản phẩm")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(ID)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterById(toolbar__SearchStringInput.getText()));
                     }
@@ -3020,7 +3147,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Tên sản phẩm")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(NAME)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByName(toolbar__SearchStringInput.getText()));
                     }
@@ -3029,7 +3156,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Danh mục")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(CATEGORY)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByCategory(toolbar__SearchStringInput.getText()));
                     }
@@ -3038,7 +3165,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Nhà sản xuất")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(MANAFACTURER)){
                     if (accessPage == PAGES_HOME){
                         appController.setProductsTable(productsTable, Services.getInstance().filterByManafacturer(toolbar__SearchStringInput.getText()));
                     }
@@ -3047,7 +3174,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         productSearchModify = true;
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(PRICE)){
                     try {
                         BigDecimal minPrice = new BigDecimal(toolbar__SearchMinInput.getText());
                         BigDecimal maxPrice = new BigDecimal(toolbar__SearchMaxInput.getText());
@@ -3059,13 +3186,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             productSearchModify = true;
                         }
                     } catch (IOException e) {
-                        showMessage("Đơn giá sản phẩm không hợp lệ", false);
+                        showMessage(PRICE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
-                if (toolbar__SearchInput.getSelectedItem().toString().equals("Hạn sử dụng")){
+                if (toolbar__SearchInput.getSelectedItem().toString().equals(EXPIRY)){
                     try {
-                        Date minDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMinInput.getText());
-                        Date maxDate = new SimpleDateFormat("dd/MM/yyyy").parse(toolbar__SearchMaxInput.getText());
+                        Date minDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMinInput.getText());
+                        Date maxDate = new SimpleDateFormat(DATE_FORMAT).parse(toolbar__SearchMaxInput.getText());
                         if (accessPage == PAGES_HOME){
                             appController.setProductsTable(productsTable, Services.getInstance().filterByExpiry(minDate, maxDate));
                         }
@@ -3074,11 +3201,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             productSearchModify = true;
                         }
                     } catch (IOException | ParseException  e) {
-                        showMessage("Hạn sử dụng sản phẩm không hợp lệ", false);
+                        showMessage(EXPIRY_FORMAT_ERROR_DIALOG_MESSAGE, false);
                     }
                 }
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
         initSearchField();
         }
@@ -3091,16 +3218,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             Date dateMax = null;
             if (!filter__RegisterDateMin.getText().equals("") && !filter__RegisterDateMax.getText().equals("")){
                 try {
-                    dateMin = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMin.getText());
-                    dateMax = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMax.getText());
+                    dateMin = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMin.getText());
+                    dateMax = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMax.getText());
                 } catch (ParseException e) {
-                    showMessage("Ngày tạo tài khoản không hợp lệ", false);
+                    showMessage(CREATE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                 }
             }
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, filter__ReadInput.isSelected(), filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             resetUserEdit();
         }
@@ -3113,16 +3240,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             Date dateMax = null;
             if (!filter__RegisterDateMin.getText().equals("") && !filter__RegisterDateMax.getText().equals("")){
                 try {
-                    dateMin = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMin.getText());
-                    dateMax = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMax.getText());
+                    dateMin = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMin.getText());
+                    dateMax = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMax.getText());
                 } catch (ParseException e) {
-                    showMessage("Ngày tạo tài khoản không hợp lệ", false);
+                    showMessage(CREATE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                 }
             }
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, filter__ReadInput.isSelected(), filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             resetUserEdit();
         }
@@ -3135,16 +3262,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             Date dateMax = null;
             if (!filter__RegisterDateMin.getText().equals("") && !filter__RegisterDateMax.getText().equals("")){
                 try {
-                    dateMin = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMin.getText());
-                    dateMax = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMax.getText());
+                    dateMin = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMin.getText());
+                    dateMax = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMax.getText());
                 } catch (ParseException e) {
-                    showMessage("Ngày tạo tài khoản không hợp lệ", false);
+                    showMessage(CREATE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                 }
             }
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, filter__ReadInput.isSelected(), filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             resetUserEdit();
         }
@@ -3157,16 +3284,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             Date dateMax = null;
             if (!filter__RegisterDateMin.getText().equals("") && !filter__RegisterDateMax.getText().equals("")){
                 try {
-                    dateMin = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMin.getText());
-                    dateMax = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMax.getText());
+                    dateMin = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMin.getText());
+                    dateMax = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMax.getText());
                 } catch (ParseException e) {
-                    showMessage("Ngày tạo tài khoản không hợp lệ", false);
+                    showMessage(CREATE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                 }
             }
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, filter__ReadInput.isSelected(), filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             resetUserEdit();
         }
@@ -3179,16 +3306,16 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             Date dateMax = null;
             if (!filter__RegisterDateMin.getText().equals("") && !filter__RegisterDateMax.getText().equals("")){
                 try {
-                    dateMin = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMin.getText());
-                    dateMax = new SimpleDateFormat("dd/MM/yyyy").parse(filter__RegisterDateMax.getText());
+                    dateMin = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMin.getText());
+                    dateMax = new SimpleDateFormat(DATE_FORMAT).parse(filter__RegisterDateMax.getText());
                 } catch (ParseException e) {
-                    showMessage("Ngày tạo tài khoản không hợp lệ", false);
+                    showMessage(CREATE_FORMAT_ERROR_DIALOG_MESSAGE, false);
                 }
             }
             try {
                 adminController.setUsersTable(usersTable, Services.getInstance().filter(username, dateMin, dateMax, filter__ReadInput.isSelected(), filter__WriteInput.isSelected()));
             } catch (IOException ex) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             resetUserEdit();
         }
@@ -3323,19 +3450,26 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             toolbar__CategoryInput.setSelectedItem(productsTable.getModel().getValueAt(row, 2).toString());
             toolbar__QuantityInput.setText(productsTable.getModel().getValueAt(row, 3).toString());
             toolbar__PriceInput.setText(BigDecimalConverter.currencyParse(productsTable.getModel().getValueAt(row, 4).toString()).toString());
-            toolbar__ExpiryInput.setDate(new SimpleDateFormat("dd/MM/yyyy").parse(productsTable.getModel().getValueAt(row, 5).toString()));
+            toolbar__ExpiryInput.setDate(new SimpleDateFormat(DATE_FORMAT).parse(productsTable.getModel().getValueAt(row, 5).toString()));
             toolbar__ManafacturerInput.setText(productsTable.getModel().getValueAt(row, 6).toString());
             try {
                 if (Services.getInstance().getSelectedProduct() != null){
                     if (Services.getInstance().getSelectedProduct().getThumbnail() != null){
                         toolbar__ThumbnailInput.setText(Services.getInstance().getSelectedProduct().getThumbnail());
                     }
+                    else{
+                        toolbar__ThumbnailInput.setText("");
+                    }
                     if (Services.getInstance().getSelectedProduct().getDescription()!= null){
                         Toolbar__DescriptionInput.setText(Services.getInstance().getSelectedProduct().getDescription());
+                        Toolbar__DescriptionInput.setCaretPosition(0);
+                    }
+                    else{
+                        Toolbar__DescriptionInput.setText("");
                     }
                 }
             } catch (IOException e) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
         }
     }
@@ -3378,7 +3512,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             try {
                 setProductFromSelected();
             } catch (ParseException ex) {
-                showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
             }
             int row = productsTable.getSelectedRow();
             if (row >= 0) {
@@ -3386,7 +3520,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     Services.getInstance();
                     Services.setSelectedProduct(Services.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
                 } catch (IOException e) {
-                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                 }
             }
             toolbar__ButtonAdd.setEnabled(false);
@@ -3403,10 +3537,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             int row = usersTable.getSelectedRow();
             if (row >= 0) {
                 try {
-                    Services.getInstance();
-                    Services.getInstance().setSelectedUser(Services.getInstance().findByUsername(usersTable.getModel().getValueAt(row, 1).toString()));
+                    Services.setSelectedUser(Services.getInstance().findByUsername(usersTable.getModel().getValueAt(row, 1).toString()));
                 } catch (IOException ex) {
-                    showMessage("Một lỗi không mong muốn đã xảy ra", false);
+                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                 }
             }
         }

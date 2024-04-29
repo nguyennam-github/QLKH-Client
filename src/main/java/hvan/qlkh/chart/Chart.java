@@ -19,8 +19,8 @@ public class Chart extends javax.swing.JPanel {
 
     private transient List<ModelLegend> legends = new ArrayList<>();
     private transient List<ModelChart> model = new ArrayList<>();
-    private static final int SERIES_SIZE = 25;
-    private static final int SERIES_SPACE = 6;
+    private static final int SERIES_SIZE = 20;
+    private static final int SERIES_SPACE = 5;
 
     public Chart() {
         super();
@@ -93,7 +93,7 @@ public class Chart extends javax.swing.JPanel {
 
         blankPlotChart.setForeground(new Color(33, 43, 39, 200)
         );
-        blankPlotChart.setFont(new java.awt.Font("Segoe UI", 0, 12)); // NOI18N
+        blankPlotChart.setFont(new java.awt.Font("Segoe UI", 0, 10)); // NOI18N
 
         panelLegend.setOpaque(false);
         panelLegend.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER, 5, 0));
