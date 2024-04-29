@@ -362,7 +362,7 @@ public class Services{
             return temp.stream()
                     .filter(user -> user.isRead() == read)
                     .filter(user -> user.isWrite() == write)
-                    .collect(Collectors.toList()); 
+                    .collect(Collectors.toList());
         }
     }
 }

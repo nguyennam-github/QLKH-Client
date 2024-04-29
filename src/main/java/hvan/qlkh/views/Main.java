@@ -39,6 +39,7 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
+import javax.imageio.stream.ImageOutputStream;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -2175,15 +2176,17 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                         else{
                                             if (idCheck == nameCheck == quantityCheck == priceCheck == manafacturerCheck){
                                                 String path = toolbar__ThumbnailInput.getText();
-                                                try {
-                                                        File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
-                                                        BufferedImage bufferedImage = ImageIO.read(new File(path));
-                                                        ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
-                                                        toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
-                                                    } catch (IOException ex) {
-                                                        toolbar__ThumbnailInput.setText("");
-                                                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
-                                                    }
+                                                if (!path.equals("")){
+                                                    try {
+                                                            File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                            BufferedImage bufferedImage = ImageIO.read(new File(path));
+                                                            ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
+                                                            toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                        } catch (IOException ex) {
+                                                            toolbar__ThumbnailInput.setText("");
+                                                            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
+                                                        }
+                                                }
                                                 try {
                                                     Product temp = new Product(toolbar__IDInput.getText(), toolbar__NameInput.getText(), (String) toolbar__CategoryInput.getSelectedItem(), Integer.parseInt(toolbar__QuantityInput.getText()), new BigDecimal(toolbar__PriceInput.getText()), toolbar__ExpiryInput.getDate(), toolbar__ManafacturerInput.getText());
                                                     if(!toolbar__ThumbnailInput.getText().equals("") || toolbar__ThumbnailInput.getText() == null){
@@ -2533,19 +2536,22 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                                 int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa thông tin sản phẩm này?", TYPE_DIALOG_MESSAGE,
                                                         JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                                                 switch (response) {
-                                                    case JOptionPane.NO_OPTION: break;
-                                                    case JOptionPane.YES_OPTION: {
+                                                    case JOptionPane.NO_OPTION -> {
+                                                    }
+                                                    case JOptionPane.YES_OPTION ->  {
                                                         String path = toolbar__ThumbnailInput.getText();
                                                         if (!path.equals(Services.getInstance().getSelectedProduct().getThumbnail())) {
-                                                            try {
-                                                                    File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
-                                                                    BufferedImage bufferedImage = ImageIO.read(new File(path));
-                                                                    ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
-                                                                    toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
-                                                                } catch (IOException ex) {
-                                                                    toolbar__ThumbnailInput.setText("");
-                                                                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
-                                                                }
+                                                            if (!path.equals("")){
+                                                                try {
+                                                                        File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                                        BufferedImage bufferedImage = ImageIO.read(new File(path));
+                                                                        ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
+                                                                        toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                                    } catch (IOException ex) {
+                                                                        toolbar__ThumbnailInput.setText("");
+                                                                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
+                                                                    }
+                                                            }
                                                         }
                                                         try {
                                                             String id  = toolbar__IDInput.getText();
@@ -2563,11 +2569,10 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                                         } catch (IOException | NumberFormatException  e) {
                                                             showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                                                         }
-                                                        break;
                                                     }
-                                                    case JOptionPane.CLOSED_OPTION: break;
-                                                    default: {
-                                                        break;
+                                                    case JOptionPane.CLOSED_OPTION -> {
+                                                    }
+                                                    default ->  {
                                                     }
                                                 }
                                             }
