@@ -113,10 +113,8 @@ public class UserController {
     }
 
     public static void setComponents(JPanel toolBar, JPanel navBar) {
-
         UserController.toolbar = toolBar;
         UserController.navbar = navBar;
-
     }
 
 }

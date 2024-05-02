@@ -39,7 +39,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
-import javax.imageio.stream.ImageOutputStream;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -67,7 +66,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private static final String ID_FORMAT = "^[a-zA-Z\\d]{1,9}$";
     private static final String DATE_FORMAT = "dd/MM/yyyy";
 
-    private static final String ID = "Mã số sản phẩm";
+    private static final String ID = "Mã số";
     private static final String NAME = "Tên sản phẩm";
     private static final String CATEGORY = "Danh mục";
     private static final String MANAFACTURER = "Nhà sản xuất";
@@ -82,8 +81,8 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
 
     private static final String STATISTIC_HEADER = "<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">";
     private static final String STATISTIC_FOOTER = "</div></html>";
-    private static final String ID_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm không hợp lệ!</div></html>";
-    private static final String ID_EXIST_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phảm này đã tồn tại!</div></html>";
+    private static final String ID_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm không hợp lệ!</div></html>";
+    private static final String ID_EXIST_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Mã số sản phẩm này đã tồn tại!</div></html>";
     private static final String NAME_EXIST_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Sản phẩm này đã tồn tại!</div></html>";
     private static final String QUANTITY_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Số lượng sản phẩm không hợp lệ!</div></html>";
     private static final String PRICE_FORMAT_ERROR_MESSAGE = "<html><div style=\"text-align: center; width: 265px; color: red; font-size: 11px; font-family: Karla; font-weight: 400; line-height: 16px; word-wrap: break-word\">Đơn giá sản phẩm không hợp lệ!</div></html>";
@@ -162,7 +161,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__DescriptionScroll.setVerticalScrollBar(new ScrollBar());
         toolbar__DescriptionScroll.getVerticalScrollBar().setBackground(Color.WHITE);
         toolbar__DescriptionScroll.getViewport().setBackground(Color.WHITE);
-        Toolbar__DescriptionInput.setCaretPosition(0);
+        toolbar__DescriptionInput.setCaretPosition(0);
         toolbar__ButtonEdit.setEnabled(false);
         toolbar__ButtonDelete.setEnabled(false);
         toolbar__ExpiryInput.getJCalendar().setPreferredSize(new Dimension(365, 300));
@@ -184,7 +183,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ExpiryInput.setDate(null);
         toolbar__ManafacturerInput.setText("");
         toolbar__ThumbnailInput.setText("");
-        Toolbar__DescriptionInput.setText("");
+        toolbar__DescriptionInput.setText("");
         toolbar__Alert.setText("");
         toolbar__ButtonAdd.setEnabled(state);
         toolbar__ButtonEdit.setEnabled(false);
@@ -270,7 +269,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             toolbar__ExpiryInput.getDate().equals(product.getExpDate())&&
                             toolbar__ManafacturerInput.getText().equals(product.getManafacturer())&&
                             toolbar__ThumbnailInput.getText().equals(product.getThumbnail())&&
-                            Toolbar__DescriptionInput.getText().equals(product.getDescription()));
+                            toolbar__DescriptionInput.getText().equals(product.getDescription()));
                 }
         }
         } catch (IOException | NumberFormatException  e) {
@@ -342,7 +341,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     @SuppressWarnings("deprecation")
     private void setBarChart(){
         statistic__BarChart.clearData();
-        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals(EXPIRY)){
+        if (statistic__QuantityStatistic.getSelectedItem().toString().equals(EXPIRY)){
             Map<Integer, Integer> expStatistic = new HashMap<>();
             try {
                 Services.getInstance().getProducts().forEach(product -> {
@@ -368,7 +367,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__BarChart.repaint();
             statistic__BarChart.revalidate();
         }
-        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals(CATEGORY)){
+        if (statistic__QuantityStatistic.getSelectedItem().toString().equals(CATEGORY)){
             Map<String, Integer> categoryStatistic = new HashMap<>();
             try {
                 Services.getInstance().getProducts().forEach(product -> {
@@ -393,7 +392,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__BarChart.repaint();
             statistic__BarChart.revalidate();
         }
-        if (Statistic__QuantityStatistic.getSelectedItem().toString().equals(MANAFACTURER)){
+        if (statistic__QuantityStatistic.getSelectedItem().toString().equals(MANAFACTURER)){
             Map<String, Integer> manafacturerStatistic = new HashMap<>();
             try {
                 Services.getInstance().getProducts().forEach(product -> {
@@ -423,7 +422,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private void setPieChart(){
         statistic__PieChart.clearData();
         statistic__PieChart.setChartType(PieChart.PeiChartType.DONUT_CHART);
-        if (Statistic__PercentStatistic.getSelectedItem().toString().equals(CATEGORY)) {
+        if (statistic__PercentStatistic.getSelectedItem().toString().equals(CATEGORY)) {
             Map<String, Integer> categoryStatistic = new HashMap<>();
             for (int i = 0; i < toolbar__CategoryInput.getItemCount(); i++) {
                 String key = toolbar__CategoryInput.getItemAt(i);
@@ -445,7 +444,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__PieChart.repaint();
             statistic__PieChart.revalidate();
         }
-        if (Statistic__PercentStatistic.getSelectedItem().toString().equals(PRICE)) {
+        if (statistic__PercentStatistic.getSelectedItem().toString().equals(PRICE)) {
             Map<String, Integer> priceStatistic = new HashMap<>();
             try {
                 priceStatistic.put(PRICE_RANGES[0], Services.getInstance().filterByPrice(new BigDecimal("0"), new BigDecimal("1000000")).size());
@@ -486,10 +485,10 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         int totalManafaturer = manafacturer.size();
-        Statistic__TotalProductsStatistic.setText(STATISTIC_HEADER + totalProducts + STATISTIC_FOOTER);
-        Statistic__TotalQuantityStatistic.setText(STATISTIC_HEADER + totalQuantity + STATISTIC_FOOTER);
-        Statistic__CategoryStatistic.setText(STATISTIC_HEADER + totalCategory + STATISTIC_FOOTER);
-        Statistic__ManafacturerStatistic.setText(STATISTIC_HEADER + totalManafaturer + STATISTIC_FOOTER);
+        statistic__TotalProductsStatistic.setText(STATISTIC_HEADER + totalProducts + STATISTIC_FOOTER);
+        statistic__TotalQuantityStatistic.setText(STATISTIC_HEADER + totalQuantity + STATISTIC_FOOTER);
+        statistic__CategoryStatistic.setText(STATISTIC_HEADER + totalCategory + STATISTIC_FOOTER);
+        statistic__ManafacturerStatistic.setText(STATISTIC_HEADER + totalManafaturer + STATISTIC_FOOTER);
     }
 
     public void initStatistic(){
@@ -499,13 +498,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         statistic__Scroll.getVerticalScrollBar().setBackground(Color.WHITE);
         statistic__Scroll.getViewport().setBackground(Color.WHITE);
         statistic__Scroll.setCorner(ScrollPaneConstants.UPPER_RIGHT_CORNER, p);
-        Statistic__QuantityStatistic.setBackground(Color.WHITE);
-        Statistic__PercentStatistic.setBackground(Color.WHITE);
+        statistic__QuantityStatistic.setBackground(Color.WHITE);
+        statistic__PercentStatistic.setBackground(Color.WHITE);
     }
 
     public void setStatistic(){
-        Statistic__QuantityStatistic.setSelectedIndex(0);
-        Statistic__PercentStatistic.setSelectedIndex(0);
+        statistic__QuantityStatistic.setSelectedIndex(0);
+        statistic__PercentStatistic.setSelectedIndex(0);
         setOveralStatistic();
         setBarChart();
         setPieChart();
@@ -557,7 +556,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         userCardLayout.show(main__Pages, CARD_HOME);
         try {
             appController.setProductsTable(productsTable, Services.getInstance().getProducts());
-        } catch (IOException e) {
+        } catch (IOException ex) {
             showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
         resetProductTemplates();
@@ -656,7 +655,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ThumbnailTitle = new javax.swing.JLabel();
         toolbar__DescriptionTitle = new javax.swing.JLabel();
         toolbar__DescriptionScroll = new javax.swing.JScrollPane();
-        Toolbar__DescriptionInput = new javax.swing.JTextPane();
+        toolbar__DescriptionInput = new javax.swing.JTextPane();
         toolbar__IDTitle = new javax.swing.JLabel();
         toolbar__IDInput = new hvan.qlkh.utils.TextField(0, Color.BLACK);
         toolbar__ButtonResetSearch = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
@@ -673,28 +672,28 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         statistic__BarChart = new hvan.qlkh.chart.Chart();
         statistic__PieChart = new hvan.qlkh.chart.PieChart();
         statistic__Menu = new hvan.qlkh.utils.Panel(40);
-        Statistic__QuantityStatistic = new javax.swing.JComboBox<>();
-        Statistic__QuantityStatisticTitle = new javax.swing.JLabel();
-        Statistic__PercentStatisticTitle = new javax.swing.JLabel();
-        Statistic__PercentStatistic = new javax.swing.JComboBox<>();
-        Statistic__ButtonPercent = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
-        Statistic__ButtonPercent1 = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
+        statistic__QuantityStatistic = new javax.swing.JComboBox<>();
+        statistic__QuantityStatisticTitle = new javax.swing.JLabel();
+        statistic__PercentStatisticTitle = new javax.swing.JLabel();
+        statistic__PercentStatistic = new javax.swing.JComboBox<>();
+        statistic__ButtonPercent = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
+        statistic__ButtonQuantity = new hvan.qlkh.utils.Button(35, new Color(76, 175, 79, 200), new Color(76, 175, 79), new Color(56, 142, 59));
         statistic__Category = new hvan.qlkh.utils.Panel(40);
-        Statistic__CategoryThumb = new javax.swing.JLabel();
-        Statistic__CategoryTitle = new javax.swing.JLabel();
-        Statistic__CategoryStatistic = new javax.swing.JLabel();
+        statistic__CategoryThumb = new javax.swing.JLabel();
+        statistic__CategoryTitle = new javax.swing.JLabel();
+        statistic__CategoryStatistic = new javax.swing.JLabel();
         statistic__Manafacturer = new hvan.qlkh.utils.Panel(40);
-        Statistic__ManafacturerThumb = new javax.swing.JLabel();
-        Statistic__ManafacturerTitle = new javax.swing.JLabel();
-        Statistic__ManafacturerStatistic = new javax.swing.JLabel();
+        statistic__ManafacturerThumb = new javax.swing.JLabel();
+        statistic__ManafacturerTitle = new javax.swing.JLabel();
+        statistic__ManafacturerStatistic = new javax.swing.JLabel();
         statistic__TotalProducts = new hvan.qlkh.utils.Panel(40);
-        Statistic__TotalProductsThumb = new javax.swing.JLabel();
-        Statistic__TotalProductsTitle = new javax.swing.JLabel();
-        Statistic__TotalProductsStatistic = new javax.swing.JLabel();
+        statistic__TotalProductsThumb = new javax.swing.JLabel();
+        statistic__TotalProductsTitle = new javax.swing.JLabel();
+        statistic__TotalProductsStatistic = new javax.swing.JLabel();
         statistic__TotalQuanity = new hvan.qlkh.utils.Panel(40);
-        Statistic__TotalQuantityThumb = new javax.swing.JLabel();
-        Statistic__TotalQuantityTitle = new javax.swing.JLabel();
-        Statistic__TotalQuantityStatistic = new javax.swing.JLabel();
+        statistic__TotalQuantityThumb = new javax.swing.JLabel();
+        statistic__TotalQuantityTitle = new javax.swing.JLabel();
+        statistic__TotalQuantityStatistic = new javax.swing.JLabel();
         pages__Sort = new Panel(40);
         sort__Scroll = new javax.swing.JScrollPane();
         sort__Main = new javax.swing.JPanel();
@@ -809,7 +808,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonAdd.setBorder(null);
         toolbar__ButtonAdd.setBorderPainted(false);
         toolbar__ButtonAdd.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonAddMouseClicked(evt);
             }
@@ -820,7 +818,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonEdit.setBorder(null);
         toolbar__ButtonEdit.setBorderPainted(false);
         toolbar__ButtonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonEditMouseClicked(evt);
             }
@@ -831,7 +828,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonDelete.setBorder(null);
         toolbar__ButtonDelete.setBorderPainted(false);
         toolbar__ButtonDelete.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonDeleteMouseClicked(evt);
             }
@@ -845,7 +841,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonReset.setBorder(null);
         toolbar__ButtonReset.setBorderPainted(false);
         toolbar__ButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonResetMouseClicked(evt);
             }
@@ -855,7 +850,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SortTitle.setPreferredSize(new java.awt.Dimension(340, 30));
 
         toolbar__SortInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        toolbar__SortInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mặc định", ID, NAME, "Số lượng tăng", "Số lượng giảm", "Đơn giá tăng", "Đơn giá giảm", EXPIRY }));
+        toolbar__SortInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mặc định", "Mã số", "Tên sản phẩm", "Số lượng tăng", "Số lượng giảm", "Đơn giá tăng", "Đơn giá giảm", "Hạn sử dụng" }));
         toolbar__SortInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         toolbar__SortInput.setPreferredSize(new java.awt.Dimension(230, 35));
 
@@ -866,7 +861,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonSort.setPreferredSize(new java.awt.Dimension(100, 35));
         toolbar__ButtonSort.setRolloverEnabled(false);
         toolbar__ButtonSort.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonSortMouseClicked(evt);
             }
@@ -876,7 +870,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchTitle.setPreferredSize(new java.awt.Dimension(100, 35));
 
         toolbar__SearchInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
-        toolbar__SearchInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ID, NAME, CATEGORY, PRICE, EXPIRY, MANAFACTURER }));
+        toolbar__SearchInput.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Mã số", "Tên sản phẩm", "Danh mục", "Đơn giá", "Hạn sử dụng", "Nhà sản xuất" }));
         toolbar__SearchInput.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         toolbar__SearchInput.setPreferredSize(new java.awt.Dimension(230, 35));
         toolbar__SearchInput.addItemListener(new java.awt.event.ItemListener() {
@@ -888,13 +882,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchStringInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         toolbar__SearchStringInput.setPreferredSize(new java.awt.Dimension(340, 35));
         toolbar__SearchStringInput.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 toolbar__SearchStringInputFocusGained(evt);
             }
         });
         toolbar__SearchStringInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchStringInputKeyPressed(evt);
             }
@@ -906,7 +898,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonSearch.setBorderPainted(false);
         toolbar__ButtonSearch.setPreferredSize(new java.awt.Dimension(100, 35));
         toolbar__ButtonSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonSearchMouseClicked(evt);
             }
@@ -943,13 +934,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchMinInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         toolbar__SearchMinInput.setPreferredSize(new java.awt.Dimension(135, 35));
         toolbar__SearchMinInput.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 toolbar__SearchMinInputFocusGained(evt);
             }
         });
         toolbar__SearchMinInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchMinInputKeyPressed(evt);
             }
@@ -958,13 +947,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchMaxInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
         toolbar__SearchMaxInput.setPreferredSize(new java.awt.Dimension(135, 35));
         toolbar__SearchMaxInput.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 toolbar__SearchMaxInputFocusGained(evt);
             }
         });
         toolbar__SearchMaxInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchMaxInputKeyPressed(evt);
             }
@@ -981,7 +968,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonFileChooser.setBorderPainted(false);
         toolbar__ButtonFileChooser.setPreferredSize(new java.awt.Dimension(55, 35));
         toolbar__ButtonFileChooser.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonFileChooserMouseClicked(evt);
             }
@@ -999,8 +985,8 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
 
         toolbar__DescriptionScroll.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        Toolbar__DescriptionInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        toolbar__DescriptionScroll.setViewportView(Toolbar__DescriptionInput);
+        toolbar__DescriptionInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        toolbar__DescriptionScroll.setViewportView(toolbar__DescriptionInput);
 
         toolbar__IDTitle.setText("<html><div style=\"width: 80px; text-align: left; color:rgba(33, 43, 39, 0.8); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word\">Mã số</div></html>");
         toolbar__IDTitle.setPreferredSize(new java.awt.Dimension(105, 35));
@@ -1019,7 +1005,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__ButtonResetSearch.setBorderPainted(false);
         toolbar__ButtonResetSearch.setPreferredSize(new java.awt.Dimension(100, 35));
         toolbar__ButtonResetSearch.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 toolbar__ButtonResetSearchMouseClicked(evt);
             }
@@ -1222,7 +1207,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(30, 30, 30))
         );
 
-        main__Pages.add(pages__Home, CARD_HOME);
+        main__Pages.add(pages__Home, "pages__Home");
 
         pages__Products.setBackground(new java.awt.Color(246, 251, 249));
         pages__Products.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1250,7 +1235,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(15, 15, 15))
         );
 
-        main__Pages.add(pages__Products, CARD_PRODUCTS);
+        main__Pages.add(pages__Products, "pages__Products");
 
         pages__Statistic.setBackground(new java.awt.Color(246, 251, 249));
         pages__Statistic.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1272,37 +1257,35 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         statistic__Menu.setBackground(new java.awt.Color(255, 255, 255));
         statistic__Menu.setPreferredSize(new java.awt.Dimension(390, 200));
 
-        Statistic__QuantityStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { CATEGORY, MANAFACTURER, EXPIRY }));
-        Statistic__QuantityStatistic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Statistic__QuantityStatistic.setPreferredSize(new java.awt.Dimension(225, 35));
+        statistic__QuantityStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Danh mục", "Nhà sản xuất", "Hạn sử dụng" }));
+        statistic__QuantityStatistic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        statistic__QuantityStatistic.setPreferredSize(new java.awt.Dimension(225, 35));
 
-        Statistic__QuantityStatisticTitle.setText("<html><div style=\"width: 300px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word\">Thống kê số lượng sản phẩm theo:</div></html>");
-        Statistic__QuantityStatisticTitle.setPreferredSize(new java.awt.Dimension(240, 30));
+        statistic__QuantityStatisticTitle.setText("<html><div style=\"width: 300px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word\">Thống kê số lượng sản phẩm theo:</div></html>");
+        statistic__QuantityStatisticTitle.setPreferredSize(new java.awt.Dimension(240, 30));
 
-        Statistic__PercentStatisticTitle.setText("<html><div style=\"width: 300px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word\">Thống kê tỉ lệ sản phẩm theo:</div></html>");
-        Statistic__PercentStatisticTitle.setPreferredSize(new java.awt.Dimension(240, 30));
+        statistic__PercentStatisticTitle.setText("<html><div style=\"width: 300px; text-align: left; color:rgba(33, 43, 39, 0.7); font-size: 11px; font-family: Karla; font-weight: 400; line-height: 15px; word-wrap: break-word\">Thống kê tỉ lệ sản phẩm theo:</div></html>");
+        statistic__PercentStatisticTitle.setPreferredSize(new java.awt.Dimension(240, 30));
 
-        Statistic__PercentStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { CATEGORY, PRICE }));
-        Statistic__PercentStatistic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        Statistic__PercentStatistic.setPreferredSize(new java.awt.Dimension(225, 35));
+        statistic__PercentStatistic.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Danh mục", "Đơn giá" }));
+        statistic__PercentStatistic.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        statistic__PercentStatistic.setPreferredSize(new java.awt.Dimension(225, 35));
 
-        Statistic__ButtonPercent.setBackground(new Color(76, 175, 79, 200));
-        Statistic__ButtonPercent.setText("<html><div style=\"text-align: center; color:white; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 160px; word-wrap: break-word\">Áp dụng</div></html>");
-        Statistic__ButtonPercent.setPreferredSize(new java.awt.Dimension(100, 35));
-        Statistic__ButtonPercent.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
+        statistic__ButtonPercent.setBackground(new Color(76, 175, 79, 200));
+        statistic__ButtonPercent.setText("<html><div style=\"text-align: center; color:white; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 160px; word-wrap: break-word\">Áp dụng</div></html>");
+        statistic__ButtonPercent.setPreferredSize(new java.awt.Dimension(100, 35));
+        statistic__ButtonPercent.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Statistic__ButtonPercentMouseClicked(evt);
+                statistic__ButtonPercentMouseClicked(evt);
             }
         });
 
-        Statistic__ButtonPercent1.setBackground(new Color(76, 175, 79, 200));
-        Statistic__ButtonPercent1.setText("<html><div style=\"text-align: center; color:white; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 160px; word-wrap: break-word\">Áp dụng</div></html>");
-        Statistic__ButtonPercent1.setPreferredSize(new java.awt.Dimension(100, 35));
-        Statistic__ButtonPercent1.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
+        statistic__ButtonQuantity.setBackground(new Color(76, 175, 79, 200));
+        statistic__ButtonQuantity.setText("<html><div style=\"text-align: center; color:white; font-size: 12px; font-family: Karla; font-weight: 400; line-height: 160px; word-wrap: break-word\">Áp dụng</div></html>");
+        statistic__ButtonQuantity.setPreferredSize(new java.awt.Dimension(100, 35));
+        statistic__ButtonQuantity.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                Statistic__ButtonPercent1MouseClicked(evt);
+                statistic__ButtonQuantityMouseClicked(evt);
             }
         });
 
@@ -1314,46 +1297,46 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(20, 20, 20)
                 .addGroup(statistic__MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statistic__MenuLayout.createSequentialGroup()
-                        .addComponent(Statistic__QuantityStatistic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(statistic__QuantityStatistic, 0, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
-                        .addComponent(Statistic__ButtonPercent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(statistic__ButtonQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statistic__MenuLayout.createSequentialGroup()
                         .addGroup(statistic__MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Statistic__PercentStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Statistic__QuantityStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(statistic__PercentStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statistic__QuantityStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(110, 110, 110))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statistic__MenuLayout.createSequentialGroup()
-                        .addComponent(Statistic__PercentStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(statistic__PercentStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(25, 25, 25)
-                        .addComponent(Statistic__ButtonPercent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(statistic__ButtonPercent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
         statistic__MenuLayout.setVerticalGroup(
             statistic__MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statistic__MenuLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(Statistic__QuantityStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic__QuantityStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addGroup(statistic__MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Statistic__ButtonPercent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Statistic__QuantityStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statistic__ButtonQuantity, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statistic__QuantityStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(15, 15, 15)
-                .addComponent(Statistic__PercentStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic__PercentStatisticTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
                 .addGroup(statistic__MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Statistic__ButtonPercent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Statistic__PercentStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(20, Short.MAX_VALUE))
+                    .addComponent(statistic__ButtonPercent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statistic__PercentStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(20, 20, 20))
         );
 
         statistic__Category.setBackground(new java.awt.Color(255, 255, 255));
         statistic__Category.setPreferredSize(new java.awt.Dimension(100, 140));
 
-        Statistic__CategoryThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-opened-folder-80.png"))); // NOI18N
+        statistic__CategoryThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-opened-folder-80.png"))); // NOI18N
 
-        Statistic__CategoryTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Tổng số danh mục:</div></html>");
+        statistic__CategoryTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Tổng số danh mục:</div></html>");
 
-        Statistic__CategoryStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">8</div></html>");
+        statistic__CategoryStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\"></div></html>");
 
         javax.swing.GroupLayout statistic__CategoryLayout = new javax.swing.GroupLayout(statistic__Category);
         statistic__Category.setLayout(statistic__CategoryLayout);
@@ -1362,34 +1345,34 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             .addGroup(statistic__CategoryLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(statistic__CategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Statistic__CategoryThumb)
+                    .addComponent(statistic__CategoryThumb)
                     .addGroup(statistic__CategoryLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(statistic__CategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Statistic__CategoryStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Statistic__CategoryTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(statistic__CategoryStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statistic__CategoryTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(10, 10, 10))
         );
         statistic__CategoryLayout.setVerticalGroup(
             statistic__CategoryLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statistic__CategoryLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(Statistic__CategoryThumb)
+                .addComponent(statistic__CategoryThumb)
                 .addGap(5, 5, 5)
-                .addComponent(Statistic__CategoryTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic__CategoryTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(Statistic__CategoryStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic__CategoryStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         statistic__Manafacturer.setBackground(new java.awt.Color(255, 255, 255));
         statistic__Manafacturer.setPreferredSize(new java.awt.Dimension(100, 140));
 
-        Statistic__ManafacturerThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-manufacture-80.png"))); // NOI18N
+        statistic__ManafacturerThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-manufacture-80.png"))); // NOI18N
 
-        Statistic__ManafacturerTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Tổng số nhà sản xuất:</div></html>");
+        statistic__ManafacturerTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Tổng số nhà sản xuất:</div></html>");
 
-        Statistic__ManafacturerStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">12</div></html>");
+        statistic__ManafacturerStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\"></div></html>");
 
         javax.swing.GroupLayout statistic__ManafacturerLayout = new javax.swing.GroupLayout(statistic__Manafacturer);
         statistic__Manafacturer.setLayout(statistic__ManafacturerLayout);
@@ -1398,34 +1381,34 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statistic__ManafacturerLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(statistic__ManafacturerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Statistic__ManafacturerThumb)
+                    .addComponent(statistic__ManafacturerThumb)
                     .addGroup(statistic__ManafacturerLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
                         .addGroup(statistic__ManafacturerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Statistic__ManafacturerStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(Statistic__ManafacturerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(statistic__ManafacturerStatistic, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statistic__ManafacturerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(10, 10, 10))
         );
         statistic__ManafacturerLayout.setVerticalGroup(
             statistic__ManafacturerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statistic__ManafacturerLayout.createSequentialGroup()
                 .addGap(5, 5, 5)
-                .addComponent(Statistic__ManafacturerThumb)
+                .addComponent(statistic__ManafacturerThumb)
                 .addGap(5, 5, 5)
-                .addComponent(Statistic__ManafacturerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic__ManafacturerTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(5, 5, 5)
-                .addComponent(Statistic__ManafacturerStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statistic__ManafacturerStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         statistic__TotalProducts.setBackground(new java.awt.Color(255, 255, 255));
         statistic__TotalProducts.setPreferredSize(new java.awt.Dimension(185, 100));
 
-        Statistic__TotalProductsThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-product-80.png"))); // NOI18N
+        statistic__TotalProductsThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-product-80.png"))); // NOI18N
 
-        Statistic__TotalProductsTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Tổng số sản phẩm:</div></html>");
+        statistic__TotalProductsTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Tổng số sản phẩm:</div></html>");
 
-        Statistic__TotalProductsStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">35</div></html>");
+        statistic__TotalProductsStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\"></div></html>");
 
         javax.swing.GroupLayout statistic__TotalProductsLayout = new javax.swing.GroupLayout(statistic__TotalProducts);
         statistic__TotalProducts.setLayout(statistic__TotalProductsLayout);
@@ -1433,14 +1416,14 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__TotalProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statistic__TotalProductsLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(Statistic__TotalProductsThumb)
+                .addComponent(statistic__TotalProductsThumb)
                 .addGroup(statistic__TotalProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(statistic__TotalProductsLayout.createSequentialGroup()
                         .addGap(12, 12, 12)
-                        .addComponent(Statistic__TotalProductsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(statistic__TotalProductsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(statistic__TotalProductsLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Statistic__TotalProductsStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(statistic__TotalProductsStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         statistic__TotalProductsLayout.setVerticalGroup(
@@ -1449,23 +1432,23 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGroup(statistic__TotalProductsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(statistic__TotalProductsLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(Statistic__TotalProductsThumb))
+                        .addComponent(statistic__TotalProductsThumb))
                     .addGroup(statistic__TotalProductsLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
-                        .addComponent(Statistic__TotalProductsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(statistic__TotalProductsTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(Statistic__TotalProductsStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(statistic__TotalProductsStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(10, Short.MAX_VALUE))
         );
 
         statistic__TotalQuanity.setBackground(new java.awt.Color(255, 255, 255));
         statistic__TotalQuanity.setPreferredSize(new java.awt.Dimension(185, 100));
 
-        Statistic__TotalQuantityThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-bill-80.png"))); // NOI18N
+        statistic__TotalQuantityThumb.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/icons8-bill-80.png"))); // NOI18N
 
-        Statistic__TotalQuantityTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Số lượng sản phẩm:</div></html>");
+        statistic__TotalQuantityTitle.setText("<html><div style=\"width: 55px; text-align: center; color:rgba(33, 43, 39, 0.7); font-size: 8px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">Số lượng sản phẩm:</div></html>");
 
-        Statistic__TotalQuantityStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\">1285</div></html>");
+        statistic__TotalQuantityStatistic.setText("<html><div style=\"width: 55px; text-align: center; color: red; font-size: 15px; font-family: Karla; font-weight: 500; line-height: 13px; word-wrap: break-word\"></div></html>");
 
         javax.swing.GroupLayout statistic__TotalQuanityLayout = new javax.swing.GroupLayout(statistic__TotalQuanity);
         statistic__TotalQuanity.setLayout(statistic__TotalQuanityLayout);
@@ -1473,11 +1456,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__TotalQuanityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statistic__TotalQuanityLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(Statistic__TotalQuantityThumb)
+                .addComponent(statistic__TotalQuantityThumb)
                 .addGap(12, 12, 12)
                 .addGroup(statistic__TotalQuanityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Statistic__TotalQuantityTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Statistic__TotalQuantityStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(statistic__TotalQuantityTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(statistic__TotalQuantityStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         statistic__TotalQuanityLayout.setVerticalGroup(
@@ -1485,12 +1468,12 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, statistic__TotalQuanityLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
                 .addGroup(statistic__TotalQuanityLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(Statistic__TotalQuantityThumb)
+                    .addComponent(statistic__TotalQuantityThumb)
                     .addGroup(statistic__TotalQuanityLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(Statistic__TotalQuantityTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(statistic__TotalQuantityTitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10)
-                        .addComponent(Statistic__TotalQuantityStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(statistic__TotalQuantityStatistic, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(10, 10, 10))
         );
 
@@ -1502,7 +1485,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(statistic__MainLayout.createSequentialGroup()
                         .addGap(5, 5, 5)
-                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(statistic__MainLayout.createSequentialGroup()
                                 .addGap(5, 5, 5)
@@ -1524,22 +1507,22 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(statistic__MainLayout.createSequentialGroup()
                 .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(statistic__BarChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(statistic__BarChart, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(statistic__MainLayout.createSequentialGroup()
-                        .addComponent(statistic__Category, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)
+                        .addComponent(statistic__Category, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15)
-                        .addComponent(statistic__Manafacturer, javax.swing.GroupLayout.DEFAULT_SIZE, 155, Short.MAX_VALUE)))
+                        .addComponent(statistic__Manafacturer, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(statistic__MainLayout.createSequentialGroup()
-                        .addGap(10, 10, 10)
+                        .addGap(15, 15, 15)
                         .addGroup(statistic__MainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(statistic__TotalProducts, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(statistic__TotalQuanity, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(10, 10, 10)
+                        .addGap(15, 15, 15)
                         .addComponent(statistic__Menu, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(10, 10, 10))
                     .addGroup(statistic__MainLayout.createSequentialGroup()
-                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(statistic__PieChart, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(5, 5, 5))))
         );
 
@@ -1558,11 +1541,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             pages__StatisticLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pages__StatisticLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addComponent(statistic__Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 640, Short.MAX_VALUE)
+                .addComponent(statistic__Scroll, javax.swing.GroupLayout.DEFAULT_SIZE, 655, Short.MAX_VALUE)
                 .addGap(15, 15, 15))
         );
 
-        main__Pages.add(pages__Statistic, CARD_STATISTIC);
+        main__Pages.add(pages__Statistic, "pages__Statistic");
 
         pages__Sort.setBackground(new java.awt.Color(246, 251, 249));
         pages__Sort.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1589,7 +1572,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(15, 15, 15))
         );
 
-        main__Pages.add(pages__Sort, CARD_SORT);
+        main__Pages.add(pages__Sort, "pages__Sort");
 
         pages__Authorization.setBackground(new java.awt.Color(246, 251, 249));
         pages__Authorization.setPreferredSize(new java.awt.Dimension(770, 690));
@@ -1657,7 +1640,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         information__ButtonDelete.setBorderPainted(false);
         information__ButtonDelete.setPreferredSize(new java.awt.Dimension(70, 35));
         information__ButtonDelete.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 information__ButtonDeleteMouseClicked(evt);
             }
@@ -1669,7 +1651,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         information__ButtonEdit.setBorderPainted(false);
         information__ButtonEdit.setPreferredSize(new java.awt.Dimension(70, 35));
         information__ButtonEdit.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 information__ButtonEditMouseClicked(evt);
             }
@@ -1681,7 +1662,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         information__ButtonReset.setBorderPainted(false);
         information__ButtonReset.setPreferredSize(new java.awt.Dimension(70, 35));
         information__ButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 information__ButtonResetMouseClicked(evt);
             }
@@ -1771,7 +1751,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__ButtonFilter.setBorderPainted(false);
         filter__ButtonFilter.setPreferredSize(new java.awt.Dimension(70, 35));
         filter__ButtonFilter.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filter__ButtonFilterMouseClicked(evt);
             }
@@ -1780,13 +1759,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__UsernameInput.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filter__UsernameInput.setPreferredSize(new java.awt.Dimension(150, 35));
         filter__UsernameInput.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 filter__UsernameInputFocusGained(evt);
             }
         });
         filter__UsernameInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__UsernameInputKeyPressed(evt);
             }
@@ -1795,13 +1772,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__RegisterDateMin.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filter__RegisterDateMin.setPreferredSize(new java.awt.Dimension(100, 35));
         filter__RegisterDateMin.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 filter__RegisterDateMinFocusGained(evt);
             }
         });
         filter__RegisterDateMin.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__RegisterDateMinKeyPressed(evt);
             }
@@ -1810,13 +1785,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__RegisterDateMax.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         filter__RegisterDateMax.setPreferredSize(new java.awt.Dimension(100, 35));
         filter__RegisterDateMax.addFocusListener(new java.awt.event.FocusAdapter() {
-            @Override
             public void focusGained(java.awt.event.FocusEvent evt) {
                 filter__RegisterDateMaxFocusGained(evt);
             }
         });
         filter__RegisterDateMax.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__RegisterDateMaxKeyPressed(evt);
             }
@@ -1838,7 +1811,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             }
         });
         filter__ReadInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__ReadInputKeyPressed(evt);
             }
@@ -1856,7 +1828,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             }
         });
         filter__WriteInput.addKeyListener(new java.awt.event.KeyAdapter() {
-            @Override
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 filter__WriteInputKeyPressed(evt);
             }
@@ -1871,7 +1842,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         filter__ButtonReset.setBorderPainted(false);
         filter__ButtonReset.setPreferredSize(new java.awt.Dimension(70, 35));
         filter__ButtonReset.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 filter__ButtonResetMouseClicked(evt);
             }
@@ -1954,7 +1924,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             pages__AuthorizationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pages__AuthorizationLayout.createSequentialGroup()
                 .addGap(15, 15, 15)
-                .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 450, Short.MAX_VALUE)
                 .addGroup(pages__AuthorizationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pages__AuthorizationLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
@@ -1972,13 +1942,13 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     .addGroup(pages__AuthorizationLayout.createSequentialGroup()
                         .addComponent(authorization__Information, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(20, 20, 20)
-                        .addComponent(authorization__Filter, javax.swing.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
+                        .addComponent(authorization__Filter, javax.swing.GroupLayout.DEFAULT_SIZE, 355, Short.MAX_VALUE)
                         .addGap(5, 5, 5))
-                    .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 635, Short.MAX_VALUE))
+                    .addComponent(authorization__Table, javax.swing.GroupLayout.DEFAULT_SIZE, 665, Short.MAX_VALUE))
                 .addGap(20, 20, 20))
         );
 
-        main__Pages.add(pages__Authorization, CARD_AUTHORIZATION);
+        main__Pages.add(pages__Authorization, "pages__Authorization");
 
         navbar.setBackground(new java.awt.Color(246, 251, 249));
         navbar.setPreferredSize(new java.awt.Dimension(770, 70));
@@ -1989,7 +1959,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonHome.setBorderPainted(false);
         navbar__ButtonHome.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonHome.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonHomeMouseClicked(evt);
             }
@@ -2001,7 +1970,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonProducts.setBorderPainted(false);
         navbar__ButtonProducts.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonProducts.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonProductsMouseClicked(evt);
             }
@@ -2013,7 +1981,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonStatistic.setBorderPainted(false);
         navbar__ButtonStatistic.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonStatistic.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonStatisticMouseClicked(evt);
             }
@@ -2025,7 +1992,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonSignOut.setBorderPainted(false);
         navbar__ButtonSignOut.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonSignOut.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonSignOutMouseClicked(evt);
             }
@@ -2037,7 +2003,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         navbar__ButtonAuthorization.setBorderPainted(false);
         navbar__ButtonAuthorization.setPreferredSize(new java.awt.Dimension(110, 35));
         navbar__ButtonAuthorization.addMouseListener(new java.awt.event.MouseAdapter() {
-            @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 navbar__ButtonAuthorizationMouseClicked(evt);
             }
@@ -2084,7 +2049,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                 .addGap(15, 15, 15)
                 .addGroup(mainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(main__Pages, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(navbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(navbar, javax.swing.GroupLayout.DEFAULT_SIZE, 790, Short.MAX_VALUE))
                 .addGap(15, 15, 15))
         );
         mainLayout.setVerticalGroup(
@@ -2178,22 +2143,22 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                                 String path = toolbar__ThumbnailInput.getText();
                                                 if (!path.equals("")){
                                                     try {
-                                                            File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
-                                                            BufferedImage bufferedImage = ImageIO.read(new File(path));
-                                                            ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
-                                                            toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
-                                                        } catch (IOException ex) {
-                                                            toolbar__ThumbnailInput.setText("");
-                                                            showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
-                                                        }
+                                                        File thumbnail = new File(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                        BufferedImage bufferedImage = ImageIO.read(new File(path));
+                                                        ImageIO.write(Scalr.resize(bufferedImage, Scalr.Method.ULTRA_QUALITY, Scalr.Mode.AUTOMATIC, 140, 180), "png", thumbnail);
+                                                        toolbar__ThumbnailInput.setText(IMAGES_DIR + path.substring(path.lastIndexOf("\\") + 1, path.lastIndexOf(".")) + ".png");
+                                                    } catch (IOException ex) {
+                                                        toolbar__ThumbnailInput.setText("");
+                                                        showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
+                                                    }
                                                 }
                                                 try {
                                                     Product temp = new Product(toolbar__IDInput.getText(), toolbar__NameInput.getText(), (String) toolbar__CategoryInput.getSelectedItem(), Integer.parseInt(toolbar__QuantityInput.getText()), new BigDecimal(toolbar__PriceInput.getText()), toolbar__ExpiryInput.getDate(), toolbar__ManafacturerInput.getText());
                                                     if(!toolbar__ThumbnailInput.getText().equals("") || toolbar__ThumbnailInput.getText() == null){
                                                         temp.setThumbnail(toolbar__ThumbnailInput.getText());
                                                     }
-                                                    if (!Toolbar__DescriptionInput.getText().equals("") || Toolbar__DescriptionInput.getText() == null){
-                                                        temp.setDescription(Toolbar__DescriptionInput.getText());
+                                                    if (!toolbar__DescriptionInput.getText().equals("") || toolbar__DescriptionInput.getText() == null){
+                                                        temp.setDescription(toolbar__DescriptionInput.getText());
                                                     }
                                                     Services.getInstance().create(temp);
                                                     showMessage("Thêm mới sản phẩm thành công!", true);
@@ -2336,7 +2301,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         try {
                             if (Services.getInstance().getSelectedProduct() != null){
                                 if (Services.getInstance().findById(toolbar__IDInput.getText()) == null ||
-                                        Services.getInstance().getSelectedProduct().getId().equals(toolbar__IDInput.getText())){
+                                    Services.getInstance().getSelectedProduct().getId().equals(toolbar__IDInput.getText())){
                                     idCheck = true;
                                     toolbar__Alert.setText(NULL_MESSAGE);
                                 }
@@ -2420,35 +2385,14 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn đăng xuất tài khoản này?", TYPE_DIALOG_MESSAGE,
             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
         switch (response) {
-            case JOptionPane.NO_OPTION: break;
-            case JOptionPane.YES_OPTION: {
-                CardLayout appCardLayout = (CardLayout) main__Pages.getParent().getParent().getParent().getLayout();
-                appCardLayout.show(main__Pages.getParent().getParent().getParent(), "app__SignIn");
-                CardLayout userCardLayout = (CardLayout) main__Pages.getLayout();
-                userCardLayout.show(main__Pages, CARD_HOME);
-                try {
-                    appController.setProductsTable(productsTable, Services.getInstance().getProducts());
-                } catch (IOException e) {
-                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
-                }
-                    resetProductTemplates();
-                    products__Scroll.getVerticalScrollBar().setValue(0);
-                    setStatistic();
-                    resetToolbar(true);
-                    resetSearchField(true);
-                try {
-                    Services.getInstance().setCurrentUser(null);
-                } catch (IOException ex) {
-                    showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
-                }
-                    accessPage = PAGES_HOME;
-                    this.repaint();
-                    this.revalidate();
-                    break;
-                }
-            case JOptionPane.CLOSED_OPTION: break;
-            default: {
-                break;
+            case JOptionPane.NO_OPTION -> {
+            }
+            case JOptionPane.YES_OPTION ->  {
+                signOut();
+            }
+            case JOptionPane.CLOSED_OPTION -> {
+            }
+            default ->  {
             }
         }
     }//GEN-LAST:event_navbar__ButtonSignOutMouseClicked
@@ -2562,7 +2506,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                                                             Date expDate = toolbar__ExpiryInput.getDate();
                                                             String manafacturer = toolbar__ManafacturerInput.getText();
                                                             String thumbnail = toolbar__ThumbnailInput.getText();
-                                                            String description = Toolbar__DescriptionInput.getText();
+                                                            String description = toolbar__DescriptionInput.getText();
                                                             Product product = new Product(id, name, category, quantity, price, expDate, manafacturer, thumbnail, description);
                                                             Services.getInstance().update(Services.getInstance().getSelectedProduct().getId(), product);
                                                             showMessage("Sửa thông tin sản phẩm thành công!", true);
@@ -2600,8 +2544,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa sản phẩm này?", TYPE_DIALOG_MESSAGE,
                             JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
                     switch (response) {
-                        case JOptionPane.NO_OPTION: break;
-                        case JOptionPane.YES_OPTION: {
+                        case JOptionPane.NO_OPTION -> {
+                        }
+                        case JOptionPane.YES_OPTION ->  {
                             try {
                                 toolbar__ButtonAdd.setEnabled(true);
                                 Services.getInstance().delete(Services.getInstance().getSelectedProduct().getId());
@@ -2610,11 +2555,10 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                             } catch (IOException e) {
                                 showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                             }
-                            break;
                         }
-                        case JOptionPane.CLOSED_OPTION: break;
-                        default: {
-                            break;
+                        case JOptionPane.CLOSED_OPTION -> {
+                        }
+                        default ->  {
                         }
                     }
                 }
@@ -2801,9 +2745,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         initSearchField();
     }//GEN-LAST:event_toolbar__ButtonSearchMouseClicked
 
-    private void Statistic__ButtonPercentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Statistic__ButtonPercentMouseClicked
+    private void statistic__ButtonPercentMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statistic__ButtonPercentMouseClicked
         setPieChart();
-    }//GEN-LAST:event_Statistic__ButtonPercentMouseClicked
+    }//GEN-LAST:event_statistic__ButtonPercentMouseClicked
 
     private void toolbar__ButtonResetSearchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toolbar__ButtonResetSearchMouseClicked
         if (accessPage == PAGES_HOME){
@@ -2834,9 +2778,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchMaxInput.setText("");
     }//GEN-LAST:event_toolbar__SearchMaxInputFocusGained
 
-    private void Statistic__ButtonPercent1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_Statistic__ButtonPercent1MouseClicked
+    private void statistic__ButtonQuantityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_statistic__ButtonQuantityMouseClicked
         setBarChart();
-    }//GEN-LAST:event_Statistic__ButtonPercent1MouseClicked
+    }//GEN-LAST:event_statistic__ButtonQuantityMouseClicked
 
     private void navbar__ButtonAuthorizationMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_navbar__ButtonAuthorizationMouseClicked
         try {
@@ -2859,19 +2803,19 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn xóa tài khoản này?", TYPE_DIALOG_MESSAGE,
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             switch (response) {
-                case JOptionPane.NO_OPTION: break;
-                case JOptionPane.YES_OPTION: {
+                case JOptionPane.NO_OPTION -> {
+                }
+                case JOptionPane.YES_OPTION ->  {
                     try {
                         Services.getInstance().deleteUser(Services.getInstance().getSelectedUser().getUsername());
                         showMessage("Bạn đã xóa thành công tài khoản", true);
                     } catch (IOException ex) {
                         showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                     }
-                    break;
                 }
-                case JOptionPane.CLOSED_OPTION: break;
-                default: {
-                    break;
+                case JOptionPane.CLOSED_OPTION -> {
+                }
+                default ->  {
                 }
             }
             resetUserEdit();
@@ -2884,8 +2828,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             int response = JOptionPane.showConfirmDialog(null, "Bạn chắc chắn muốn sửa quyền cho tài khoản này?", TYPE_DIALOG_MESSAGE,
                 JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
             switch (response) {
-                case JOptionPane.NO_OPTION: break;
-                case JOptionPane.YES_OPTION: {
+                case JOptionPane.NO_OPTION -> {
+                }
+                case JOptionPane.YES_OPTION ->  {
                     try {
                         Services.getInstance().getSelectedUser().setRead(information__ReadInput.isSelected());
                         Services.getInstance().getSelectedUser().setWrite(information__WriteInput.isSelected());
@@ -2894,11 +2839,10 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     } catch (IOException ex) {
                         showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
                     }
-                    break;
                 }
-                case JOptionPane.CLOSED_OPTION: break;
-                default: {
-                    break;
+                case JOptionPane.CLOSED_OPTION -> {
+                }
+                default ->  {
                 }
             }
             resetUserEdit();
@@ -3328,25 +3272,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton Statistic__ButtonPercent;
-    private javax.swing.JButton Statistic__ButtonPercent1;
-    private javax.swing.JLabel Statistic__CategoryStatistic;
-    private javax.swing.JLabel Statistic__CategoryThumb;
-    private javax.swing.JLabel Statistic__CategoryTitle;
-    private javax.swing.JLabel Statistic__ManafacturerStatistic;
-    private javax.swing.JLabel Statistic__ManafacturerThumb;
-    private javax.swing.JLabel Statistic__ManafacturerTitle;
-    private javax.swing.JComboBox<String> Statistic__PercentStatistic;
-    private javax.swing.JLabel Statistic__PercentStatisticTitle;
-    private javax.swing.JComboBox<String> Statistic__QuantityStatistic;
-    private javax.swing.JLabel Statistic__QuantityStatisticTitle;
-    private javax.swing.JLabel Statistic__TotalProductsStatistic;
-    private javax.swing.JLabel Statistic__TotalProductsThumb;
-    private javax.swing.JLabel Statistic__TotalProductsTitle;
-    private javax.swing.JLabel Statistic__TotalQuantityStatistic;
-    private javax.swing.JLabel Statistic__TotalQuantityThumb;
-    private javax.swing.JLabel Statistic__TotalQuantityTitle;
-    private javax.swing.JTextPane Toolbar__DescriptionInput;
     private javax.swing.JPanel authorization__Filter;
     private javax.swing.JPanel authorization__Information;
     private javax.swing.JPanel authorization__Table;
@@ -3394,14 +3319,32 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private javax.swing.JPanel sort__Main;
     private javax.swing.JScrollPane sort__Scroll;
     private hvan.qlkh.chart.Chart statistic__BarChart;
+    private javax.swing.JButton statistic__ButtonPercent;
+    private javax.swing.JButton statistic__ButtonQuantity;
     private javax.swing.JPanel statistic__Category;
+    private javax.swing.JLabel statistic__CategoryStatistic;
+    private javax.swing.JLabel statistic__CategoryThumb;
+    private javax.swing.JLabel statistic__CategoryTitle;
     private javax.swing.JPanel statistic__Main;
     private javax.swing.JPanel statistic__Manafacturer;
+    private javax.swing.JLabel statistic__ManafacturerStatistic;
+    private javax.swing.JLabel statistic__ManafacturerThumb;
+    private javax.swing.JLabel statistic__ManafacturerTitle;
     private javax.swing.JPanel statistic__Menu;
+    private javax.swing.JComboBox<String> statistic__PercentStatistic;
+    private javax.swing.JLabel statistic__PercentStatisticTitle;
     private hvan.qlkh.chart.PieChart statistic__PieChart;
+    private javax.swing.JComboBox<String> statistic__QuantityStatistic;
+    private javax.swing.JLabel statistic__QuantityStatisticTitle;
     private javax.swing.JScrollPane statistic__Scroll;
     private javax.swing.JPanel statistic__TotalProducts;
+    private javax.swing.JLabel statistic__TotalProductsStatistic;
+    private javax.swing.JLabel statistic__TotalProductsThumb;
+    private javax.swing.JLabel statistic__TotalProductsTitle;
     private javax.swing.JPanel statistic__TotalQuanity;
+    private javax.swing.JLabel statistic__TotalQuantityStatistic;
+    private javax.swing.JLabel statistic__TotalQuantityThumb;
+    private javax.swing.JLabel statistic__TotalQuantityTitle;
     private javax.swing.JPanel toolbar;
     private javax.swing.JLabel toolbar__Alert;
     private javax.swing.JButton toolbar__ButtonAdd;
@@ -3415,6 +3358,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     private javax.swing.JComboBox<String> toolbar__CategoryInput;
     private javax.swing.JLabel toolbar__CategoryTitle;
     private javax.swing.JLabel toolbar__Decorate;
+    private javax.swing.JTextPane toolbar__DescriptionInput;
     private javax.swing.JScrollPane toolbar__DescriptionScroll;
     private javax.swing.JLabel toolbar__DescriptionTitle;
     private com.toedter.calendar.JDateChooser toolbar__ExpiryInput;
@@ -3466,11 +3410,11 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                         toolbar__ThumbnailInput.setText("");
                     }
                     if (Services.getInstance().getSelectedProduct().getDescription()!= null){
-                        Toolbar__DescriptionInput.setText(Services.getInstance().getSelectedProduct().getDescription());
-                        Toolbar__DescriptionInput.setCaretPosition(0);
+                        toolbar__DescriptionInput.setText(Services.getInstance().getSelectedProduct().getDescription());
+                        toolbar__DescriptionInput.setCaretPosition(0);
                     }
                     else{
-                        Toolbar__DescriptionInput.setText("");
+                        toolbar__DescriptionInput.setText("");
                     }
                 }
             } catch (IOException e) {
@@ -3522,7 +3466,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             int row = productsTable.getSelectedRow();
             if (row >= 0) {
                 try {
-                    Services.getInstance();
                     Services.setSelectedProduct(Services.getInstance().findById(productsTable.getModel().getValueAt(row, 0).toString()));
                 } catch (IOException e) {
                     showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
@@ -3535,7 +3478,6 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
     }
 
     class UserSelectionListener implements ListSelectionListener {
-
         @Override
         public void valueChanged(ListSelectionEvent e) {
             setUserFromSelected();
