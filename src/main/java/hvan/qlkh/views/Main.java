@@ -40,6 +40,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.JDialog;
@@ -993,6 +995,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchMinInputKeyPressed(evt);
             }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                toolbar__SearchMinInputKeyReleased(evt);
+            }
         });
 
         toolbar__SearchMaxInput.setFont(new java.awt.Font("Segoe UI", 0, 15)); // NOI18N
@@ -1005,6 +1010,9 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         toolbar__SearchMaxInput.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 toolbar__SearchMaxInputKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                toolbar__SearchMaxInputKeyReleased(evt);
             }
         });
 
@@ -2645,8 +2653,8 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
         }
         if (toolbar__SearchInput.getSelectedItem().toString().equals(PRICE)){
             try {
-                BigDecimal minPrice = new BigDecimal(toolbar__SearchMinInput.getText());
-                BigDecimal maxPrice = new BigDecimal(toolbar__SearchMaxInput.getText());
+                BigDecimal minPrice = BigDecimalConverter.currencyParse(toolbar__SearchMinInput.getText());
+                BigDecimal maxPrice = BigDecimalConverter.currencyParse(toolbar__SearchMaxInput.getText());
                 if (accessPage == PAGES_HOME){
                     appController.setProductsTable(productsTable, Services.getInstance().filterByPrice(minPrice, maxPrice));
                 }
@@ -2654,7 +2662,7 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
                     filter(Services.getInstance().filterByPrice(minPrice, maxPrice));
                     productSearchModify = true;
                 }
-            } catch (IOException e) {
+            } catch (IOException | ParseException e) {
                 showMessage(PRICE_FORMAT_ERROR_DIALOG_MESSAGE, false);
             }
         }
@@ -3240,6 +3248,38 @@ public final class Main extends javax.swing.JPanel implements ListSelectionListe
             showMessage(UNKNOWN_ERROR_DIALOG_MESSAGE, false);
         }
     }//GEN-LAST:event_toolbar__PriceInputKeyReleased
+
+    private void toolbar__SearchMinInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_toolbar__SearchMinInputKeyReleased
+        if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+            String price = toolbar__SearchMinInput.getText().replaceAll("\\.", "");
+            Pattern pattern = Pattern.compile("^\\d+$");
+            if (pattern.matcher(price).find()){
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
+                decimalFormatSymbols.setCurrencySymbol("");
+                ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+                price = currencyFormat.format(new BigDecimal(price)).trim();
+                price = price.substring(0, price.length() - 1);
+                toolbar__SearchMinInput.setText(price);
+            }
+        }
+    }//GEN-LAST:event_toolbar__SearchMinInputKeyReleased
+
+    private void toolbar__SearchMaxInputKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_toolbar__SearchMaxInputKeyReleased
+        if (toolbar__SearchInput.getSelectedItem().toString().equals("Đơn giá")){
+            String price = toolbar__SearchMaxInput.getText().replaceAll("\\.", "");
+            Pattern pattern = Pattern.compile("^\\d+$");
+            if (pattern.matcher(price).find()){
+                NumberFormat currencyFormat = NumberFormat.getCurrencyInstance();
+                DecimalFormatSymbols decimalFormatSymbols = ((DecimalFormat) currencyFormat).getDecimalFormatSymbols();
+                decimalFormatSymbols.setCurrencySymbol("");
+                ((DecimalFormat) currencyFormat).setDecimalFormatSymbols(decimalFormatSymbols);
+                price = currencyFormat.format(new BigDecimal(price)).trim();
+                price = price.substring(0, price.length() - 1);
+                toolbar__SearchMaxInput.setText(price);
+            }
+        }
+    }//GEN-LAST:event_toolbar__SearchMaxInputKeyReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
